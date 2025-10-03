@@ -14,3 +14,11 @@ buildingScene = ExtResource("2_idj7w")
 unique_name_in_owner = true
 texture = SubResource("PlaceholderTexture2D_c1w88")
 centered = false
+
+[node name="PlaceBuildingButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 438.0
+offset_right = 146.0
+offset_bottom = 469.0
+text = "PLACE BUILDING"

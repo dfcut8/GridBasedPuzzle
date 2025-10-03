@@ -4,26 +4,35 @@ namespace GridBasedPuzzle.Core;
 
 public partial class Main : Node2D
 {
-    private Sprite2D sprite;
+    private Sprite2D cursor;
+    private Button placeBuildingButton;
 
     [Export] private PackedScene buildingScene;
 
     public override void _Ready()
     {
-        sprite = GetNode<Sprite2D>("%Cursor");
+        cursor = GetNode<Sprite2D>("%Cursor");
+        cursor.Visible = false;
+        placeBuildingButton = GetNode<Button>("%PlaceBuildingButton");
+        placeBuildingButton.Pressed += () =>
+        {
+            GD.Print("Pressed!!!");
+            cursor.Visible = true;
+        };
     }
 
     public override void _Process(double delta)
     {
         var gridPosition = GetMouseGridCellPosition();
-        sprite.GlobalPosition = gridPosition * 64;
+        cursor.GlobalPosition = gridPosition * 64;
     }
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (e.IsActionPressed("mouse_click_left"))
+        if (cursor.Visible && e.IsActionPressed("mouse_click_left"))
         {
             PlaceBuildingAtMousePosition();
+            cursor.Visible = false;
         }
     }
 
