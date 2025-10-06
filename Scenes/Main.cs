@@ -6,6 +6,8 @@ public partial class Main : Node2D
 {
     private Sprite2D cursor;
     private Button placeBuildingButton;
+    private TileMapLayer highLightTileMapLayer;
+    private Vector2? hoveredGridCell;
 
     [Export] private PackedScene buildingScene;
 
@@ -19,12 +21,19 @@ public partial class Main : Node2D
             GD.Print("Pressed!!!");
             cursor.Visible = true;
         };
+
+        highLightTileMapLayer = GetNode<TileMapLayer>("%HighLightTileMapLayer");
     }
 
     public override void _Process(double delta)
     {
         var gridPosition = GetMouseGridCellPosition();
         cursor.GlobalPosition = gridPosition * 64;
+        if (cursor.Visible && (hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
+        {
+            hoveredGridCell = gridPosition;
+            UpdateHighLightTileMapLayer();
+        }
     }
 
     public override void _UnhandledInput(InputEvent e)
@@ -34,12 +43,30 @@ public partial class Main : Node2D
             PlaceBuildingAtMousePosition();
             cursor.Visible = false;
         }
+        hoveredGridCell = null;
     }
 
     private Vector2 GetMouseGridCellPosition()
     {
         var mousePosition = GetGlobalMousePosition();
         return (mousePosition / 64).Floor();
+    }
+
+    private void UpdateHighLightTileMapLayer()
+    {
+        highLightTileMapLayer.Clear();
+        if (!hoveredGridCell.HasValue)
+        {
+            return;
+        }
+
+        for (var x = hoveredGridCell.Value.X - 3; hoveredGridCell.Value.X <= 3; x++)
+        {
+            for (var y = hoveredGridCell.Value.Y - 3; hoveredGridCell.Value.Y <= 3; y++)
+            {
+                highLightTileMapLayer.SetCell(new Vector2I((int)x, (int)y), 0, Vector2I.Zero);
+            }
+        }
     }
 
     private void PlaceBuildingAtMousePosition()
