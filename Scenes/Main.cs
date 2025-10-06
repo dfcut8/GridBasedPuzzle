@@ -22,7 +22,6 @@ public partial class Main : Node
         placeBuildingButton = GetNode<Button>("%PlaceBuildingButton");
         placeBuildingButton.Pressed += () =>
         {
-            GD.Print("Pressed!!!");
             cursor.Visible = true;
         };
 
