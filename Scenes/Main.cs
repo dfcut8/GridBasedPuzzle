@@ -4,7 +4,7 @@ using Godot;
 
 namespace GridBasedPuzzle.Core;
 
-public partial class Main : Node2D
+public partial class Main : Node
 {
     private Sprite2D cursor;
     private Button placeBuildingButton;
@@ -52,7 +52,7 @@ public partial class Main : Node2D
 
     private Vector2 GetMouseGridCellPosition()
     {
-        var mousePosition = GetGlobalMousePosition();
+        var mousePosition = highLightTileMapLayer.GetGlobalMousePosition();
         return (mousePosition / 64).Floor();
     }
 
