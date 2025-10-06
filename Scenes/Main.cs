@@ -29,7 +29,7 @@ public partial class Main : Node2D
     {
         var gridPosition = GetMouseGridCellPosition();
         cursor.GlobalPosition = gridPosition * 64;
-        if (cursor.Visible && (hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
+        if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
         {
             hoveredGridCell = gridPosition;
             UpdateHighLightTileMapLayer();
@@ -43,7 +43,6 @@ public partial class Main : Node2D
             PlaceBuildingAtMousePosition();
             cursor.Visible = false;
         }
-        hoveredGridCell = null;
     }
 
     private Vector2 GetMouseGridCellPosition()
@@ -55,14 +54,11 @@ public partial class Main : Node2D
     private void UpdateHighLightTileMapLayer()
     {
         highLightTileMapLayer.Clear();
-        if (!hoveredGridCell.HasValue)
-        {
-            return;
-        }
+        if (!hoveredGridCell.HasValue) return;
 
-        for (var x = hoveredGridCell.Value.X - 3; hoveredGridCell.Value.X <= 3; x++)
+        for (var x = hoveredGridCell.Value.X - 3; x <= hoveredGridCell.Value.X + 3; x++)
         {
-            for (var y = hoveredGridCell.Value.Y - 3; hoveredGridCell.Value.Y <= 3; y++)
+            for (var y = hoveredGridCell.Value.Y - 3; y <= hoveredGridCell.Value.Y + 3; y++)
             {
                 highLightTileMapLayer.SetCell(new Vector2I((int)x, (int)y), 0, Vector2I.Zero);
             }
@@ -75,5 +71,8 @@ public partial class Main : Node2D
         AddChild(building);
         var gridPosition = GetMouseGridCellPosition();
         building.GlobalPosition = gridPosition * 64;
+
+        hoveredGridCell = null;
+        UpdateHighLightTileMapLayer();
     }
 }

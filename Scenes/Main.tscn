@@ -13,6 +13,7 @@ buildingScene = ExtResource("2_idj7w")
 
 [node name="HighLightTileMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.5137255)
 tile_set = ExtResource("3_kln2b")
 
 [node name="Cursor" type="Sprite2D" parent="."]
