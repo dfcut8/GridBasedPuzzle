@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Godot;
 
 namespace GridBasedPuzzle.Core;
@@ -8,6 +10,8 @@ public partial class Main : Node2D
     private Button placeBuildingButton;
     private TileMapLayer highLightTileMapLayer;
     private Vector2? hoveredGridCell;
+
+    private HashSet<Vector2> occupiedCells = [];
 
     [Export] private PackedScene buildingScene;
 
@@ -38,7 +42,8 @@ public partial class Main : Node2D
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (cursor.Visible && e.IsActionPressed("mouse_click_left"))
+        if (cursor.Visible && e.IsActionPressed("mouse_click_left")
+            && !occupiedCells.Contains(GetMouseGridCellPosition()))
         {
             PlaceBuildingAtMousePosition();
             cursor.Visible = false;
@@ -71,6 +76,7 @@ public partial class Main : Node2D
         AddChild(building);
         var gridPosition = GetMouseGridCellPosition();
         building.GlobalPosition = gridPosition * 64;
+        occupiedCells.Add(gridPosition);
 
         hoveredGridCell = null;
         UpdateHighLightTileMapLayer();
