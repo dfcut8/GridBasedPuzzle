@@ -40,6 +40,11 @@ public partial class GridManager : Node
 
     public bool IsTilePositionValid(Vector2 tilePosition)
     {
+        // Potential bug related to casting
+        var customData = baseTerrainTilemapLayer.GetCellTileData((Vector2I)tilePosition);
+        if (customData is null) return false;
+        if (!(bool)customData.GetCustomData("Buildable")) return false;
+
         return !occupiedCells.Contains(tilePosition);
     }
 
