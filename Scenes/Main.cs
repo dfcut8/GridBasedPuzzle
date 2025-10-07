@@ -69,6 +69,6 @@ public partial class Main : Node
         occupiedCells.Add(hoveredGridCell.Value);
 
         hoveredGridCell = null;
-        gridManager.HighlightValidTilesInRadius(hoveredGridCell.Value, 3);
+        gridManager.ClearHighlightedTiles();
     }
 }
