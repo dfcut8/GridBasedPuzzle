@@ -9,7 +9,7 @@ public partial class Main : Node
     [Export] private GridManager gridManager;
     private Sprite2D cursor;
     private Button placeBuildingButton;
-    private Vector2? hoveredGridCell;
+    private Vector2I? hoveredGridCell;
 
     [Export] private PackedScene buildingScene;
 

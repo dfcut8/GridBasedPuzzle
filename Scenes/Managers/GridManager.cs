@@ -9,9 +9,9 @@ public partial class GridManager : Node
     [Export] private TileMapLayer highlightTilemapLayer;
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
-    private HashSet<Vector2> occupiedCells = [];
+    private HashSet<Vector2I> occupiedCells = [];
 
-    public void HighlightValidTilesInRadius(Vector2 rootCell, int radius)
+    public void HighlightValidTilesInRadius(Vector2I rootCell, int radius)
     {
         var highLightedTilesCount = 0;
         ClearHighlightedTiles();
@@ -20,8 +20,9 @@ public partial class GridManager : Node
         {
             for (var y = rootCell.Y - radius; y <= rootCell.Y + radius; y++)
             {
-                if (!IsTilePositionValid(new Vector2(x, y))) continue;
-                highlightTilemapLayer.SetCell(new Vector2I((int)x, (int)y), 0, Vector2I.Zero);
+                var tilePosition = new Vector2I(x, y);
+                if (!IsTilePositionValid(tilePosition)) continue;
+                highlightTilemapLayer.SetCell(tilePosition, 0, Vector2I.Zero);
                 highLightedTilesCount++;
             }
         }
@@ -33,24 +34,25 @@ public partial class GridManager : Node
         highlightTilemapLayer.Clear();
     }
 
-    public void MarkTileAsOccupied(Vector2 tilePosition)
+    public void MarkTileAsOccupied(Vector2I tilePosition)
     {
         occupiedCells.Add(tilePosition);
     }
 
-    public bool IsTilePositionValid(Vector2 tilePosition)
+    public bool IsTilePositionValid(Vector2I tilePosition)
     {
-        // Potential bug related to casting
-        var customData = baseTerrainTilemapLayer.GetCellTileData((Vector2I)tilePosition);
+        var customData = baseTerrainTilemapLayer.GetCellTileData(tilePosition);
         if (customData is null) return false;
         if (!(bool)customData.GetCustomData("Buildable")) return false;
 
         return !occupiedCells.Contains(tilePosition);
     }
 
-    public Vector2 GetMouseGridCellPosition()
+    public Vector2I GetMouseGridCellPosition()
     {
         var mousePosition = highlightTilemapLayer.GetGlobalMousePosition();
-        return (mousePosition / 64).Floor();
+        var gridPosition = (mousePosition / 64).Floor();
+
+        return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
     }
 }
