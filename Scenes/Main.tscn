@@ -23,8 +23,8 @@ centered = false
 
 [node name="PlaceBuildingButton" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 8.0
-offset_top = 438.0
-offset_right = 146.0
-offset_bottom = 469.0
+offset_left = 34.0
+offset_top = 900.0
+offset_right = 172.0
+offset_bottom = 931.0
 text = "PLACE BUILDING"
