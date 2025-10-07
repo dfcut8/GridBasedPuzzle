@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://muerhcv1wnin"
-path="res://.godot/imported/HighlightTile.png-1bdbbe68629d90e9c3f01a32c4b711e4.ctex"
+path="res://.godot/imported/HighlightTile.png-f5d092c84694584e559528919430a6ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/HighlightTile.png"
-dest_files=["res://.godot/imported/HighlightTile.png-1bdbbe68629d90e9c3f01a32c4b711e4.ctex"]
+source_file="res://Assets/Textures/Tiles/HighlightTile.png"
+dest_files=["res://.godot/imported/HighlightTile.png-f5d092c84694584e559528919430a6ea.ctex"]
 
 [params]
 
