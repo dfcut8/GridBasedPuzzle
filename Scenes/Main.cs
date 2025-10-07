@@ -2,10 +2,13 @@ using System.Collections.Generic;
 
 using Godot;
 
+using GridBasedPuzzle.Managers;
+
 namespace GridBasedPuzzle.Core;
 
 public partial class Main : Node
 {
+    [Export] private GridManager gridManager;
     private Sprite2D cursor;
     private Button placeBuildingButton;
     private TileMapLayer highLightTileMapLayer;
@@ -35,7 +38,7 @@ public partial class Main : Node
         if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
         {
             hoveredGridCell = gridPosition;
-            UpdateHighLightTileMapLayer();
+            gridManager.HighlightValidTilesInRadius(hoveredGridCell.Value, 3);
         }
     }
 
@@ -55,20 +58,6 @@ public partial class Main : Node
         return (mousePosition / 64).Floor();
     }
 
-    private void UpdateHighLightTileMapLayer()
-    {
-        highLightTileMapLayer.Clear();
-        if (!hoveredGridCell.HasValue) return;
-
-        for (var x = hoveredGridCell.Value.X - 3; x <= hoveredGridCell.Value.X + 3; x++)
-        {
-            for (var y = hoveredGridCell.Value.Y - 3; y <= hoveredGridCell.Value.Y + 3; y++)
-            {
-                highLightTileMapLayer.SetCell(new Vector2I((int)x, (int)y), 0, Vector2I.Zero);
-            }
-        }
-    }
-
     private void PlaceBuildingAtHoveredCellPosition()
     {
         if (!hoveredGridCell.HasValue) return;
@@ -80,6 +69,6 @@ public partial class Main : Node
         occupiedCells.Add(hoveredGridCell.Value);
 
         hoveredGridCell = null;
-        UpdateHighLightTileMapLayer();
+        gridManager.HighlightValidTilesInRadius(hoveredGridCell.Value, 3);
     }
 }
