@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using Godot;
+
+using GridBasedPuzzle.Components;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -11,10 +14,10 @@ public partial class GridManager : Node
 
     private HashSet<Vector2I> occupiedCells = [];
 
-    public void HighlightValidTilesInRadius(Vector2I rootCell, int radius)
+    private void HighlightValidTilesInRadius(Vector2I rootCell, int radius)
     {
         var highLightedTilesCount = 0;
-        ClearHighlightedTiles();
+
 
         for (var x = rootCell.X - radius; x <= rootCell.X + radius; x++)
         {
@@ -54,5 +57,16 @@ public partial class GridManager : Node
         var gridPosition = (mousePosition / 64).Floor();
 
         return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
+    }
+
+    public void HighlightBuildableTiles()
+    {
+        ClearHighlightedTiles();
+        var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>();
+
+        foreach (var b in buildingComponents)
+        {
+            HighlightValidTilesInRadius(b.GetRootGridCellPosition(), b.BuildableRadius);
+        }
     }
 }
