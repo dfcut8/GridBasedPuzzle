@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://ca70iacsqhub7"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://ca70iacsqhub7"]
 
 [ext_resource type="Texture2D" uid="uid://bqa0x11nwvrg5" path="res://Assets/Textures/Tiles/FlatTilemap.png" id="1_ki748"]
+[ext_resource type="Texture2D" uid="uid://bgjggg1cnwnb4" path="res://Assets/Textures/Tiles/Tree.png" id="2_3g0vu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3g0vu"]
 texture = ExtResource("1_ki748")
@@ -102,6 +103,18 @@ texture_region_size = Vector2i(64, 64)
 8:3/0/terrain = 0
 8:3/0/custom_data_0 = true
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mwfvm"]
+texture = ExtResource("2_3g0vu")
+texture_region_size = Vector2i(192, 192)
+0:0/animation_columns = 4
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 0.25
+0:0/animation_frame_1/duration = 0.25
+0:0/animation_frame_2/duration = 0.15
+0:0/animation_frame_3/duration = 0.15
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 64)
+
 [resource]
 tile_size = Vector2i(64, 64)
 terrain_set_0/mode = 2
@@ -110,3 +123,4 @@ terrain_set_0/terrain_0/color = Color(0.7225111, 0, 0.22572821, 1)
 custom_data_layer_0/name = "Buildable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_3g0vu")
+sources/1 = SubResource("TileSetAtlasSource_mwfvm")
