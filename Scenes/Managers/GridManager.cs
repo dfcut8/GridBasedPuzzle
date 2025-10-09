@@ -14,10 +14,17 @@ public partial class GridManager : Node
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
     private HashSet<Vector2I> validBuildableTiles = [];
+    private List<TileMapLayer> tileMapLayers = [];
 
     public override void _Ready()
     {
         GlobalEvents.BuildingPlaced += OnBuildingPlaced;
+        tileMapLayers = GetTileMapLayers(baseTerrainTilemapLayer);
+
+        foreach (var layer in tileMapLayers)
+        {
+            GD.Print(layer.Name);
+        }
     }
 
     protected override void Dispose(bool disposing)
@@ -64,6 +71,23 @@ public partial class GridManager : Node
         return buildingComponents.Select(x => x.GetRootGridCellPosition());
     }
 
+    private List<TileMapLayer> GetTileMapLayers(TileMapLayer baseTileMapLayer)
+    {
+        // TODO: Think about doing this in loop and benchmark it...
+        List<TileMapLayer> result = [];
+        var children = baseTileMapLayer.GetChildren();
+        children.Reverse();
+        foreach (var child in children)
+        {
+            if (child is TileMapLayer layer)
+            {
+                result.AddRange(GetTileMapLayers(layer));
+            }
+        }
+        result.Add(baseTileMapLayer);
+        return result;
+    }
+
     public void ClearHighlightedTiles()
     {
         highlightTilemapLayer.Clear();
@@ -71,9 +95,13 @@ public partial class GridManager : Node
 
     public bool IsTilePositionValid(Vector2I tilePosition)
     {
-        var customData = baseTerrainTilemapLayer.GetCellTileData(tilePosition);
-        if (customData is null) return false;
-        return (bool)customData.GetCustomData("Buildable");
+        foreach (var layer in tileMapLayers)
+        {
+            var customData = layer.GetCellTileData(tilePosition);
+            if (customData is null) continue;
+            return (bool)customData.GetCustomData("Buildable");
+        }
+        return false;
     }
 
     public bool IsTilePositionBuildable(Vector2I tilePosition)
