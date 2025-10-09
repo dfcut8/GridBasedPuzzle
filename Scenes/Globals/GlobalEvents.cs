@@ -1,8 +1,10 @@
 using System;
 
+using GridBasedPuzzle.Components;
+
 namespace GridBasedPuzzle.Globals;
 
 public static class GlobalEvents
 {
-    public static Action BuildingPlaced;
+    public static Action<BuildingComponent> BuildingPlaced;
 }

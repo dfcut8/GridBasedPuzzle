@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 
 using GridBasedPuzzle.Components;
+using GridBasedPuzzle.Globals;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -13,6 +14,21 @@ public partial class GridManager : Node
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
     private HashSet<Vector2I> occupiedCells = [];
+
+    public override void _Ready()
+    {
+        GlobalEvents.BuildingPlaced += OnBuildingPlaced;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        GlobalEvents.BuildingPlaced -= OnBuildingPlaced;
+    }
+
+    private void OnBuildingPlaced(BuildingComponent b)
+    {
+        MarkTileAsOccupied(b.GetRootGridCellPosition());
+    }
 
     private void HighlightValidTilesInRadius(Vector2I rootCell, int radius)
     {
