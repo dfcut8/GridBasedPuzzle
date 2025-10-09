@@ -12,7 +12,6 @@ public partial class GridManager : Node
     [Export] private TileMapLayer highlightTilemapLayer;
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
-    private HashSet<Vector2I> occupiedCells = [];
     private HashSet<Vector2I> validBuildableTiles = [];
 
     public override void _Ready()
@@ -28,7 +27,6 @@ public partial class GridManager : Node
     private void OnBuildingPlaced(BuildingComponent b)
     {
         UpdateValidBuildableTiles(b);
-        MarkTileAsOccupied(b.GetRootGridCellPosition());
     }
 
     private void UpdateValidBuildableTiles(BuildingComponent b)
@@ -43,6 +41,7 @@ public partial class GridManager : Node
                 validBuildableTiles.Add(tilePosition);
             }
         }
+        validBuildableTiles.Remove(b.GetRootGridCellPosition());
     }
 
     public void ClearHighlightedTiles()
@@ -50,18 +49,16 @@ public partial class GridManager : Node
         highlightTilemapLayer.Clear();
     }
 
-    public void MarkTileAsOccupied(Vector2I tilePosition)
-    {
-        occupiedCells.Add(tilePosition);
-    }
-
     public bool IsTilePositionValid(Vector2I tilePosition)
     {
         var customData = baseTerrainTilemapLayer.GetCellTileData(tilePosition);
         if (customData is null) return false;
-        if (!(bool)customData.GetCustomData("Buildable")) return false;
+        return (bool)customData.GetCustomData("Buildable");
+    }
 
-        return !occupiedCells.Contains(tilePosition);
+    public bool IsTilePositionBuildable(Vector2I tilePosition)
+    {
+        return validBuildableTiles.Contains(tilePosition);
     }
 
     public Vector2I GetMouseGridCellPosition()
