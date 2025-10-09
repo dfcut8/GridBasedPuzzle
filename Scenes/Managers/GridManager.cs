@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using Godot;
 
@@ -32,16 +33,24 @@ public partial class GridManager : Node
     private void UpdateValidBuildableTiles(BuildingComponent b)
     {
         var rootCell = b.GetRootGridCellPosition();
-        for (var x = rootCell.X - b.BuildableRadius; x <= rootCell.X + b.BuildableRadius; x++)
+        var validTiles = GetValidTilesRadius(rootCell, b.BuildableRadius);
+        validBuildableTiles.UnionWith(validTiles);
+        validBuildableTiles.Remove(b.GetRootGridCellPosition());
+    }
+
+    private List<Vector2I> GetValidTilesRadius(Vector2I rootCell, int radius)
+    {
+        List<Vector2I> result = [];
+        for (var x = rootCell.X - radius; x <= rootCell.X + radius; x++)
         {
-            for (var y = rootCell.Y - b.BuildableRadius; y <= rootCell.Y + b.BuildableRadius; y++)
+            for (var y = rootCell.Y - radius; y <= rootCell.Y + radius; y++)
             {
                 var tilePosition = new Vector2I(x, y);
                 if (!IsTilePositionValid(tilePosition)) continue;
-                validBuildableTiles.Add(tilePosition);
+                result.Add(tilePosition);
             }
         }
-        validBuildableTiles.Remove(b.GetRootGridCellPosition());
+        return result;
     }
 
     public void ClearHighlightedTiles()
@@ -74,6 +83,19 @@ public partial class GridManager : Node
         foreach (var tilePosition in validBuildableTiles)
         {
             highlightTilemapLayer.SetCell(tilePosition, 0, Vector2I.Zero);
+        }
+    }
+
+    public void HighlightExpandedBuildableTiles(Vector2I rootCell, int radius)
+    {
+        ClearHighlightedTiles();
+        HighlightBuildableTiles();
+        var validTiles = GetValidTilesRadius(rootCell, radius).ToHashSet();
+        var expandedTiles = validTiles.Except(validBuildableTiles);
+        var atlasCoords = new Vector2I(1, 0);
+        foreach (var tilePosition in expandedTiles)
+        {
+            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
         }
     }
 }

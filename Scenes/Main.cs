@@ -21,6 +21,7 @@ public partial class Main : Node
         placeBuildingButton.Pressed += () =>
         {
             cursor.Visible = true;
+            gridManager.HighlightBuildableTiles();
         };
     }
 
@@ -31,7 +32,7 @@ public partial class Main : Node
         if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
         {
             hoveredGridCell = gridPosition;
-            gridManager.HighlightBuildableTiles();
+            gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, 3);
         }
     }
 
