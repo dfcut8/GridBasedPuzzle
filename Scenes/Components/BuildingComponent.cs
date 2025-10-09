@@ -1,5 +1,7 @@
 using Godot;
 
+using GridBasedPuzzle.Globals;
+
 namespace GridBasedPuzzle.Components;
 
 public partial class BuildingComponent : Node2D
@@ -9,6 +11,7 @@ public partial class BuildingComponent : Node2D
     public override void _Ready()
     {
         AddToGroup(nameof(BuildingComponent));
+        GlobalEvents.BuildingPlaced?.Invoke(this);
     }
 
     public Vector2I GetRootGridCellPosition()

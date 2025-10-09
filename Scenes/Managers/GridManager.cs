@@ -33,8 +33,6 @@ public partial class GridManager : Node
     private void HighlightValidTilesInRadius(Vector2I rootCell, int radius)
     {
         var highLightedTilesCount = 0;
-
-
         for (var x = rootCell.X - radius; x <= rootCell.X + radius; x++)
         {
             for (var y = rootCell.Y - radius; y <= rootCell.Y + radius; y++)
@@ -45,7 +43,7 @@ public partial class GridManager : Node
                 highLightedTilesCount++;
             }
         }
-        GD.Print(highLightedTilesCount);
+        // GD.Print(highLightedTilesCount);
     }
 
     public void ClearHighlightedTiles()
