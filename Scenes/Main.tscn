@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=4 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Main.cs" id="1_r150o"]
-[ext_resource type="PackedScene" uid="uid://duhm5vw4ilj6i" path="res://Scenes/Buildings/Building.tscn" id="2_idj7w"]
+[ext_resource type="PackedScene" uid="uid://duhm5vw4ilj6i" path="res://Scenes/Buildings/Tower.tscn" id="2_idj7w"]
 [ext_resource type="TileSet" uid="uid://di7b570y6y7tj" path="res://Resources/HighLightTileset.tres" id="3_kln2b"]
 [ext_resource type="PackedScene" uid="uid://dvf3srqqpmw6f" path="res://Scenes/Managers/GridManager.tscn" id="3_pbw6q"]
 [ext_resource type="TileSet" uid="uid://ca70iacsqhub7" path="res://Resources/FlatTileset.tres" id="4_rgh2o"]
@@ -15,7 +15,8 @@ size = Vector2(64, 64)
 script = ExtResource("1_r150o")
 gridManager = NodePath("GridManager")
 ySortRoot = NodePath("YSortRoot")
-buildingScene = ExtResource("2_idj7w")
+towerScene = ExtResource("2_idj7w")
+villageScene = ExtResource("6_jw32o")
 
 [node name="GridManager" parent="." node_paths=PackedStringArray("highlightTilemapLayer", "baseTerrainTilemapLayer") instance=ExtResource("3_pbw6q")]
 highlightTilemapLayer = NodePath("../HighlightTilemapLayer")
@@ -36,9 +37,6 @@ tile_set = ExtResource("4_rgh2o")
 
 [node name="BaseBuilding" parent="YSortRoot" instance=ExtResource("6_v1gob")]
 position = Vector2(256, 448)
-
-[node name="Village" parent="YSortRoot" instance=ExtResource("6_jw32o")]
-position = Vector2(192, 256)
 
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
