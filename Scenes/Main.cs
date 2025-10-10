@@ -24,7 +24,7 @@ public partial class Main : Node
         cursor = GetNode<Sprite2D>("%Cursor");
         cursor.Visible = false;
 
-        placeTowerButton = GetNode<Button>("%PlaceBuildingButton");
+        placeTowerButton = GetNode<Button>("%PlaceTowerButton");
         placeTowerButton.Pressed += () =>
         {
             toPlaceScene = towerScene;

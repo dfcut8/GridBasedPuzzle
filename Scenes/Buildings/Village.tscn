@@ -6,11 +6,12 @@
 [node name="Village" type="Node2D"]
 y_sort_enabled = true
 
+[node name="BuildingComponent" parent="." instance=ExtResource("2_qygkm")]
+BuildableRadius = 3
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(32, 32)
 texture = ExtResource("1_we6cg")
 centered = false
 offset = Vector2(-64, -140)
-
-[node name="BuildingComponent" parent="." instance=ExtResource("2_qygkm")]

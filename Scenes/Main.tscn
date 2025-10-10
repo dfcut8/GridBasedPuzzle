@@ -48,7 +48,7 @@ unique_name_in_owner = true
 texture = SubResource("PlaceholderTexture2D_c1w88")
 centered = false
 
-[node name="PlaceBuildingButton" type="Button" parent="."]
+[node name="PlaceTowerButton" type="Button" parent="."]
 unique_name_in_owner = true
 offset_left = 64.0
 offset_top = 896.0
