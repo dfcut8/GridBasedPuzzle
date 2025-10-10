@@ -1,6 +1,7 @@
 using Godot;
 
 using GridBasedPuzzle.Managers;
+using GridBasedPuzzle.Resources.Buildings;
 
 namespace GridBasedPuzzle.Core;
 
@@ -14,20 +15,25 @@ public partial class Main : Node
     private Vector2I? hoveredGridCell;
 
 
-    [Export] private PackedScene towerScene;
-    [Export] private PackedScene villageScene;
+    // Resources
+    private BuildingResource towerResource;
+    private BuildingResource villageResource;
 
     private PackedScene toPlaceScene;
 
     public override void _Ready()
     {
-        cursor = GetNode<Sprite2D>("%Cursor");
-        cursor.Visible = false;
+        LoadBuildingResources();
+        InitCursor();
+        InitButtons();
+    }
 
+    private void InitButtons()
+    {
         placeTowerButton = GetNode<Button>("%PlaceTowerButton");
         placeTowerButton.Pressed += () =>
         {
-            toPlaceScene = towerScene;
+            toPlaceScene = towerResource.BuildingScene;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
@@ -35,10 +41,22 @@ public partial class Main : Node
         placeVillageButton = GetNode<Button>("%PlaceVillageButton");
         placeVillageButton.Pressed += () =>
         {
-            toPlaceScene = villageScene;
+            toPlaceScene = villageResource.BuildingScene;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
+    }
+
+    private void InitCursor()
+    {
+        cursor = GetNode<Sprite2D>("%Cursor");
+        cursor.Visible = false;
+    }
+
+    private void LoadBuildingResources()
+    {
+        towerResource = GD.Load<BuildingResource>("res://Resources/Buildings/Tower.tres");
+        villageResource = GD.Load<BuildingResource>("res://Resources/Buildings/Village.tres");
     }
 
     public override void _Process(double delta)
