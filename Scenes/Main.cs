@@ -19,7 +19,7 @@ public partial class Main : Node
     private BuildingResource towerResource;
     private BuildingResource villageResource;
 
-    private PackedScene toPlaceScene;
+    private BuildingResource toPlaceBuildingResource;
 
     public override void _Ready()
     {
@@ -33,7 +33,7 @@ public partial class Main : Node
         placeTowerButton = GetNode<Button>("%PlaceTowerButton");
         placeTowerButton.Pressed += () =>
         {
-            toPlaceScene = towerResource.BuildingScene;
+            toPlaceBuildingResource = towerResource;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
@@ -41,7 +41,7 @@ public partial class Main : Node
         placeVillageButton = GetNode<Button>("%PlaceVillageButton");
         placeVillageButton.Pressed += () =>
         {
-            toPlaceScene = villageResource.BuildingScene;
+            toPlaceBuildingResource = villageResource;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
@@ -63,16 +63,19 @@ public partial class Main : Node
     {
         var gridPosition = gridManager.GetMouseGridCellPosition();
         cursor.GlobalPosition = gridPosition * 64;
-        if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
+        if (toPlaceBuildingResource is not null
+            && cursor.Visible
+            && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
         {
             hoveredGridCell = gridPosition;
-            gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, 3);
+            gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
         }
     }
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (hoveredGridCell.HasValue && e.IsActionPressed("mouse_click_left")
+        if (hoveredGridCell.HasValue
+            && e.IsActionPressed("mouse_click_left")
             && gridManager.IsTilePositionBuildable(hoveredGridCell.Value))
         {
             PlaceBuildingAtHoveredCellPosition();
@@ -84,7 +87,7 @@ public partial class Main : Node
     {
         if (!hoveredGridCell.HasValue) return;
 
-        var building = toPlaceScene.Instantiate<Node2D>();
+        var building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
         ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridCell.Value * 64;

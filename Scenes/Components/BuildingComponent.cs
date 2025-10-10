@@ -1,12 +1,14 @@
 using Godot;
 
 using GridBasedPuzzle.Globals;
+using GridBasedPuzzle.Resources.Buildings;
 
 namespace GridBasedPuzzle.Components;
 
 public partial class BuildingComponent : Node2D
 {
-    [Export] public int BuildableRadius { get; private set; }
+    // Injected by BuildingResource that owns BuildingScene
+    public BuildingResource BuildingResource;
 
     public override void _Ready()
     {
