@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://bvnu58ajf8bub"]
+[gd_scene load_steps=9 format=4 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Main.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://duhm5vw4ilj6i" path="res://Scenes/Buildings/Building.tscn" id="2_idj7w"]
 [ext_resource type="TileSet" uid="uid://di7b570y6y7tj" path="res://Resources/HighLightTileset.tres" id="3_kln2b"]
 [ext_resource type="PackedScene" uid="uid://dvf3srqqpmw6f" path="res://Scenes/Managers/GridManager.tscn" id="3_pbw6q"]
 [ext_resource type="TileSet" uid="uid://ca70iacsqhub7" path="res://Resources/FlatTileset.tres" id="4_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://dfmmgk2rsm4q7" path="res://Scenes/Buildings/Village.tscn" id="6_jw32o"]
 [ext_resource type="PackedScene" uid="uid://7lqoud5x50xk" path="res://Scenes/Buildings/BaseBuilding.tscn" id="6_v1gob"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c1w88"]
@@ -36,6 +37,9 @@ tile_set = ExtResource("4_rgh2o")
 [node name="BaseBuilding" parent="YSortRoot" instance=ExtResource("6_v1gob")]
 position = Vector2(256, 448)
 
+[node name="Village" parent="YSortRoot" instance=ExtResource("6_jw32o")]
+position = Vector2(192, 256)
+
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.5137255)
@@ -48,8 +52,16 @@ centered = false
 
 [node name="PlaceBuildingButton" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 34.0
-offset_top = 900.0
-offset_right = 172.0
-offset_bottom = 931.0
-text = "PLACE BUILDING"
+offset_left = 64.0
+offset_top = 896.0
+offset_right = 202.0
+offset_bottom = 927.0
+text = "PLACE TOWER"
+
+[node name="PlaceVillageButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 256.0
+offset_top = 896.0
+offset_right = 394.0
+offset_bottom = 927.0
+text = "PLACE VILLAGE"
