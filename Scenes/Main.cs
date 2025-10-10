@@ -7,9 +7,11 @@ namespace GridBasedPuzzle.Core;
 public partial class Main : Node
 {
     [Export] private GridManager gridManager;
+    [Export] private Node2D ySortRoot;
     private Sprite2D cursor;
     private Button placeBuildingButton;
     private Vector2I? hoveredGridCell;
+
 
     [Export] private PackedScene buildingScene;
 
@@ -51,7 +53,7 @@ public partial class Main : Node
         if (!hoveredGridCell.HasValue) return;
 
         var building = buildingScene.Instantiate<Node2D>();
-        AddChild(building);
+        ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridCell.Value * 64;
 

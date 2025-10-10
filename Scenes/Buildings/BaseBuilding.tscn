@@ -13,3 +13,4 @@ BuildableRadius = 2
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_hholo")
 centered = false
+offset = Vector2(-32, -64)
