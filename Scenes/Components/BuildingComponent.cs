@@ -7,7 +7,7 @@ namespace GridBasedPuzzle.Components;
 
 public partial class BuildingComponent : Node2D
 {
-    // Injected by BuildingResource that owns BuildingScene
+    [Export(PropertyHint.File, "*.tres")]
     public BuildingResource BuildingResource;
 
     public override void _Ready()
