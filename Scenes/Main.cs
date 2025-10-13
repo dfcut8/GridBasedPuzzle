@@ -45,6 +45,11 @@ public partial class Main : Node
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
+
+        gridManager.ResourceTilesUpdated += count =>
+        {
+            GD.Print($"Resource Count: {count}");
+        };
     }
 
     private void InitCursor()

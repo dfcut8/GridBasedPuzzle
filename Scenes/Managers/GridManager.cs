@@ -13,10 +13,24 @@ public partial class GridManager : Node
 {
     private const string IS_WOOD_LAYER_NAME = "IsWood";
     private const string IS_BUILDABLE_LAYER_NAME = "IsBuildable";
+
+
+    /// <summary>
+    /// Delegate that is invoked when the set of collected resource tiles changes.
+    /// The delegate should return the current count of collected resource tiles.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="int"/> returned the number of resource tiles
+    /// that have been collected/tracked (for example, wood tiles collected by
+    /// buildings). Consumers can assign a function that computes or returns
+    /// that count and use the value for UI updates or gameplay logic.
+    /// </remarks>
+    public Action<int> ResourceTilesUpdated;
     [Export] private TileMapLayer highlightTilemapLayer;
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
     private HashSet<Vector2I> validBuildableTiles = [];
+    private HashSet<Vector2I> collectedResourceTiles = [];
     private List<TileMapLayer> tileMapLayers = [];
 
     public override void _Ready()
@@ -38,6 +52,7 @@ public partial class GridManager : Node
     private void OnBuildingPlaced(BuildingComponent b)
     {
         UpdateValidBuildableTiles(b);
+        UpdateCollectedResourceTiles(b);
     }
 
     private void UpdateValidBuildableTiles(BuildingComponent buildingComponent)
@@ -51,6 +66,21 @@ public partial class GridManager : Node
         foreach (var tilePosition in GetOccupiedTiles())
         {
             validBuildableTiles.Remove(tilePosition);
+        }
+    }
+
+    private void UpdateCollectedResourceTiles(BuildingComponent buildingComponent)
+    {
+        var rootCell = buildingComponent.GetRootGridCellPosition();
+        var resourceTiles = GetTilesRadius(rootCell,
+            buildingComponent.BuildingResource.ResourceRadius,
+            (tilePosition) => TileHasCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME));
+
+        var oldResourceTileCount = collectedResourceTiles.Count;
+        collectedResourceTiles.UnionWith(resourceTiles);
+        if (oldResourceTileCount != collectedResourceTiles.Count)
+        {
+            ResourceTilesUpdated?.Invoke(collectedResourceTiles.Count);
         }
     }
 
