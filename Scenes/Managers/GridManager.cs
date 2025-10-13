@@ -74,7 +74,7 @@ public partial class GridManager : Node
         var rootCell = buildingComponent.GetRootGridCellPosition();
         var resourceTiles = GetTilesRadius(rootCell,
             buildingComponent.BuildingResource.ResourceRadius,
-            (tilePosition) => TileHasCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME));
+            (tilePosition) => TileHasCustomData(tilePosition, IS_WOOD_LAYER_NAME));
 
         var oldResourceTileCount = collectedResourceTiles.Count;
         collectedResourceTiles.UnionWith(resourceTiles);
