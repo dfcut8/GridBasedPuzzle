@@ -2,6 +2,7 @@ using Godot;
 
 using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Buildings;
+using GridBasedPuzzle.UserInterface;
 
 namespace GridBasedPuzzle.Core;
 
@@ -10,8 +11,6 @@ public partial class Main : Node
     [Export] private GridManager gridManager;
     [Export] private Node2D ySortRoot;
     private Sprite2D cursor;
-    private Button placeTowerButton;
-    private Button placeVillageButton;
     private Vector2I? hoveredGridCell;
 
 
@@ -20,26 +19,28 @@ public partial class Main : Node
     private BuildingResource villageResource;
 
     private BuildingResource toPlaceBuildingResource;
+    private Ui ui;
 
     public override void _Ready()
     {
         LoadBuildingResources();
         InitCursor();
         InitButtons();
+
     }
 
     private void InitButtons()
     {
-        placeTowerButton = GetNode<Button>("%PlaceTowerButton");
-        placeTowerButton.Pressed += () =>
+        ui = GetNode<Ui>("%Ui");
+        ui.PlaceTowerButtonPressed += () =>
         {
             toPlaceBuildingResource = towerResource;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
 
-        placeVillageButton = GetNode<Button>("%PlaceVillageButton");
-        placeVillageButton.Pressed += () =>
+
+        ui.PlaceVillageButtonPressed += () =>
         {
             toPlaceBuildingResource = villageResource;
             cursor.Visible = true;
