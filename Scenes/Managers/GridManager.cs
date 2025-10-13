@@ -43,7 +43,6 @@ public partial class GridManager : Node
         var validTiles = GetValidTilesRadius(rootCell, buildingComponent.BuildingResource.BuildableRadius);
         validBuildableTiles.UnionWith(validTiles);
 
-
         foreach (var tilePosition in GetOccupiedTiles())
         {
             validBuildableTiles.Remove(tilePosition);

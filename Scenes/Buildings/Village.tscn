@@ -7,7 +7,7 @@
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." instance=ExtResource("2_qygkm")]
-BuildableRadius = 3
+buildingResourcePath = "uid://y1lwti6w3s7w"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
