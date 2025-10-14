@@ -74,7 +74,7 @@ public partial class BuildingManager : Node
 
     private void OnResourceTilesUpdated(int resourceCount)
     {
-        GD.Print($"Resource Count: {resourceCount}");
+        currentResourceCount += resourceCount;
     }
 
     private void PlaceBuildingAtHoveredCellPosition()
