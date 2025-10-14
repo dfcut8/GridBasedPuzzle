@@ -23,26 +23,16 @@ public partial class Main : Node
 
     public override void _Ready()
     {
-        LoadBuildingResources();
         InitCursor();
         InitButtons();
-
     }
 
     private void InitButtons()
     {
         ui = GetNode<Ui>("%Ui");
-        ui.PlaceTowerButtonPressed += () =>
+        ui.BuildingResourceSelected += (br) =>
         {
-            toPlaceBuildingResource = towerResource;
-            cursor.Visible = true;
-            gridManager.HighlightBuildableTiles();
-        };
-
-
-        ui.PlaceVillageButtonPressed += () =>
-        {
-            toPlaceBuildingResource = villageResource;
+            toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
@@ -57,12 +47,6 @@ public partial class Main : Node
     {
         cursor = GetNode<Sprite2D>("%Cursor");
         cursor.Visible = false;
-    }
-
-    private void LoadBuildingResources()
-    {
-        towerResource = GD.Load<BuildingResource>("res://Resources/Buildings/Tower.tres");
-        villageResource = GD.Load<BuildingResource>("res://Resources/Buildings/Village.tres");
     }
 
     public override void _Process(double delta)

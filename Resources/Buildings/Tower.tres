@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_ig81x")
+DisplayName = "Tower"
 BuildableRadius = 3
 BuildingScene = ExtResource("1_73dci")
 metadata/_custom_type_script = "uid://dhkl1b3d21mec"

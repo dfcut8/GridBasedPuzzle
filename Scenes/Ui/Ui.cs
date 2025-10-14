@@ -10,8 +10,7 @@ public partial class Ui : MarginContainer
 {
     [Export] private BuildingResource[] buildingResources;
 
-    public Action PlaceTowerButtonPressed;
-    public Action PlaceVillageButtonPressed;
+    public Action<BuildingResource> BuildingResourceSelected;
 
     private HBoxContainer hBoxContainer;
 
@@ -26,18 +25,13 @@ public partial class Ui : MarginContainer
         foreach (var br in buildingResources)
         {
             var buildingButton = new Button();
-            buildingButton.Text = "PLACE BUILDING";
+            buildingButton.Text = $"PLACE {br.DisplayName.ToUpper()}";
             hBoxContainer.AddChild(buildingButton);
+
+            buildingButton.Pressed += () =>
+            {
+                BuildingResourceSelected?.Invoke(br);
+            };
         }
-    }
-
-    private void OnPlaceVillageButtonPressed()
-    {
-        PlaceTowerButtonPressed?.Invoke();
-    }
-
-    private void OnPlaceTowerButtonPressed()
-    {
-        PlaceVillageButtonPressed?.Invoke();
     }
 }
