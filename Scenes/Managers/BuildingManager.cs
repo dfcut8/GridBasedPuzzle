@@ -11,7 +11,6 @@ public partial class BuildingManager : Node
     [Export] private GridManager gridManager;
     [Export] private Ui ui;
     [Export] private Node2D ySortRoot;
-    [Export] private PackedScene cursorScene;
     [Export] private int startingResourceCount = 4;
 
 

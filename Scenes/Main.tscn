@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://bvnu58ajf8bub"]
+[gd_scene load_steps=8 format=4 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Main.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://mrkx2m388gth" path="res://Scenes/Managers/BuildingManager.tscn" id="2_jw32o"]
@@ -7,7 +7,6 @@
 [ext_resource type="TileSet" uid="uid://ca70iacsqhub7" path="res://Resources/FlatTileset.tres" id="4_rgh2o"]
 [ext_resource type="PackedScene" uid="uid://didqeaf7n7aae" path="res://Scenes/Ui/Ui.tscn" id="6_jw32o"]
 [ext_resource type="PackedScene" uid="uid://7lqoud5x50xk" path="res://Scenes/Buildings/BaseBuilding.tscn" id="6_v1gob"]
-[ext_resource type="PackedScene" uid="uid://kvhwvs42ymq3" path="res://Scenes/Buildings/BuildingGhost.tscn" id="8_50glp"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("gridManager", "buildingManager")]
 script = ExtResource("1_r150o")
@@ -18,7 +17,6 @@ buildingManager = NodePath("BuildingManager")
 gridManager = NodePath("../GridManager")
 ui = NodePath("../Ui")
 ySortRoot = NodePath("../YSortRoot")
-cursorScene = ExtResource("8_50glp")
 
 [node name="GridManager" parent="." node_paths=PackedStringArray("highlightTilemapLayer", "baseTerrainTilemapLayer") instance=ExtResource("3_pbw6q")]
 highlightTilemapLayer = NodePath("../HighlightTilemapLayer")
