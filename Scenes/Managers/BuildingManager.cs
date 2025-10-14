@@ -1,5 +1,6 @@
 using Godot;
 
+using GridBasedPuzzle.Buildings;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.UserInterface;
 
@@ -19,7 +20,7 @@ public partial class BuildingManager : Node
     private int availableResourceCount => startingResourceCount + currentResourceCount - usedResourceCount;
     private BuildingResource toPlaceBuildingResource;
     private Vector2I? hoveredGridCell;
-    private Node2D cursor;
+    private Building cursor;
 
     public override void _Ready()
     {
@@ -63,8 +64,9 @@ public partial class BuildingManager : Node
 
         ui.BuildingResourceSelected += (br) =>
         {
-            cursor = cursorScene.Instantiate<Node2D>();
+            cursor = br.BuildingScene.Instantiate<Building>();
             ySortRoot.AddChild(cursor);
+            cursor.Sprite2D.Modulate = new Color(1f, 1f, 1f, 0.5137255f);
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();

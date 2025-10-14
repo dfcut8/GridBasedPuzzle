@@ -1,15 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfmmgk2rsm4q7"]
+[gd_scene load_steps=4 format=3 uid="uid://dfmmgk2rsm4q7"]
 
+[ext_resource type="Script" uid="uid://n87iwli5oir7" path="res://Scenes/Buildings/Village.cs" id="1_qygkm"]
 [ext_resource type="Texture2D" uid="uid://d4ltso5m2wwef" path="res://Assets/Textures/Buildings/HouseBlue.png" id="1_we6cg"]
 [ext_resource type="PackedScene" uid="uid://bqixj3oynfsl6" path="res://Scenes/Components/BuildingComponent.tscn" id="2_qygkm"]
 
 [node name="Village" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_qygkm")
 
 [node name="BuildingComponent" parent="." instance=ExtResource("2_qygkm")]
 buildingResourcePath = "uid://y1lwti6w3s7w"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(32, 32)
 texture = ExtResource("1_we6cg")
