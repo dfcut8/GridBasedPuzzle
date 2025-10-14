@@ -10,7 +10,7 @@ public partial class BuildingManager : Node
     [Export] private GridManager gridManager;
     [Export] private Ui ui;
     [Export] private Node2D ySortRoot;
-    [Export] private Sprite2D cursor;
+    [Export] private PackedScene cursorScene;
     [Export] private int startingResourceCount = 4;
 
 
@@ -19,17 +19,20 @@ public partial class BuildingManager : Node
     private int availableResourceCount => startingResourceCount + currentResourceCount - usedResourceCount;
     private BuildingResource toPlaceBuildingResource;
     private Vector2I? hoveredGridCell;
+    private Node2D cursor;
 
     public override void _Ready()
     {
-        InitCursor();
         InitSignals();
     }
 
     public override void _Process(double delta)
     {
         var gridPosition = gridManager.GetMouseGridCellPosition();
-        cursor.GlobalPosition = gridPosition * 64;
+        if (cursor is not null)
+        {
+            cursor.GlobalPosition = gridPosition * 64;
+        }
         if (toPlaceBuildingResource is not null
             && cursor.Visible
             && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
@@ -60,16 +63,12 @@ public partial class BuildingManager : Node
 
         ui.BuildingResourceSelected += (br) =>
         {
+            cursor = cursorScene.Instantiate<Node2D>();
+            ySortRoot.AddChild(cursor);
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
-    }
-
-    private void InitCursor()
-    {
-        cursor = GetNode<Sprite2D>("%Cursor");
-        cursor.Visible = false;
     }
 
     private void OnResourceTilesUpdated(int resourceCount)
