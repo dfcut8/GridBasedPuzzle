@@ -44,7 +44,7 @@ public partial class BuildingManager : Node
             {
                 gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
                 gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
-                cursor.SetValid();
+                cursor.SetSelected();
             }
             else
             {
@@ -76,7 +76,14 @@ public partial class BuildingManager : Node
             cursor = null;
             cursor = br.BuildingScene.Instantiate<Building>();
             ySortRoot.AddChild(cursor);
-            cursor.Sprite2D.Modulate = new Color(1f, 1f, 1f, 0.5137255f);
+            if (hoveredGridCell.HasValue && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
+            {
+                cursor.SetSelected();
+            }
+            else
+            {
+                cursor.SetInvalid();
+            }
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
@@ -102,6 +109,7 @@ public partial class BuildingManager : Node
 
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         GD.Print($"Used Resources: {usedResourceCount}; Available Resources: {availableResourceCount}.");
+        cursor.SetPlaced();
     }
 
     private bool IsBuildingPlaceableAtTile(Vector2I tilePosition)

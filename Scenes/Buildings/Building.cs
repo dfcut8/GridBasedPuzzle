@@ -9,6 +9,7 @@ public partial class Building : Node2D
     public override void _Ready()
     {
         Sprite2D = GetNode<Sprite2D>("%Sprite2D");
+
     }
 
     public void SetInvalid()
@@ -16,7 +17,12 @@ public partial class Building : Node2D
         Sprite2D.Modulate = Colors.Red;
     }
 
-    public void SetValid()
+    public void SetSelected()
+    {
+        Sprite2D.Modulate = new Color(1f, 1f, 1f, 0.5137255f);
+    }
+
+    public void SetPlaced()
     {
         Sprite2D.Modulate = Colors.White;
     }
