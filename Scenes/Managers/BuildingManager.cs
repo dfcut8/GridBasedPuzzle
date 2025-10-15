@@ -39,10 +39,16 @@ public partial class BuildingManager : Node
         {
             hoveredGridCell = gridPosition;
             gridManager.ClearHighlightedTiles();
+            gridManager.HighlightBuildableTiles();
             if (IsBuildingPlaceableAtTile(hoveredGridCell.Value))
             {
                 gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
                 gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
+                cursor.SetValid();
+            }
+            else
+            {
+                cursor.SetInvalid(); 
             }
         }
     }

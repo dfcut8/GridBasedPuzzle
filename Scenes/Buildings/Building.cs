@@ -10,4 +10,14 @@ public partial class Building : Node2D
     {
         Sprite2D = GetNode<Sprite2D>("%Sprite2D");
     }
+
+    public void SetInvalid()
+    {
+        Sprite2D.Modulate = Colors.Red;
+    }
+
+    public void SetValid()
+    {
+        Sprite2D.Modulate = Colors.White;
+    }
 }
