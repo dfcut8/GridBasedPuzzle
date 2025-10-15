@@ -69,7 +69,7 @@ public partial class BuildingManager : Node
     {
         gridManager.ResourceTilesUpdated += OnResourceTilesUpdated;
 
-        ui.BuildingResourceSelected += (br) =>
+        ui.BuildingResourceSelected += br =>
         {
             // Remove previous cursor if one exists
             cursor?.QueueFree();
@@ -99,7 +99,7 @@ public partial class BuildingManager : Node
     {
         if (!hoveredGridCell.HasValue) return;
 
-        var building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
+        var building = toPlaceBuildingResource.BuildingScene.Instantiate<Building>();
         ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridCell.Value * 64;

@@ -9,7 +9,6 @@ public partial class Building : Node2D
     public override void _Ready()
     {
         Sprite2D = GetNode<Sprite2D>("%Sprite2D");
-
     }
 
     public void SetInvalid()

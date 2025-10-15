@@ -39,7 +39,7 @@ tile_map_data = PackedByteArray("AAAGAAUAAQAAAAAAAAAHAAUAAQAAAAAAAAAIAAUAAQAAAAA
 tile_set = ExtResource("4_rgh2o")
 
 [node name="BaseBuilding" parent="YSortRoot" instance=ExtResource("6_v1gob")]
-position = Vector2(512, 640)
+position = Vector2(192, 448)
 
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
