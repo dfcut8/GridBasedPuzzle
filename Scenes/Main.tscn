@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://bvnu58ajf8bub"]
+[gd_scene load_steps=9 format=4 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Main.cs" id="1_r150o"]
+[ext_resource type="PackedScene" uid="uid://3in1dqsfo66r" path="res://Scenes/Managers/GlobalInputManager.tscn" id="2_50glp"]
 [ext_resource type="PackedScene" uid="uid://mrkx2m388gth" path="res://Scenes/Managers/BuildingManager.tscn" id="2_jw32o"]
 [ext_resource type="TileSet" uid="uid://di7b570y6y7tj" path="res://Resources/HighLightTileset.tres" id="3_kln2b"]
 [ext_resource type="PackedScene" uid="uid://dvf3srqqpmw6f" path="res://Scenes/Managers/GridManager.tscn" id="3_pbw6q"]
@@ -12,6 +13,8 @@
 script = ExtResource("1_r150o")
 gridManager = NodePath("GridManager")
 buildingManager = NodePath("BuildingManager")
+
+[node name="GlobalInputManager" parent="." instance=ExtResource("2_50glp")]
 
 [node name="BuildingManager" parent="." node_paths=PackedStringArray("gridManager", "ui", "ySortRoot") instance=ExtResource("2_jw32o")]
 gridManager = NodePath("../GridManager")
@@ -36,7 +39,7 @@ tile_map_data = PackedByteArray("AAAGAAUAAQAAAAAAAAAHAAUAAQAAAAAAAAAIAAUAAQAAAAA
 tile_set = ExtResource("4_rgh2o")
 
 [node name="BaseBuilding" parent="YSortRoot" instance=ExtResource("6_v1gob")]
-position = Vector2(256, 832)
+position = Vector2(512, 640)
 
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
