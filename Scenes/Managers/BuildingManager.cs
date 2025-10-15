@@ -48,7 +48,7 @@ public partial class BuildingManager : Node
             }
             else
             {
-                cursor.SetInvalid(); 
+                cursor.SetInvalid();
             }
         }
     }
@@ -71,6 +71,9 @@ public partial class BuildingManager : Node
 
         ui.BuildingResourceSelected += (br) =>
         {
+            // Remove previous cursor if one exists
+            cursor?.QueueFree();
+            cursor = null;
             cursor = br.BuildingScene.Instantiate<Building>();
             ySortRoot.AddChild(cursor);
             cursor.Sprite2D.Modulate = new Color(1f, 1f, 1f, 0.5137255f);
