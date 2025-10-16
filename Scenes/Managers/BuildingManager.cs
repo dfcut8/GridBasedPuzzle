@@ -1,6 +1,5 @@
 using Godot;
 
-using GridBasedPuzzle.Buildings;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.UserInterface;
 
@@ -87,7 +86,7 @@ public partial class BuildingManager : Node
     {
         if (!hoveredGridCell.HasValue) return;
 
-        var building = toPlaceBuildingResource.BuildingScene.Instantiate<Building>();
+        var building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
         ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridCell.Value * 64;
