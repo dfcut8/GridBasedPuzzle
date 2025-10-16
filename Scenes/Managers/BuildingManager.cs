@@ -1,6 +1,7 @@
 using Godot;
 
 using GridBasedPuzzle.Buildings;
+using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.UserInterface;
 
@@ -44,10 +45,10 @@ public partial class BuildingManager : Node
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (e.IsActionPressed("building_cancel")) ClearCursor();
+        if (e.IsActionPressed(InputConstants.BUILDING_CANCEL)) ClearCursor();
         else if (hoveredGridCell.HasValue
             && toPlaceBuildingResource is not null
-            && e.IsActionPressed("mouse_click_left")
+            && e.IsActionPressed(InputConstants.BUILDING_MOUSE_LEFT_CLICK)
             && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
         {
             PlaceBuildingAtHoveredCellPosition();
