@@ -2,7 +2,7 @@ using System;
 
 using GridBasedPuzzle.Components;
 
-namespace GridBasedPuzzle.Globals;
+namespace GridBasedPuzzle.Core;
 
 public static class GlobalEvents
 {

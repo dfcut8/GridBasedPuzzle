@@ -1,6 +1,6 @@
 using Godot;
 
-using GridBasedPuzzle.Globals;
+using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
 
 namespace GridBasedPuzzle.Components;

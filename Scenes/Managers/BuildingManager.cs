@@ -38,18 +38,7 @@ public partial class BuildingManager : Node
             && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
         {
             hoveredGridCell = gridPosition;
-            gridManager.ClearHighlightedTiles();
-            gridManager.HighlightBuildableTiles();
-            if (IsBuildingPlaceableAtTile(hoveredGridCell.Value))
-            {
-                gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
-                gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
-                cursor.SetValid();
-            }
-            else
-            {
-                cursor.SetInvalid();
-            }
+            UpdateGridDisplay();
         }
     }
 
@@ -76,18 +65,28 @@ public partial class BuildingManager : Node
 
             var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.AddChild(cursorSprite);
-            if (hoveredGridCell.HasValue && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
-            {
-                cursor.SetValid();
-            }
-            else
-            {
-                cursor.SetInvalid();
-            }
+            UpdateGridDisplay();
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
         };
+    }
+
+    private void UpdateGridDisplay()
+    {
+        if (!hoveredGridCell.HasValue) return;
+        gridManager.ClearHighlightedTiles();
+        gridManager.HighlightBuildableTiles();
+        if (IsBuildingPlaceableAtTile(hoveredGridCell.Value))
+        {
+            gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
+            gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
+            cursor.SetValid();
+        }
+        else
+        {
+            cursor.SetInvalid();
+        }
     }
 
     private void OnResourceTilesUpdated(int resourceCount)

@@ -5,7 +5,7 @@ using System.Linq;
 using Godot;
 
 using GridBasedPuzzle.Components;
-using GridBasedPuzzle.Globals;
+using GridBasedPuzzle.Core;
 
 namespace GridBasedPuzzle.Managers;
 
