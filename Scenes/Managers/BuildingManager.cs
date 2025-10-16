@@ -15,13 +15,21 @@ public partial class BuildingManager : Node
     [Export] private Node2D ySortRoot;
     [Export] private int startingResourceCount = 4;
 
+    private enum State
+    {
+        Normal,
+        PlacingBuilding
+    }
+
 
     private int currentResourceCount;
     private int usedResourceCount;
     private int availableResourceCount => startingResourceCount + currentResourceCount - usedResourceCount;
     private BuildingResource toPlaceBuildingResource;
-    private Vector2I? hoveredGridCell;
+    private Vector2I hoveredGridCell;
     private Cursor cursor;
+    private State currentState;
+
 
     public override void _Ready()
     {
@@ -30,29 +38,66 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
-        if (!IsInstanceValid(cursor)) return;
-
         var gridPosition = gridManager.GetMouseGridCellPosition();
         cursor.GlobalPosition = gridPosition * 64;
-        if (toPlaceBuildingResource is not null
-            && cursor.Visible
-            && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
+        if (hoveredGridCell != gridPosition)
         {
             hoveredGridCell = gridPosition;
-            UpdateGridDisplay();
+            UpdateHoveredGridCell();
         }
     }
 
     public override void _UnhandledInput(InputEvent e)
     {
+        switch (currentState)
+        {
+            case State.Normal:
+                HandleNormalInput(e);
+                break;
+            case State.PlacingBuilding:
+                HandlePlacingBuildingInput(e);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void HandleNormalInput(InputEvent e)
+    {
+        if (e.IsActionPressed(InputConstants.MOUSE_RIGHT_CLICK))
+        {
+            DestroyBuildingAtHoveredCellPosition();
+        }
+    }
+
+    private void HandlePlacingBuildingInput(InputEvent e)
+    {
         if (e.IsActionPressed(InputConstants.BUILDING_CANCEL)) ClearCursor();
-        else if (hoveredGridCell.HasValue
-            && toPlaceBuildingResource is not null
+        else if (toPlaceBuildingResource is not null
             && e.IsActionPressed(InputConstants.BUILDING_MOUSE_LEFT_CLICK)
-            && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
+            && IsBuildingPlaceableAtTile(hoveredGridCell))
         {
             PlaceBuildingAtHoveredCellPosition();
         }
+    }
+
+    private void UpdateHoveredGridCell()
+    {
+        switch (currentState)
+        {
+            case State.Normal:
+                break;
+            case State.PlacingBuilding:
+                UpdateGridDisplay();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void DestroyBuildingAtHoveredCellPosition()
+    {
+
     }
 
     private void InitSignals()
@@ -76,13 +121,12 @@ public partial class BuildingManager : Node
 
     private void UpdateGridDisplay()
     {
-        if (!hoveredGridCell.HasValue) return;
         gridManager.ClearHighlightedTiles();
         gridManager.HighlightBuildableTiles();
-        if (IsBuildingPlaceableAtTile(hoveredGridCell.Value))
+        if (IsBuildingPlaceableAtTile(hoveredGridCell))
         {
-            gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
-            gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
+            gridManager.HighlightExpandedBuildableTiles(hoveredGridCell, toPlaceBuildingResource.BuildableRadius);
+            gridManager.HighlightResourceTiles(hoveredGridCell, toPlaceBuildingResource.ResourceRadius);
             cursor.SetValid();
         }
         else
@@ -98,12 +142,10 @@ public partial class BuildingManager : Node
 
     private void PlaceBuildingAtHoveredCellPosition()
     {
-        if (!hoveredGridCell.HasValue) return;
-
         var building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
         ySortRoot.AddChild(building);
 
-        building.GlobalPosition = hoveredGridCell.Value * 64;
+        building.GlobalPosition = hoveredGridCell * 64;
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         GD.Print($"Used Resources: {usedResourceCount}; Available Resources: {availableResourceCount}.");
         ClearCursor();
@@ -111,7 +153,6 @@ public partial class BuildingManager : Node
 
     private void ClearCursor()
     {
-        hoveredGridCell = null;
         gridManager.ClearHighlightedTiles();
         if (IsInstanceValid(cursor)) cursor.QueueFree();
         cursor = null;
