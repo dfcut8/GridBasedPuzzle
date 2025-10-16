@@ -55,7 +55,6 @@ public partial class BuildingManager : Node
             && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
         {
             PlaceBuildingAtHoveredCellPosition();
-            cursor.Visible = false;
         }
     }
 
@@ -71,6 +70,7 @@ public partial class BuildingManager : Node
 
             var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.AddChild(cursorSprite);
+
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();

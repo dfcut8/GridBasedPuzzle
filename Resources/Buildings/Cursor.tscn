@@ -1,12 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://1rt1fsvp1e5w"]
-
-[sub_resource type="CSharpScript" id="CSharpScript_m4pom"]
-script/source = "namespace GridBasedPuzzle.Buildings;
-
-public partial class Cursor : Building
-{
-}
-"
+[gd_scene format=3 uid="uid://1rt1fsvp1e5w"]
 
 [node name="Cursor" type="Node2D"]
-script = SubResource("CSharpScript_m4pom")
+y_sort_enabled = true
