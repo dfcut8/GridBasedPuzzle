@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://1rt1fsvp1e5w"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_m4pom"]
+script/source = "namespace GridBasedPuzzle.Buildings;
+
+public partial class Cursor : Building
+{
+}
+"
+
+[node name="Cursor" type="Node2D"]
+script = SubResource("CSharpScript_m4pom")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true

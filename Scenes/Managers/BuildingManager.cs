@@ -10,6 +10,7 @@ public partial class BuildingManager : Node
 {
     [Export] private GridManager gridManager;
     [Export] private Ui ui;
+    [Export] private PackedScene cursorScene;
     [Export] private Node2D ySortRoot;
     [Export] private int startingResourceCount = 4;
 
@@ -19,7 +20,7 @@ public partial class BuildingManager : Node
     private int availableResourceCount => startingResourceCount + currentResourceCount - usedResourceCount;
     private BuildingResource toPlaceBuildingResource;
     private Vector2I? hoveredGridCell;
-    private Building cursor;
+    private Node2D cursor;
 
     public override void _Ready()
     {
@@ -28,11 +29,10 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
+        if (!IsInstanceValid(cursor)) return;
+
         var gridPosition = gridManager.GetMouseGridCellPosition();
-        if (cursor is not null)
-        {
-            cursor.GlobalPosition = gridPosition * 64;
-        }
+        cursor.GlobalPosition = gridPosition * 64;
         if (toPlaceBuildingResource is not null
             && cursor.Visible
             && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
@@ -44,11 +44,6 @@ public partial class BuildingManager : Node
             {
                 gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
                 gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
-                cursor.SetSelected();
-            }
-            else
-            {
-                cursor.SetInvalid();
             }
         }
     }
@@ -71,19 +66,10 @@ public partial class BuildingManager : Node
 
         ui.BuildingResourceSelected += br =>
         {
-            // Remove previous cursor if one exists
-            cursor?.QueueFree();
-            cursor = null;
-            cursor = br.BuildingScene.Instantiate<Building>();
+            cursor = cursorScene.Instantiate<Node2D>();
             ySortRoot.AddChild(cursor);
-            if (hoveredGridCell.HasValue && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
-            {
-                cursor.SetSelected();
-            }
-            else
-            {
-                cursor.SetInvalid();
-            }
+
+            cursor = br.BuildingScene.Instantiate<Building>();
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
@@ -109,7 +95,8 @@ public partial class BuildingManager : Node
 
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         GD.Print($"Used Resources: {usedResourceCount}; Available Resources: {availableResourceCount}.");
-        cursor.SetPlaced();
+        cursor.QueueFree();
+        cursor = null;
     }
 
     private bool IsBuildingPlaceableAtTile(Vector2I tilePosition)
