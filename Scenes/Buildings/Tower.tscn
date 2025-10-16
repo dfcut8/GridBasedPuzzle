@@ -10,5 +10,3 @@ y_sort_enabled = true
 buildingResourcePath = "uid://bcupk3s047qr4"
 
 [node name="TowerSprite2D" parent="." instance=ExtResource("3_8qjvt")]
-unique_name_in_owner = true
-position = Vector2(32, 32)

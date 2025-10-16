@@ -6,7 +6,7 @@
 [node name="Village" type="Node2D"]
 y_sort_enabled = true
 
+[node name="VillageSprite2D" parent="." instance=ExtResource("3_qygkm")]
+
 [node name="BuildingComponent" parent="." instance=ExtResource("2_qygkm")]
 buildingResourcePath = "uid://y1lwti6w3s7w"
-
-[node name="VillageSprite2D" parent="." instance=ExtResource("3_qygkm")]
