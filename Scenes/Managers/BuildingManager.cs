@@ -66,10 +66,12 @@ public partial class BuildingManager : Node
 
         ui.BuildingResourceSelected += br =>
         {
+            if (IsInstanceValid(cursor)) cursor.QueueFree();
             cursor = cursorScene.Instantiate<Node2D>();
             ySortRoot.AddChild(cursor);
 
-            cursor = br.BuildingScene.Instantiate<Building>();
+            var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
+            cursor.AddChild(cursorSprite);
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();

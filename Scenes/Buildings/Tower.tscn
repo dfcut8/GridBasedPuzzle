@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://duhm5vw4ilj6i"]
 
 [ext_resource type="Script" uid="uid://npbcuj2vul52" path="res://Scenes/Buildings/Tower.cs" id="1_8qjvt"]
-[ext_resource type="Texture2D" uid="uid://b87v8h5f40cet" path="res://Assets/Textures/Buildings/TowerBlue.png" id="1_vmb8x"]
 [ext_resource type="PackedScene" uid="uid://bqixj3oynfsl6" path="res://Scenes/Components/BuildingComponent.tscn" id="2_ywl2g"]
+[ext_resource type="PackedScene" uid="uid://db3n70n14h465" path="res://Scenes/Buildings/Sprites/TowerSprite2d.tscn" id="3_8qjvt"]
 
 [node name="Tower" type="Node2D"]
 y_sort_enabled = true
@@ -11,9 +11,6 @@ script = ExtResource("1_8qjvt")
 [node name="BuildingComponent" parent="." instance=ExtResource("2_ywl2g")]
 buildingResourcePath = "uid://bcupk3s047qr4"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="TowerSprite2D" parent="." instance=ExtResource("3_8qjvt")]
 unique_name_in_owner = true
 position = Vector2(32, 32)
-texture = ExtResource("1_vmb8x")
-centered = false
-offset = Vector2(-64, -204)

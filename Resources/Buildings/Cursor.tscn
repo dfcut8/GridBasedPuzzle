@@ -10,6 +10,3 @@ public partial class Cursor : Building
 
 [node name="Cursor" type="Node2D"]
 script = SubResource("CSharpScript_m4pom")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-unique_name_in_owner = true
