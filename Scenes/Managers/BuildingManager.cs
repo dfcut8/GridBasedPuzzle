@@ -44,7 +44,8 @@ public partial class BuildingManager : Node
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (hoveredGridCell.HasValue
+        if (e.IsActionPressed("building_cancel")) ClearCursor();
+        else if (hoveredGridCell.HasValue
             && toPlaceBuildingResource is not null
             && e.IsActionPressed("mouse_click_left")
             && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
@@ -102,13 +103,16 @@ public partial class BuildingManager : Node
         ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridCell.Value * 64;
-
-        hoveredGridCell = null;
-        gridManager.ClearHighlightedTiles();
-
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         GD.Print($"Used Resources: {usedResourceCount}; Available Resources: {availableResourceCount}.");
-        cursor.QueueFree();
+        ClearCursor();
+    }
+
+    private void ClearCursor()
+    {
+        hoveredGridCell = null;
+        gridManager.ClearHighlightedTiles();
+        if (IsInstanceValid(cursor)) cursor.QueueFree();
         cursor = null;
     }
 
