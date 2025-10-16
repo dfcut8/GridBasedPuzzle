@@ -1,5 +1,6 @@
 using Godot;
 
+using GridBasedPuzzle.Buildings;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.UserInterface;
 
@@ -19,7 +20,7 @@ public partial class BuildingManager : Node
     private int availableResourceCount => startingResourceCount + currentResourceCount - usedResourceCount;
     private BuildingResource toPlaceBuildingResource;
     private Vector2I? hoveredGridCell;
-    private Node2D cursor;
+    private Cursor cursor;
 
     public override void _Ready()
     {
@@ -43,6 +44,11 @@ public partial class BuildingManager : Node
             {
                 gridManager.HighlightExpandedBuildableTiles(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
                 gridManager.HighlightResourceTiles(hoveredGridCell.Value, toPlaceBuildingResource.ResourceRadius);
+                cursor.SetValid();
+            }
+            else
+            {
+                cursor.SetInvalid();
             }
         }
     }
@@ -65,12 +71,19 @@ public partial class BuildingManager : Node
         ui.BuildingResourceSelected += br =>
         {
             if (IsInstanceValid(cursor)) cursor.QueueFree();
-            cursor = cursorScene.Instantiate<Node2D>();
+            cursor = cursorScene.Instantiate<Cursor>();
             ySortRoot.AddChild(cursor);
 
             var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.AddChild(cursorSprite);
-
+            if (hoveredGridCell.HasValue && IsBuildingPlaceableAtTile(hoveredGridCell.Value))
+            {
+                cursor.SetValid();
+            }
+            else
+            {
+                cursor.SetInvalid();
+            }
             toPlaceBuildingResource = br;
             cursor.Visible = true;
             gridManager.HighlightBuildableTiles();
