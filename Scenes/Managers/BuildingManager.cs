@@ -38,6 +38,7 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
+        if (!IsInstanceValid(cursor)) return;
         var gridPosition = gridManager.GetMouseGridCellPosition();
         cursor.GlobalPosition = gridPosition * 64;
         if (hoveredGridCell != gridPosition)
@@ -112,10 +113,8 @@ public partial class BuildingManager : Node
 
             var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.AddChild(cursorSprite);
-            UpdateGridDisplay();
             toPlaceBuildingResource = br;
-            cursor.Visible = true;
-            gridManager.HighlightBuildableTiles();
+            UpdateGridDisplay();
         };
     }
 
