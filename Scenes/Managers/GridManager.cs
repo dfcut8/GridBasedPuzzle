@@ -30,6 +30,7 @@ public partial class GridManager : Node
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
     private HashSet<Vector2I> validBuildableTiles = [];
+    private HashSet<Vector2I> occupiedTiles = [];
     private HashSet<Vector2I> collectedResourceTiles = [];
     private List<TileMapLayer> tileMapLayers = [];
 
@@ -52,13 +53,24 @@ public partial class GridManager : Node
 
     private void OnBuildingDestroyed(BuildingComponent bc)
     {
-        RecalculateGrid();
+        RecalculateGrid(bc);
     }
 
-    private void RecalculateGrid()
+    private void RecalculateGrid(BuildingComponent excludedComponent)
     {
+        occupiedTiles.Clear();
         validBuildableTiles.Clear();
-        var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>();
+        collectedResourceTiles.Clear();
+
+        var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
+            .Except([excludedComponent]);
+
+        foreach (var bc in buildingComponents)
+        {
+            UpdateValidBuildableTiles(bc);
+            UpdateCollectedResourceTiles(bc);
+        }
+        ResourceTilesUpdated?.Invoke(collectedResourceTiles.Count);
     }
 
     private void OnBuildingPlaced(BuildingComponent b)
@@ -69,13 +81,14 @@ public partial class GridManager : Node
 
     private void UpdateValidBuildableTiles(BuildingComponent buildingComponent)
     {
+        occupiedTiles.Add(buildingComponent.GetRootGridCellPosition());
         var rootCell = buildingComponent.GetRootGridCellPosition();
         var validTiles = GetTilesRadius(rootCell,
             buildingComponent.BuildingResource.BuildableRadius,
             (tilePosition) => TileHasCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME));
         validBuildableTiles.UnionWith(validTiles);
 
-        foreach (var tilePosition in GetOccupiedTiles())
+        foreach (var tilePosition in occupiedTiles)
         {
             validBuildableTiles.Remove(tilePosition);
         }
@@ -109,12 +122,6 @@ public partial class GridManager : Node
             }
         }
         return result;
-    }
-
-    private IEnumerable<Vector2I> GetOccupiedTiles()
-    {
-        var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>();
-        return buildingComponents.Select(x => x.GetRootGridCellPosition());
     }
 
     private List<TileMapLayer> GetTileMapLayers(TileMapLayer baseTileMapLayer)
@@ -176,7 +183,7 @@ public partial class GridManager : Node
         var validTiles = GetTilesRadius(rootCell, radius,
             (tilePosition) => TileHasCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME))
             .ToHashSet();
-        var expandedTiles = validTiles.Except(validBuildableTiles).Except(GetOccupiedTiles());
+        var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles);
         var atlasCoords = new Vector2I(1, 0);
         foreach (var tilePosition in expandedTiles)
         {
