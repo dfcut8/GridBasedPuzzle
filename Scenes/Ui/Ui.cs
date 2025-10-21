@@ -13,11 +13,24 @@ public partial class Ui : MarginContainer
     public Action<BuildingResource> BuildingResourceSelected;
 
     private HBoxContainer hBoxContainer;
+    private Label usedLabel;
+    private Label availableLabel;
+    private Label currentLabel;
 
     public override void _Ready()
     {
         hBoxContainer = GetNode<HBoxContainer>("%HBoxContainer");
+        usedLabel = GetNode<PanelContainer>("%Used").GetNode<Label>("Text");
+        availableLabel = GetNode<PanelContainer>("%Available").GetNode<Label>("Text");
+        availableLabel = GetNode<PanelContainer>("%Current").GetNode<Label>("Text");
         CreateBuildingButtons();
+    }
+
+    public void UpdateResources(int used, int available, int current)
+    {
+        usedLabel.Text = used.ToString();
+        availableLabel.Text = available.ToString();
+        currentLabel.Text = current.ToString();
     }
 
     private void CreateBuildingButtons()

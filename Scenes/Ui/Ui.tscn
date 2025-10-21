@@ -22,3 +22,52 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 16
+
+[node name="ResourceContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Used" type="PanelContainer" parent="ResourceContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ResourceContainer/Used"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Used:"
+
+[node name="Text" type="Label" parent="ResourceContainer/Used"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "00"
+
+[node name="Available" type="PanelContainer" parent="ResourceContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ResourceContainer/Available"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Available:"
+
+[node name="Text" type="Label" parent="ResourceContainer/Available"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "00"
+
+[node name="Current" type="PanelContainer" parent="ResourceContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ResourceContainer/Current"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Current:"
+
+[node name="Text" type="Label" parent="ResourceContainer/Current"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "00"

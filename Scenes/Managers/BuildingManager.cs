@@ -37,6 +37,10 @@ public partial class BuildingManager : Node
     public override void _Ready()
     {
         InitSignals();
+        if (IsInstanceValid(ui))
+        {
+            ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
+        }
     }
 
     public override void _Process(double delta)
@@ -142,6 +146,7 @@ public partial class BuildingManager : Node
         if (buildingComponent == null) return;
         currentResourceCount -= buildingComponent.BuildingResource.ResourceCost;
         buildingComponent.DestroyBuilding();
+        ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
     }
 
     private void InitSignals()
@@ -187,7 +192,7 @@ public partial class BuildingManager : Node
 
         building.GlobalPosition = hoveredGridCell * 64;
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
-        GD.Print($"Used Resources: {usedResourceCount}; Available Resources: {availableResourceCount}.");
+        ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
         ChangeState(State.Normal);
     }
 
