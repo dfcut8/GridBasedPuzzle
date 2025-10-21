@@ -104,7 +104,7 @@ public partial class BuildingManager : Node
 
     private void ChangeState(State toState)
     {
-        switch (toState)
+        switch (currentState)
         {
             case State.Normal:
                 break;
