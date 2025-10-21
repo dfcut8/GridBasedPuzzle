@@ -1,6 +1,9 @@
+using System.Linq;
+
 using Godot;
 
 using GridBasedPuzzle.Buildings;
+using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.UserInterface;
@@ -133,7 +136,10 @@ public partial class BuildingManager : Node
 
     private void DestroyBuildingAtHoveredCellPosition()
     {
-
+        var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
+            .Where(bc => bc.GetRootGridCellPosition() == hoveredGridCell)
+            .FirstOrDefault();
+        buildingComponent?.DestroyBuilding();
     }
 
     private void InitSignals()

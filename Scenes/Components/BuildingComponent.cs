@@ -27,4 +27,9 @@ public partial class BuildingComponent : Node2D
         var gridPosition = (GlobalPosition / 64).Floor();
         return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
     }
+
+    public void DestroyBuilding()
+    {
+        Owner.QueueFree();
+    }
 }
