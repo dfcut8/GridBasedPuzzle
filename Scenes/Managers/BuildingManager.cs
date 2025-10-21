@@ -38,13 +38,19 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
-        if (!IsInstanceValid(cursor)) return;
         var gridPosition = gridManager.GetMouseGridCellPosition();
-        cursor.GlobalPosition = gridPosition * 64;
         if (hoveredGridCell != gridPosition)
         {
             hoveredGridCell = gridPosition;
             UpdateHoveredGridCell();
+        }
+        switch (currentState)
+        {
+            case State.Normal:
+                break;
+            case State.PlacingBuilding:
+                cursor.GlobalPosition = gridPosition * 64;
+                break;
         }
     }
 
@@ -73,7 +79,7 @@ public partial class BuildingManager : Node
 
     private void HandlePlacingBuildingInput(InputEvent e)
     {
-        if (e.IsActionPressed(InputConstants.BUILDING_CANCEL)) ClearCursor();
+        if (e.IsActionPressed(InputConstants.BUILDING_CANCEL)) ChangeState(State.Normal);
         else if (toPlaceBuildingResource is not null
             && e.IsActionPressed(InputConstants.BUILDING_MOUSE_LEFT_CLICK)
             && IsBuildingPlaceableAtTile(hoveredGridCell))
@@ -96,6 +102,35 @@ public partial class BuildingManager : Node
         }
     }
 
+    private void ChangeState(State toState)
+    {
+        switch (toState)
+        {
+            case State.Normal:
+                break;
+            case State.PlacingBuilding:
+                ClearCursor();
+                toPlaceBuildingResource = null;
+                break;
+        }
+        currentState = toState;
+
+        switch (currentState)
+        {
+            case State.Normal:
+                break;
+            case State.PlacingBuilding:
+                CreateCursor();
+                break;
+        }
+    }
+
+    private void CreateCursor()
+    {
+        cursor = cursorScene.Instantiate<Cursor>();
+        ySortRoot.AddChild(cursor);
+    }
+
     private void DestroyBuildingAtHoveredCellPosition()
     {
 
@@ -107,12 +142,10 @@ public partial class BuildingManager : Node
 
         ui.BuildingResourceSelected += br =>
         {
-            if (IsInstanceValid(cursor)) cursor.QueueFree();
-            cursor = cursorScene.Instantiate<Cursor>();
-            ySortRoot.AddChild(cursor);
-
+            ChangeState(State.PlacingBuilding);
             var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.AddChild(cursorSprite);
+
             toPlaceBuildingResource = br;
             UpdateGridDisplay();
         };
@@ -147,7 +180,7 @@ public partial class BuildingManager : Node
         building.GlobalPosition = hoveredGridCell * 64;
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         GD.Print($"Used Resources: {usedResourceCount}; Available Resources: {availableResourceCount}.");
-        ClearCursor();
+        ChangeState(State.Normal);
     }
 
     private void ClearCursor()
