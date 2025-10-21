@@ -36,6 +36,7 @@ public partial class GridManager : Node
     public override void _Ready()
     {
         GlobalEvents.BuildingPlaced += OnBuildingPlaced;
+        GlobalEvents.BuildingDestroyed += OnBuildingDestroyed;
         tileMapLayers = GetTileMapLayers(baseTerrainTilemapLayer);
 
         foreach (var layer in tileMapLayers)
@@ -47,6 +48,17 @@ public partial class GridManager : Node
     protected override void Dispose(bool disposing)
     {
         GlobalEvents.BuildingPlaced -= OnBuildingPlaced;
+    }
+
+    private void OnBuildingDestroyed(BuildingComponent bc)
+    {
+        RecalculateGrid();
+    }
+
+    private void RecalculateGrid()
+    {
+        validBuildableTiles.Clear();
+        var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>();
     }
 
     private void OnBuildingPlaced(BuildingComponent b)

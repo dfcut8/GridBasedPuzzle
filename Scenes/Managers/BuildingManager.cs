@@ -139,7 +139,9 @@ public partial class BuildingManager : Node
         var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
             .Where(bc => bc.GetRootGridCellPosition() == hoveredGridCell)
             .FirstOrDefault();
-        buildingComponent?.DestroyBuilding();
+        if (buildingComponent == null) return;
+        currentResourceCount -= buildingComponent.BuildingResource.ResourceCost;
+        buildingComponent.DestroyBuilding();
     }
 
     private void InitSignals()
