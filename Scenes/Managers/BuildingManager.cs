@@ -37,10 +37,7 @@ public partial class BuildingManager : Node
     public override void _Ready()
     {
         InitSignals();
-        if (IsInstanceValid(ui))
-        {
-            ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
-        }
+        ui.Ready += () => ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
     }
 
     public override void _Process(double delta)
@@ -144,8 +141,8 @@ public partial class BuildingManager : Node
             .Where(bc => bc.GetRootGridCellPosition() == hoveredGridCell)
             .FirstOrDefault();
         if (buildingComponent == null) return;
-        currentResourceCount -= buildingComponent.BuildingResource.ResourceCost;
         buildingComponent.DestroyBuilding();
+        currentResourceCount -= buildingComponent.BuildingResource.ResourceCost;
         ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
     }
 
@@ -182,7 +179,7 @@ public partial class BuildingManager : Node
 
     private void OnResourceTilesUpdated(int resourceCount)
     {
-        currentResourceCount += resourceCount;
+        currentResourceCount = resourceCount;
     }
 
     private void PlaceBuildingAtHoveredCellPosition()

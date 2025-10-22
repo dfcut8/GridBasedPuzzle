@@ -22,7 +22,7 @@ public partial class Ui : MarginContainer
         hBoxContainer = GetNode<HBoxContainer>("%HBoxContainer");
         usedLabel = GetNode<PanelContainer>("%Used").GetNode<Label>("Text");
         availableLabel = GetNode<PanelContainer>("%Available").GetNode<Label>("Text");
-        availableLabel = GetNode<PanelContainer>("%Current").GetNode<Label>("Text");
+        currentLabel = GetNode<PanelContainer>("%Current").GetNode<Label>("Text");
         CreateBuildingButtons();
     }
 
@@ -38,7 +38,7 @@ public partial class Ui : MarginContainer
         foreach (var br in buildingResources)
         {
             var buildingButton = new Button();
-            buildingButton.Text = $"PLACE {br.DisplayName.ToUpper()}";
+            buildingButton.Text = $"PLACE {br.DisplayName.ToUpper()} ({br.ResourceCost})";
             hBoxContainer.AddChild(buildingButton);
 
             buildingButton.Pressed += () =>
