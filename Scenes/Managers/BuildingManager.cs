@@ -141,8 +141,8 @@ public partial class BuildingManager : Node
             .Where(bc => bc.GetRootGridCellPosition() == hoveredGridCell)
             .FirstOrDefault();
         if (buildingComponent == null) return;
-        buildingComponent.DestroyBuilding();
         currentResourceCount -= buildingComponent.BuildingResource.ResourceCost;
+        buildingComponent.DestroyBuilding();
         ui.UpdateResources(usedResourceCount, availableResourceCount, currentResourceCount);
     }
 
