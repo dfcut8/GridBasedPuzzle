@@ -8,7 +8,7 @@ public partial class Main : Node
 {
     [Export] private GridManager gridManager;
     [Export] private BuildingManager buildingManager;
-    [Export] private Node2D goldMine;
+    [Export] private GoldMine goldMine;
 
     public override void _Ready()
     {
@@ -18,6 +18,7 @@ public partial class Main : Node
             if (gridManager.IsTilePositionBuildable(goldMineTilePosition))
             {
                 GD.Print("win");
+                goldMine.SetActive();
             }
         };
     }
