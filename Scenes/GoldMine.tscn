@@ -6,4 +6,7 @@
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
 texture = ExtResource("1_8p0xm")
+centered = false
+offset = Vector2(-96, -87)

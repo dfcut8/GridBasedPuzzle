@@ -26,6 +26,7 @@ public partial class GridManager : Node
     /// that count and use the value for UI updates or gameplay logic.
     /// </remarks>
     public Action<int> ResourceTilesUpdated;
+    public Action GridStateUpdated;
     [Export] private TileMapLayer highlightTilemapLayer;
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
@@ -71,6 +72,7 @@ public partial class GridManager : Node
             UpdateCollectedResourceTiles(bc);
         }
         ResourceTilesUpdated?.Invoke(collectedResourceTiles.Count);
+        GridStateUpdated?.Invoke();
     }
 
     private void OnBuildingPlaced(BuildingComponent b)
@@ -92,6 +94,7 @@ public partial class GridManager : Node
         {
             validBuildableTiles.Remove(tilePosition);
         }
+        GridStateUpdated?.Invoke();
     }
 
     private void UpdateCollectedResourceTiles(BuildingComponent buildingComponent)
@@ -107,6 +110,7 @@ public partial class GridManager : Node
         {
             ResourceTilesUpdated?.Invoke(collectedResourceTiles.Count);
         }
+        GridStateUpdated?.Invoke();
     }
 
     private List<Vector2I> GetTilesRadius(Vector2I rootCell, int radius, Func<Vector2I, bool> filter)
@@ -164,10 +168,7 @@ public partial class GridManager : Node
 
     public Vector2I GetMouseGridCellPosition()
     {
-        var mousePosition = highlightTilemapLayer.GetGlobalMousePosition();
-        var gridPosition = (mousePosition / 64).Floor();
-
-        return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
+        return ConvertWorldPositionToTilePosition(highlightTilemapLayer.GetGlobalMousePosition());
     }
 
     public void HighlightBuildableTiles()
@@ -201,5 +202,11 @@ public partial class GridManager : Node
         {
             highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
         }
+    }
+
+    public Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition)
+    {
+        var gridPosition = (worldPosition / 64).Floor();
+        return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
     }
 }
