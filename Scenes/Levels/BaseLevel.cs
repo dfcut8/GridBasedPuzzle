@@ -4,7 +4,7 @@ using GridBasedPuzzle.Managers;
 
 namespace GridBasedPuzzle.Core;
 
-public partial class Main : Node
+public partial class BaseLevel : Node
 {
     [Export] private GridManager gridManager;
     [Export] private BuildingManager buildingManager;
