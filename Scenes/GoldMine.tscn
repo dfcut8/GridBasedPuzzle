@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://0lypfhhry1bt"]
+
+[ext_resource type="Texture2D" uid="uid://d4c40t6l2vhfd" path="res://Assets/Textures/GoldMineInactive.png" id="1_8p0xm"]
+
+[node name="GoldMine" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8p0xm")
