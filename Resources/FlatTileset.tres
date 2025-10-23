@@ -1,10 +1,11 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://ca70iacsqhub7"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://ca70iacsqhub7"]
 
 [ext_resource type="Texture2D" uid="uid://bqa0x11nwvrg5" path="res://Assets/Textures/Tiles/FlatTilemap.png" id="1_ki748"]
 [ext_resource type="Texture2D" uid="uid://bgjggg1cnwnb4" path="res://Assets/Textures/Tiles/Tree.png" id="2_3g0vu"]
 [ext_resource type="Texture2D" uid="uid://u54ueeqni2yr" path="res://Assets/Textures/Tiles/TilemapElevation.png" id="3_mwfvm"]
 [ext_resource type="Texture2D" uid="uid://echu5fwwgfi4" path="res://Assets/Textures/Tiles/Water.png" id="4_qmu5h"]
 [ext_resource type="Texture2D" uid="uid://b4umpt1so4lpi" path="res://Assets/Textures/Tiles/Foam.png" id="5_xpoai"]
+[ext_resource type="Texture2D" uid="uid://cvh312t050mu2" path="res://Assets/Textures/Tiles/Shadows.png" id="6_xpoai"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3g0vu"]
 texture = ExtResource("1_ki748")
@@ -296,6 +297,7 @@ texture_region_size = Vector2i(64, 64)
 texture = ExtResource("4_qmu5h")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
+0:0/0/z_index = -2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1gfds"]
 texture = ExtResource("5_xpoai")
@@ -312,6 +314,30 @@ texture_region_size = Vector2i(192, 192)
 0:0/animation_frame_6/duration = 0.15
 0:0/animation_frame_7/duration = 0.15
 0:0/0 = 0
+0:0/0/z_index = -1
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cdlip"]
+texture = ExtResource("6_xpoai")
+texture_region_size = Vector2i(64, 64)
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/right_side = 3
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrain = 3
+1:1/0/terrains_peering_bit/right_side = 3
+1:1/0/terrains_peering_bit/bottom_side = 3
+1:1/0/terrains_peering_bit/left_side = 3
+1:1/0/terrains_peering_bit/top_side = 3
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrains_peering_bit/left_side = 3
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_side = 3
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/top_side = 3
 
 [resource]
 tile_size = Vector2i(64, 64)
@@ -322,6 +348,8 @@ terrain_set_0/terrain_1/name = "Grass"
 terrain_set_0/terrain_1/color = Color(0, 0.44112164, 0.82012904, 1)
 terrain_set_0/terrain_2/name = "Elevation"
 terrain_set_0/terrain_2/color = Color(0.8270431, 3.590554e-05, 0.6088264, 1)
+terrain_set_0/terrain_3/name = "Shadow"
+terrain_set_0/terrain_3/color = Color(0.375, 0.5, 0.25, 1)
 custom_data_layer_0/name = "IsBuildable"
 custom_data_layer_0/type = 1
 custom_data_layer_1/name = "IsWood"
@@ -331,3 +359,4 @@ sources/1 = SubResource("TileSetAtlasSource_mwfvm")
 sources/2 = SubResource("TileSetAtlasSource_owpii")
 sources/3 = SubResource("TileSetAtlasSource_sxlxs")
 sources/4 = SubResource("TileSetAtlasSource_1gfds")
+sources/5 = SubResource("TileSetAtlasSource_cdlip")
