@@ -46,7 +46,10 @@ public partial class BuildingComponent : Node2D
 
     public void DestroyBuilding()
     {
-        GlobalEvents.BuildingDestroyed?.Invoke(this);
-        Owner.QueueFree();
+        if (BuildingResource.IsDeletable)
+        {
+            GlobalEvents.BuildingDestroyed?.Invoke(this);
+            Owner.QueueFree();
+        }
     }
 }
