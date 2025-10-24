@@ -4,7 +4,11 @@
 [ext_resource type="Resource" uid="uid://bcupk3s047qr4" path="res://Resources/Buildings/Tower.tres" id="2_0nsdw"]
 [ext_resource type="Resource" uid="uid://y1lwti6w3s7w" path="res://Resources/Buildings/Village.tres" id="3_impxa"]
 
-[node name="Ui" type="MarginContainer"]
+[node name="Ui" type="CanvasLayer"]
+script = ExtResource("1_evexs")
+buildingResources = Array[Object]([ExtResource("2_0nsdw"), ExtResource("3_impxa")])
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,60 +18,58 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
-script = ExtResource("1_evexs")
-buildingResources = Array[Object]([ExtResource("2_0nsdw"), ExtResource("3_impxa")])
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 16
 
-[node name="ResourceContainer" type="VBoxContainer" parent="."]
+[node name="ResourceContainer" type="VBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="Used" type="PanelContainer" parent="ResourceContainer"]
+[node name="Used" type="PanelContainer" parent="MarginContainer/ResourceContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ResourceContainer/Used"]
+[node name="Label" type="Label" parent="MarginContainer/ResourceContainer/Used"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Used:"
 
-[node name="Text" type="Label" parent="ResourceContainer/Used"]
+[node name="Text" type="Label" parent="MarginContainer/ResourceContainer/Used"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "00"
 
-[node name="Available" type="PanelContainer" parent="ResourceContainer"]
+[node name="Available" type="PanelContainer" parent="MarginContainer/ResourceContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ResourceContainer/Available"]
+[node name="Label" type="Label" parent="MarginContainer/ResourceContainer/Available"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Available:"
 
-[node name="Text" type="Label" parent="ResourceContainer/Available"]
+[node name="Text" type="Label" parent="MarginContainer/ResourceContainer/Available"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "00"
 
-[node name="Current" type="PanelContainer" parent="ResourceContainer"]
+[node name="Current" type="PanelContainer" parent="MarginContainer/ResourceContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ResourceContainer/Current"]
+[node name="Label" type="Label" parent="MarginContainer/ResourceContainer/Current"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Current:"
 
-[node name="Text" type="Label" parent="ResourceContainer/Current"]
+[node name="Text" type="Label" parent="MarginContainer/ResourceContainer/Current"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "00"

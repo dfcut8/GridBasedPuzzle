@@ -6,7 +6,7 @@ using GridBasedPuzzle.Resources.Buildings;
 
 namespace GridBasedPuzzle.UserInterface;
 
-public partial class Ui : MarginContainer
+public partial class Ui : CanvasLayer
 {
     [Export] private BuildingResource[] buildingResources;
 
