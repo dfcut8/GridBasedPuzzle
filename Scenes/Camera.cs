@@ -33,4 +33,9 @@ public partial class Camera : Camera2D
         LimitTop = rect.Position.Y * GlobalConstants.TILE_SIZE_PIXELS;
         LimitBottom = rect.End.Y * GlobalConstants.TILE_SIZE_PIXELS;
     }
+
+    public void SetCameraPosition(Vector2 pos)
+    {
+        GlobalPosition = pos;
+    }
 }

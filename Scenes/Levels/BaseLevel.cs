@@ -8,6 +8,7 @@ public partial class BaseLevel : Node
 {
     [Export] private GridManager gridManager;
     [Export] private BuildingManager buildingManager;
+    [Export] private Node2D baseBuilding;
     [Export] private GoldMine goldMine;
     [Export] private Camera camera;
     [Export] private TileMapLayer baseLayer;
@@ -15,6 +16,7 @@ public partial class BaseLevel : Node
     public override void _Ready()
     {
         camera.SetBoundariesRect(baseLayer.GetUsedRect());
+        camera.SetCameraPosition(baseBuilding.GlobalPosition);
 
         gridManager.GridStateUpdated += () =>
         {
