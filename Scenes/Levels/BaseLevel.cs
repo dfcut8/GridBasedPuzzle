@@ -14,6 +14,8 @@ public partial class BaseLevel : Node
 
     public override void _Ready()
     {
+        camera.SetBoundariesRect(baseLayer.GetUsedRect());
+
         gridManager.GridStateUpdated += () =>
         {
             var goldMineTilePosition = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
