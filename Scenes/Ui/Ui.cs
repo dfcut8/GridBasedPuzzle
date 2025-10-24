@@ -23,6 +23,10 @@ public partial class Ui : MarginContainer
         usedLabel = GetNode<PanelContainer>("%Used").GetNode<Label>("Text");
         availableLabel = GetNode<PanelContainer>("%Available").GetNode<Label>("Text");
         currentLabel = GetNode<PanelContainer>("%Current").GetNode<Label>("Text");
+
+        // Make sure UI is always starts visible
+        Visible = true;
+
         CreateBuildingButtons();
     }
 
