@@ -13,7 +13,7 @@ public partial class GridManager : Node
 {
     private const string IS_WOOD_LAYER_NAME = "IsWood";
     private const string IS_BUILDABLE_LAYER_NAME = "IsBuildable";
-
+    private const string IS_IGNORED_LAYER_NAME = "IsIgnored";
 
     /// <summary>
     /// Delegate that is invoked when the set of collected resource tiles changes.
@@ -155,7 +155,10 @@ public partial class GridManager : Node
         foreach (var layer in tileMapLayers)
         {
             var customData = layer.GetCellTileData(tilePosition);
-            if (customData is null) continue;
+            if (customData is null || (bool)customData.GetCustomData(IS_IGNORED_LAYER_NAME))
+            {
+                continue;
+            }
             return (bool)customData.GetCustomData(dataName);
         }
         return false;

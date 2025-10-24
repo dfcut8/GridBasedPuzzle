@@ -24,7 +24,6 @@ public partial class BuildingManager : Node
         PlacingBuilding
     }
 
-
     private int currentResourceCount;
     private int usedResourceCount;
     private int availableResourceCount => startingResourceCount + currentResourceCount - usedResourceCount;
