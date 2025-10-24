@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvnu58ajf8bub"]
+[gd_scene load_steps=12 format=3 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Levels/BaseLevel.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://3in1dqsfo66r" path="res://Scenes/Managers/GlobalInputManager.tscn" id="2_50glp"]
@@ -8,6 +8,7 @@
 [ext_resource type="TileSet" uid="uid://ca70iacsqhub7" path="res://Resources/FlatTileset.tres" id="4_rgh2o"]
 [ext_resource type="PackedScene" uid="uid://1rt1fsvp1e5w" path="res://Resources/Buildings/Cursor.tscn" id="4_vy5pj"]
 [ext_resource type="PackedScene" uid="uid://didqeaf7n7aae" path="res://Scenes/Ui/Ui.tscn" id="6_jw32o"]
+[ext_resource type="PackedScene" uid="uid://b1ifv3js634q2" path="res://Scenes/Camera.tscn" id="6_poiwk"]
 [ext_resource type="PackedScene" uid="uid://7lqoud5x50xk" path="res://Scenes/Buildings/BaseBuilding.tscn" id="6_v1gob"]
 [ext_resource type="PackedScene" uid="uid://0lypfhhry1bt" path="res://Scenes/GoldMine.tscn" id="8_bmxlf"]
 
@@ -29,7 +30,7 @@ ySortRoot = NodePath("../YSortRoot")
 highlightTilemapLayer = NodePath("../HighlightTilemapLayer")
 baseTerrainTilemapLayer = NodePath("../YSortRoot/BaseTerrainTilemapLayer")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" parent="." instance=ExtResource("6_poiwk")]
 
 [node name="YSortRoot" type="Node2D" parent="."]
 y_sort_enabled = true
