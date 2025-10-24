@@ -33,6 +33,9 @@ ySortRoot = NodePath("../YSortRoot")
 highlightTilemapLayer = NodePath("../HighlightTilemapLayer")
 baseTerrainTilemapLayer = NodePath("../YSortRoot/BaseTerrainTilemapLayer")
 
+[node name="Ui" parent="." instance=ExtResource("6_jw32o")]
+unique_name_in_owner = true
+
 [node name="Camera" parent="." instance=ExtResource("6_poiwk")]
 
 [node name="YSortRoot" type="Node2D" parent="."]
@@ -55,6 +58,3 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.5137255)
 tile_set = ExtResource("3_kln2b")
-
-[node name="Ui" parent="." instance=ExtResource("6_jw32o")]
-unique_name_in_owner = true

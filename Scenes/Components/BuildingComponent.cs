@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Godot;
 
 using GridBasedPuzzle.Core;
@@ -26,6 +28,20 @@ public partial class BuildingComponent : Node2D
     {
         var gridPosition = (GlobalPosition / 64).Floor();
         return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
+    }
+
+    public List<Vector2I> GetOccupiedSellPositions()
+    {
+        var result = new List<Vector2I>();
+        var gridPosition = GetRootGridCellPosition();
+        for (int x = gridPosition.X; x < gridPosition.X + BuildingResource.Dimensions.X; x++)
+        {
+            for (int y = gridPosition.Y; y < gridPosition.Y + BuildingResource.Dimensions.Y; y++)
+            {
+                result.Add(new Vector2I(x, y));
+            }
+        }
+        return result;
     }
 
     public void DestroyBuilding()
