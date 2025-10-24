@@ -12,11 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://7lqoud5x50xk" path="res://Scenes/Buildings/BaseBuilding.tscn" id="6_v1gob"]
 [ext_resource type="PackedScene" uid="uid://0lypfhhry1bt" path="res://Scenes/GoldMine.tscn" id="8_bmxlf"]
 
-[node name="BaseLevel" type="Node" node_paths=PackedStringArray("gridManager", "buildingManager", "goldMine")]
+[node name="BaseLevel" type="Node" node_paths=PackedStringArray("gridManager", "buildingManager", "goldMine", "camera", "baseLayer")]
 script = ExtResource("1_r150o")
 gridManager = NodePath("GridManager")
 buildingManager = NodePath("BuildingManager")
 goldMine = NodePath("YSortRoot/GoldMine")
+camera = NodePath("Camera")
+baseLayer = NodePath("YSortRoot/BaseTerrainTilemapLayer")
 
 [node name="GlobalInputManager" parent="." instance=ExtResource("2_50glp")]
 

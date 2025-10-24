@@ -9,6 +9,8 @@ public partial class BaseLevel : Node
     [Export] private GridManager gridManager;
     [Export] private BuildingManager buildingManager;
     [Export] private GoldMine goldMine;
+    [Export] private Camera camera;
+    [Export] private TileMapLayer baseLayer;
 
     public override void _Ready()
     {
