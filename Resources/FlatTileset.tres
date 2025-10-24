@@ -174,7 +174,6 @@ texture_region_size = Vector2i(64, 64)
 0:1/0/terrains_peering_bit/right_side = 1
 0:1/0/terrains_peering_bit/bottom_side = 1
 0:1/0/terrains_peering_bit/top_side = 1
-0:1/0/custom_data_0 = true
 1:1/0 = 0
 1:1/0/terrain_set = 0
 1:1/0/terrain = 1
@@ -203,8 +202,6 @@ texture_region_size = Vector2i(64, 64)
 1:2/0/terrains_peering_bit/left_side = 1
 1:2/0/terrains_peering_bit/top_side = 1
 1:2/0/custom_data_0 = true
-4:0/0 = 0
-9:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mwfvm"]
 texture = ExtResource("2_3g0vu")
@@ -315,12 +312,10 @@ texture_region_size = Vector2i(64, 64)
 texture = ExtResource("4_qmu5h")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
-0:0/0/z_index = -2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1gfds"]
 texture = ExtResource("5_xpoai")
 texture_region_size = Vector2i(192, 192)
-1:1/0 = 0
 0:0/animation_columns = 8
 0:0/animation_mode = 1
 0:0/animation_frame_0/duration = 0.15
@@ -330,7 +325,7 @@ texture_region_size = Vector2i(192, 192)
 0:0/animation_frame_4/duration = 0.15
 0:0/animation_frame_5/duration = 0.15
 0:0/animation_frame_6/duration = 0.15
-0:0/animation_frame_7/duration = 0.15
+0:0/animation_frame_7/duration = 1.0
 0:0/0 = 0
 0:0/0/z_index = -1
 

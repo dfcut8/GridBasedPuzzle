@@ -47,5 +47,5 @@ position = Vector2(192, 256)
 [node name="GoldMine" parent="YSortRoot" index="2"]
 position = Vector2(832, 576)
 
-[node name="Ui" parent="." index="5"]
+[node name="Ui" parent="." index="6"]
 visible = false

@@ -29,6 +29,8 @@ ySortRoot = NodePath("../YSortRoot")
 highlightTilemapLayer = NodePath("../HighlightTilemapLayer")
 baseTerrainTilemapLayer = NodePath("../YSortRoot/BaseTerrainTilemapLayer")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="YSortRoot" type="Node2D" parent="."]
 y_sort_enabled = true
 
