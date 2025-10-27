@@ -6,6 +6,7 @@ using Godot;
 
 using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
+using GridBasedPuzzle.Levels.Utils;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -34,12 +35,14 @@ public partial class GridManager : Node
     private HashSet<Vector2I> occupiedTiles = [];
     private HashSet<Vector2I> collectedResourceTiles = [];
     private List<TileMapLayer> tileMapLayers = [];
+    private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = [];
 
     public override void _Ready()
     {
         GlobalEvents.BuildingPlaced += OnBuildingPlaced;
         GlobalEvents.BuildingDestroyed += OnBuildingDestroyed;
         tileMapLayers = GetTileMapLayers(baseTerrainTilemapLayer);
+        MapTileMapLayersToElevationLayers();
 
         foreach (var layer in tileMapLayers)
         {
@@ -130,21 +133,46 @@ public partial class GridManager : Node
         return result;
     }
 
-    private List<TileMapLayer> GetTileMapLayers(TileMapLayer baseTileMapLayer)
+    private List<TileMapLayer> GetTileMapLayers(Node2D rootNode)
     {
         // TODO: Think about doing this in loop and benchmark it...
         List<TileMapLayer> result = [];
-        var children = baseTileMapLayer.GetChildren();
+        var children = rootNode.GetChildren();
         children.Reverse();
         foreach (var child in children)
         {
-            if (child is TileMapLayer layer)
+            if (child is Node2D node)
             {
-                result.AddRange(GetTileMapLayers(layer));
+                result.AddRange(GetTileMapLayers(node));
             }
         }
-        result.Add(baseTileMapLayer);
+        if (rootNode is TileMapLayer layer)
+        {
+            result.Add(layer);
+        }
         return result;
+    }
+
+    // Can have bugs, need to confirm works as expected
+    private void MapTileMapLayersToElevationLayers()
+    {
+        foreach (var layer in tileMapLayers)
+        {
+            var elevationLayer = layer.GetParentOrNull<ElevationLayer>();
+            if (elevationLayer is not null)
+            {
+                tileMapLayerToElevationLayer.Add(layer, elevationLayer);
+            }
+        }
+        // DebugTileMapLayerToElevationLayer();
+    }
+
+    private void DebugTileMapLayerToElevationLayer()
+    {
+        foreach (var pair in tileMapLayerToElevationLayer)
+        {
+            GD.Print($"Key: {pair.Key.Name}, Value: {pair.Value.Name}");
+        }
     }
 
     public void ClearHighlightedTiles()
