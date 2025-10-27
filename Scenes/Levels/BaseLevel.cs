@@ -2,7 +2,7 @@ using Godot;
 
 using GridBasedPuzzle.Managers;
 
-namespace GridBasedPuzzle.Core;
+namespace GridBasedPuzzle.Levels;
 
 public partial class BaseLevel : Node
 {
