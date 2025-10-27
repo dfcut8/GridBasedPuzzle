@@ -204,8 +204,7 @@ public partial class BuildingManager : Node
 
     private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
     {
-        var tiles = tileArea.GetTiles();
-        var buildable = tiles.All(gridManager.IsTilePositionBuildable);
+        var buildable = gridManager.IsTileAreaBuildable(tileArea);
         return buildable && AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
     }
 }

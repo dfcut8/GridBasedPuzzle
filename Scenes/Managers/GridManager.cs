@@ -206,12 +206,14 @@ public partial class GridManager : Node
         if (tiles.Count == 0) return false;
 
         (TileMapLayer firstTileMapLayer, _) = GetTileCustomData(tiles[0], IS_BUILDABLE_LAYER_NAME);
-        var targetElevationLayer = tileMapLayerToElevationLayer[firstTileMapLayer];
+        ElevationLayer targetElevationLayer = null;
+        tileMapLayerToElevationLayer.TryGetValue(firstTileMapLayer, out targetElevationLayer);
 
         return tiles.All(t =>
         {
             (TileMapLayer layer, bool isBuildable) = GetTileCustomData(t, IS_BUILDABLE_LAYER_NAME);
-            var elevationLayer = tileMapLayerToElevationLayer[layer];
+            ElevationLayer elevationLayer = null;
+            tileMapLayerToElevationLayer.TryGetValue(layer, out elevationLayer);
             return isBuildable && validBuildableTiles.Contains(t) && elevationLayer == targetElevationLayer;
         });
     }
