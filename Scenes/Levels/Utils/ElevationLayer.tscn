@@ -1,3 +1,20 @@
-[gd_scene format=3 uid="uid://jau2jhq1s2mf"]
+[gd_scene load_steps=3 format=3 uid="uid://jau2jhq1s2mf"]
+
+[ext_resource type="Script" uid="uid://b4qmx4qfphpcn" path="res://Scenes/Levels/Utils/ElevationLayer.cs" id="1_la760"]
+[ext_resource type="TileSet" uid="uid://ca70iacsqhub7" path="res://Resources/FlatTileset.tres" id="2_kwelw"]
 
 [node name="ElevationLayer" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_la760")
+
+[node name="ShadowLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_set = ExtResource("2_kwelw")
+
+[node name="ShadowLayer2" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_set = ExtResource("2_kwelw")
+
+[node name="TerrainLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_set = ExtResource("2_kwelw")
