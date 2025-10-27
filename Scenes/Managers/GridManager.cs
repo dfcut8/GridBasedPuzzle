@@ -7,6 +7,7 @@ using Godot;
 using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Levels.Utils;
+using GridBasedPuzzle.Scenes.Core;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -91,7 +92,7 @@ public partial class GridManager : Node
         var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
         var validTiles = GetTilesRadius(tileArea,
             buildingComponent.BuildingResource.BuildableRadius,
-            (tilePosition) => TileHasCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME));
+            (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
         validBuildableTiles.UnionWith(validTiles);
 
         foreach (var tilePosition in occupiedTiles)
@@ -107,7 +108,7 @@ public partial class GridManager : Node
         var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
         var resourceTiles = GetTilesRadius(tileArea,
             buildingComponent.BuildingResource.ResourceRadius,
-            (tilePosition) => TileHasCustomData(tilePosition, IS_WOOD_LAYER_NAME));
+            (tilePosition) => GetTileCustomData(tilePosition, IS_WOOD_LAYER_NAME).hasData);
 
         var oldResourceTileCount = collectedResourceTiles.Count;
         collectedResourceTiles.UnionWith(resourceTiles);
@@ -161,10 +162,10 @@ public partial class GridManager : Node
             var elevationLayer = layer.GetParentOrNull<ElevationLayer>();
             if (elevationLayer is not null)
             {
-                tileMapLayerToElevationLayer.Add(layer, elevationLayer);
+                tileMapLayerToElevationLayer[layer] = elevationLayer;
             }
         }
-        // DebugTileMapLayerToElevationLayer();
+        DebugTileMapLayerToElevationLayer();
     }
 
     private void DebugTileMapLayerToElevationLayer()
@@ -180,7 +181,7 @@ public partial class GridManager : Node
         highlightTilemapLayer.Clear();
     }
 
-    public bool TileHasCustomData(Vector2I tilePosition, string dataName)
+    public (TileMapLayer layer, bool hasData) GetTileCustomData(Vector2I tilePosition, string dataName)
     {
         foreach (var layer in tileMapLayers)
         {
@@ -189,14 +190,30 @@ public partial class GridManager : Node
             {
                 continue;
             }
-            return (bool)customData.GetCustomData(dataName);
+            return (layer, (bool)customData.GetCustomData(dataName));
         }
-        return false;
+        return (null, false);
     }
 
     public bool IsTilePositionBuildable(Vector2I tilePosition)
     {
         return validBuildableTiles.Contains(tilePosition);
+    }
+
+    public bool IsTileAreaBuildable(Rect2I rect)
+    {
+        var tiles = rect.GetTiles();
+        if (tiles.Count == 0) return false;
+
+        (TileMapLayer firstTileMapLayer, _) = GetTileCustomData(tiles[0], IS_BUILDABLE_LAYER_NAME);
+        var targetElevationLayer = tileMapLayerToElevationLayer[firstTileMapLayer];
+
+        return tiles.All(t =>
+        {
+            (TileMapLayer layer, bool isBuildable) = GetTileCustomData(t, IS_BUILDABLE_LAYER_NAME);
+            var elevationLayer = tileMapLayerToElevationLayer[layer];
+            return isBuildable && validBuildableTiles.Contains(t) && elevationLayer == targetElevationLayer;
+        });
     }
 
     public Vector2I GetMouseGridCellPosition()
@@ -215,7 +232,7 @@ public partial class GridManager : Node
     public void HighlightExpandedBuildableTiles(Rect2I tileArea, int radius)
     {
         var validTiles = GetTilesRadius(tileArea, radius,
-            (tilePosition) => TileHasCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME))
+            (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData)
             .ToHashSet();
         var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles);
         var atlasCoords = new Vector2I(1, 0);
@@ -229,7 +246,7 @@ public partial class GridManager : Node
     {
         var resourceTiles = GetTilesRadius(tileArea,
             radius,
-            (tilePosition) => TileHasCustomData(tilePosition, IS_WOOD_LAYER_NAME));
+            (tilePosition) => GetTileCustomData(tilePosition, IS_WOOD_LAYER_NAME).hasData);
         var atlasCoords = new Vector2I(1, 0);
         foreach (var tilePosition in resourceTiles)
         {
