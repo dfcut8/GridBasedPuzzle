@@ -119,15 +119,35 @@ public partial class GridManager : Node
         GridStateUpdated?.Invoke();
     }
 
+    private bool IsTileInsideRadius(Vector2 center, Vector2 tilePosition, float radius)
+    {
+        // We need to get center of the tiles in float
+        var distanceX = center.X - tilePosition.X + 0.5;
+        var distanceY = center.Y - tilePosition.Y + 0.5;
+
+        var distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+        return distanceSquared <= radius * radius;
+    }
+
     private List<Vector2I> GetTilesRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filter)
     {
+        var rect = tileArea.ToRect();
+        var tileCenter = rect.GetCenter();
+
+        // To offset building size itself
+        var offset = Mathf.Max(tileArea.Size.X, tileArea.Size.Y) / 2;
+
         List<Vector2I> result = [];
         for (var x = tileArea.Position.X - radius; x <= tileArea.End.X + radius; x++)
         {
             for (var y = tileArea.Position.Y - radius; y <= tileArea.End.Y + radius; y++)
             {
                 var tilePosition = new Vector2I(x, y);
-                if (!filter(tilePosition)) continue;
+                if (!IsTileInsideRadius(tileCenter, tilePosition, radius + offset)
+                    || !filter(tilePosition))
+                {
+                    continue;
+                }
                 result.Add(tilePosition);
             }
         }

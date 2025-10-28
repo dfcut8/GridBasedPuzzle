@@ -18,4 +18,9 @@ public static class GodotExtensions
         }
         return result;
     }
+
+    public static Rect2 ToRect(this Rect2I r)
+    {
+        return new Rect2(r.Position, r.Size);
+    }
 }
