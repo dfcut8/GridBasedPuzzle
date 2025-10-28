@@ -1,25 +1,24 @@
-using System;
-
 using Godot;
-
 using GridBasedPuzzle.Resources.Buildings;
+using System;
 
 namespace GridBasedPuzzle.UserInterface;
 
 public partial class Ui : CanvasLayer
 {
     [Export] private BuildingResource[] buildingResources;
+    [Export] private PackedScene buildingSectionScene;
 
     public Action<BuildingResource> BuildingResourceSelected;
 
-    private HBoxContainer hBoxContainer;
+    private VBoxContainer buttonsContainer;
     private Label usedLabel;
     private Label availableLabel;
     private Label currentLabel;
 
     public override void _Ready()
     {
-        hBoxContainer = GetNode<HBoxContainer>("%HBoxContainer");
+        buttonsContainer = GetNode<VBoxContainer>("%ButtonsContainer");
         usedLabel = GetNode<PanelContainer>("%Used").GetNode<Label>("Text");
         availableLabel = GetNode<PanelContainer>("%Available").GetNode<Label>("Text");
         currentLabel = GetNode<PanelContainer>("%Current").GetNode<Label>("Text");
@@ -41,14 +40,14 @@ public partial class Ui : CanvasLayer
     {
         foreach (var br in buildingResources)
         {
-            var buildingButton = new Button();
-            buildingButton.Text = $"PLACE {br.DisplayName.ToUpper()} ({br.ResourceCost})";
-            hBoxContainer.AddChild(buildingButton);
+            var buildingSectionInstance = buildingSectionScene.Instantiate<BuildingSection>();
+            buttonsContainer.AddChild(buildingSectionInstance);
+            buildingSectionInstance.Initialize(br);
 
-            buildingButton.Pressed += () =>
-            {
-                BuildingResourceSelected?.Invoke(br);
-            };
+            //buildingSectionInstance.Pressed += () =>
+            //{
+            //    BuildingResourceSelected?.Invoke(br);
+            //};
         }
     }
 }
