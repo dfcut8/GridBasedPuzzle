@@ -44,10 +44,10 @@ public partial class Ui : CanvasLayer
             buttonsContainer.AddChild(buildingSectionInstance);
             buildingSectionInstance.Initialize(br);
 
-            //buildingSectionInstance.Pressed += () =>
-            //{
-            //    BuildingResourceSelected?.Invoke(br);
-            //};
+            buildingSectionInstance.Pressed += () =>
+            {
+                BuildingResourceSelected?.Invoke(br);
+            };
         }
     }
 }
