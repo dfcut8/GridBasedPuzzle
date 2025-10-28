@@ -1,0 +1,29 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://damf7citn7sqd"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jyamd"]
+load_path = "res://.godot/imported/BannerVertical.png-e2b2fffaea6d137dae659eae3af028e7.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dc14f"]
+texture = SubResource("CompressedTexture2D_jyamd")
+texture_margin_left = 32.0
+texture_margin_top = 40.0
+texture_margin_right = 32.0
+texture_margin_bottom = 40.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(32, 24, 128, 144)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dc14f"]
+load_path = "res://.godot/imported/Carved9Slides.png-b7180a2e51f151c8da2261da5b56d6b0.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uw0va"]
+texture = SubResource("CompressedTexture2D_dc14f")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[resource]
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_dc14f")
+PanelContainerAlt/base_type = &"PanelContainer"
+PanelContainerAlt/styles/panel = SubResource("StyleBoxTexture_uw0va")
