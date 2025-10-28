@@ -122,8 +122,8 @@ public partial class GridManager : Node
     private bool IsTileInsideRadius(Vector2 center, Vector2 tilePosition, float radius)
     {
         // We need to get center of the tiles in float
-        var distanceX = center.X - tilePosition.X + 0.5;
-        var distanceY = center.Y - tilePosition.Y + 0.5;
+        var distanceX = center.X - (tilePosition.X + 0.5);
+        var distanceY = center.Y - (tilePosition.Y + 0.5);
 
         var distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
         return distanceSquared <= radius * radius;
