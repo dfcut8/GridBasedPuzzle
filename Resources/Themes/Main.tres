@@ -1,6 +1,28 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://damf7citn7sqd"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://damf7citn7sqd"]
 
+[ext_resource type="Texture2D" uid="uid://dqoprhxqp3rtg" path="res://Assets/Textures/Ui/ButtonHover9Slides.png" id="1_ajr5p"]
 [ext_resource type="FontFile" uid="uid://cvhhedwga6jna" path="res://Assets/Fonts/Bitfantasy.ttf" id="1_dc14f"]
+[ext_resource type="Texture2D" uid="uid://cfy0vkxvc5qgh" path="res://Assets/Textures/Ui/ButtonRed9Slides.png" id="1_uw0va"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ddke0"]
+texture = ExtResource("1_ajr5p")
+texture_margin_left = 21.0
+texture_margin_top = 21.0
+texture_margin_right = 21.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(7, 0, 178, 186)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ajr5p"]
+texture = ExtResource("1_uw0va")
+texture_margin_left = 21.0
+texture_margin_top = 21.0
+texture_margin_right = 21.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(7, 0, 178, 186)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jyamd"]
 load_path = "res://.godot/imported/BannerVertical.png-e2b2fffaea6d137dae659eae3af028e7.ctex"
@@ -28,6 +50,8 @@ texture_margin_bottom = 24.0
 [resource]
 default_font = ExtResource("1_dc14f")
 default_font_size = 16
+Button/styles/hover = SubResource("StyleBoxTexture_ddke0")
+Button/styles/normal = SubResource("StyleBoxTexture_ajr5p")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_dc14f")
 PanelContainerAlt/base_type = &"PanelContainer"
 PanelContainerAlt/styles/panel = SubResource("StyleBoxTexture_uw0va")
