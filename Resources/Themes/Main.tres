@@ -1,8 +1,11 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://damf7citn7sqd"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://damf7citn7sqd"]
 
 [ext_resource type="Texture2D" uid="uid://dqoprhxqp3rtg" path="res://Assets/Textures/Ui/ButtonHover9Slides.png" id="1_ajr5p"]
 [ext_resource type="FontFile" uid="uid://cvhhedwga6jna" path="res://Assets/Fonts/Bitfantasy.ttf" id="1_dc14f"]
 [ext_resource type="Texture2D" uid="uid://cfy0vkxvc5qgh" path="res://Assets/Textures/Ui/ButtonRed9Slides.png" id="1_uw0va"]
+[ext_resource type="Texture2D" uid="uid://d2thga5c6nvbd" path="res://Assets/Textures/Ui/ButtonRed9SlidesPressed.png" id="2_ddke0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8edxj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ddke0"]
 texture = ExtResource("1_ajr5p")
@@ -14,6 +17,16 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 region_rect = Rect2(7, 0, 178, 186)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xb86e"]
+texture = ExtResource("2_ddke0")
+texture_margin_left = 23.0
+texture_margin_top = 21.0
+texture_margin_right = 23.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(4, 0, 185, 186)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ajr5p"]
 texture = ExtResource("1_uw0va")
 texture_margin_left = 21.0
@@ -23,6 +36,17 @@ texture_margin_bottom = 27.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 region_rect = Rect2(7, 0, 178, 186)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtxdq"]
+content_margin_bottom = 16.0
+texture = ExtResource("2_ddke0")
+texture_margin_left = 21.0
+texture_margin_top = 21.0
+texture_margin_right = 21.0
+texture_margin_bottom = 27.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(4, 0, 184, 186)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jyamd"]
 load_path = "res://.godot/imported/BannerVertical.png-e2b2fffaea6d137dae659eae3af028e7.ctex"
@@ -50,8 +74,16 @@ texture_margin_bottom = 24.0
 [resource]
 default_font = ExtResource("1_dc14f")
 default_font_size = 16
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_8edxj")
 Button/styles/hover = SubResource("StyleBoxTexture_ddke0")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_xb86e")
 Button/styles/normal = SubResource("StyleBoxTexture_ajr5p")
+Button/styles/pressed = SubResource("StyleBoxTexture_rtxdq")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_dc14f")
 PanelContainerAlt/base_type = &"PanelContainer"
 PanelContainerAlt/styles/panel = SubResource("StyleBoxTexture_uw0va")
