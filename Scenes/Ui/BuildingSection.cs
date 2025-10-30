@@ -18,6 +18,7 @@ public partial class BuildingSection : PanelContainer
         title = GetNode<Label>("%Title");
         cost = GetNode<Label>("%Cost");
         description = GetNode<Label>("%Description");
+        button = GetNode<Button>("%Button");
         button.Pressed += () => Pressed?.Invoke();
     }
 
