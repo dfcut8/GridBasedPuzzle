@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjcj77rbdtfj8"]
+[gd_scene load_steps=4 format=3 uid="uid://bjcj77rbdtfj8"]
 
 [ext_resource type="Script" uid="uid://b3oynxmxq8k0o" path="res://Scenes/Ui/BuildingSection.cs" id="1_os1iu"]
+[ext_resource type="Texture2D" uid="uid://7rgffe4dg53l" path="res://Assets/Textures/Ui/WoodIcon.png" id="2_hbmc4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcfds"]
+atlas = ExtResource("2_hbmc4")
+region = Rect2(38, 75, 34, 26)
 
 [node name="BuildingSection" type="PanelContainer" node_paths=PackedStringArray("label", "button")]
 theme_type_variation = &"PanelContainerAlt"
@@ -13,8 +18,35 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 
+[node name="l2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+text = "Gathers Wood"
+
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kcfds")
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 32
+text = "4"
