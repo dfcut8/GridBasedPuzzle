@@ -1,13 +1,11 @@
-using System.Linq;
-
 using Godot;
-
 using GridBasedPuzzle.Buildings;
 using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.Scenes.Core;
 using GridBasedPuzzle.UserInterface;
+using System.Linq;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -37,7 +35,7 @@ public partial class BuildingManager : Node
     public override void _Ready()
     {
         InitSignals();
-        ui.Ready += () => ui.UpdateResources(usedResourceCount, AvailableResourceCount, currentResourceCount);
+        ui.Ready += () => ui.UpdateAvailableResources(AvailableResourceCount);
     }
 
     public override void _Process(double delta)
@@ -144,7 +142,7 @@ public partial class BuildingManager : Node
         if (buildingComponent == null) return;
         usedResourceCount -= buildingComponent.BuildingResource.ResourceCost;
         buildingComponent.DestroyBuilding();
-        ui.UpdateResources(usedResourceCount, AvailableResourceCount, currentResourceCount);
+        ui.UpdateAvailableResources(AvailableResourceCount);
     }
 
     private void InitSignals()
@@ -182,6 +180,7 @@ public partial class BuildingManager : Node
     private void OnResourceTilesUpdated(int resourceCount)
     {
         currentResourceCount = resourceCount;
+        ui.UpdateAvailableResources(AvailableResourceCount);
     }
 
     private void PlaceBuildingAtHoveredCellPosition()
@@ -191,7 +190,7 @@ public partial class BuildingManager : Node
 
         building.GlobalPosition = hoveredGridArea.Position * GlobalConstants.TILE_SIZE_PIXELS;
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
-        ui.UpdateResources(usedResourceCount, AvailableResourceCount, currentResourceCount);
+        ui.UpdateAvailableResources(AvailableResourceCount);
         ChangeState(State.Normal);
     }
 

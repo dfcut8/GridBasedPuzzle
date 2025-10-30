@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://didqeaf7n7aae"]
+[gd_scene load_steps=7 format=3 uid="uid://didqeaf7n7aae"]
 
 [ext_resource type="Script" uid="uid://3n41hn1surad" path="res://Scenes/Ui/Ui.cs" id="1_evexs"]
 [ext_resource type="Resource" uid="uid://bcupk3s047qr4" path="res://Resources/Buildings/Tower.tres" id="2_0nsdw"]
 [ext_resource type="Resource" uid="uid://y1lwti6w3s7w" path="res://Resources/Buildings/Village.tres" id="3_impxa"]
 [ext_resource type="PackedScene" uid="uid://bjcj77rbdtfj8" path="res://Scenes/Ui/BuildingSection.tscn" id="4_impxa"]
+[ext_resource type="Texture2D" uid="uid://7rgffe4dg53l" path="res://Assets/Textures/Ui/WoodIcon.png" id="5_ebkin"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fik5"]
+atlas = ExtResource("5_ebkin")
+region = Rect2(38, 75, 34, 26)
 
 [node name="Ui" type="CanvasLayer"]
 script = ExtResource("1_evexs")
@@ -21,64 +26,31 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/separation = 16
-
-[node name="ResourceContainer" type="VBoxContainer" parent="MarginContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-
-[node name="Used" type="PanelContainer" parent="MarginContainer/ResourceContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/ResourceContainer/Used"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Used:"
-
-[node name="Text" type="Label" parent="MarginContainer/ResourceContainer/Used"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "00"
-
-[node name="Available" type="PanelContainer" parent="MarginContainer/ResourceContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/ResourceContainer/Available"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Available:"
-
-[node name="Text" type="Label" parent="MarginContainer/ResourceContainer/Available"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "00"
-
-[node name="Current" type="PanelContainer" parent="MarginContainer/ResourceContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/ResourceContainer/Current"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Current:"
-
-[node name="Text" type="Label" parent="MarginContainer/ResourceContainer/Current"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "00"
-
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_3fik5")
+stretch_mode = 3
+
+[node name="Resource" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.61960787, 0.5294118, 0.4627451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 48
+text = "4"
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2

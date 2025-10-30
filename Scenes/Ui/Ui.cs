@@ -12,16 +12,13 @@ public partial class Ui : CanvasLayer
     public Action<BuildingResource> BuildingResourceSelected;
 
     private VBoxContainer buttonsContainer;
-    private Label usedLabel;
-    private Label availableLabel;
+    private Label availableResourceLabel;
     private Label currentLabel;
 
     public override void _Ready()
     {
         buttonsContainer = GetNode<VBoxContainer>("%ButtonsContainer");
-        usedLabel = GetNode<PanelContainer>("%Used").GetNode<Label>("Text");
-        availableLabel = GetNode<PanelContainer>("%Available").GetNode<Label>("Text");
-        currentLabel = GetNode<PanelContainer>("%Current").GetNode<Label>("Text");
+        availableResourceLabel = GetNode<Label>("%Resource");
 
         // Make sure UI is always starts visible
         Visible = true;
@@ -29,11 +26,9 @@ public partial class Ui : CanvasLayer
         CreateBuildingButtons();
     }
 
-    public void UpdateResources(int used, int available, int current)
+    public void UpdateAvailableResources(int resourceCount)
     {
-        usedLabel.Text = used.ToString();
-        availableLabel.Text = available.ToString();
-        currentLabel.Text = current.ToString();
+        availableResourceLabel.Text = resourceCount.ToString();
     }
 
     private void CreateBuildingButtons()
