@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_ig81x")
 DisplayName = "Tower"
+Description = "Expands area"
 Dimensions = Vector2i(2, 2)
 ResourceCost = 4
 BuildableRadius = 6
