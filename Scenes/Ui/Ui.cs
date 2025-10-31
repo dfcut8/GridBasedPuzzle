@@ -20,9 +20,6 @@ public partial class Ui : CanvasLayer
         buttonsContainer = GetNode<VBoxContainer>("%ButtonsContainer");
         availableResourceLabel = GetNode<Label>("%Resource");
 
-        // Make sure UI is always starts visible
-        Visible = true;
-
         CreateBuildingButtons();
     }
 
