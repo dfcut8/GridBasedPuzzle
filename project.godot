@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="GridBasedPuzzle"
-run/main_scene="uid://bypt25sd50bds"
+run/main_scene="uid://07rdoi2mguu6"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+LevelManager="*res://Scenes/Autoloads/LevelManager.tscn"
 
 [display]
 
