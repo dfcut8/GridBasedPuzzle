@@ -28,6 +28,11 @@ public partial class Ui : CanvasLayer
         availableResourceLabel.Text = resourceCount.ToString();
     }
 
+    public void HideUi()
+    {
+        Visible = false;
+    }
+
     private void CreateBuildingButtons()
     {
         foreach (var br in buildingResources)

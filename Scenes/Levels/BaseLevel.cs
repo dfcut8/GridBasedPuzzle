@@ -1,6 +1,7 @@
 using Godot;
 
 using GridBasedPuzzle.Managers;
+using GridBasedPuzzle.UserInterface;
 
 namespace GridBasedPuzzle.Levels;
 
@@ -12,6 +13,7 @@ public partial class BaseLevel : Node
     [Export] private GoldMine goldMine;
     [Export] private Camera camera;
     [Export] private TileMapLayer baseLayer;
+    [Export] private PackedScene levelCompleteScreenScene;
 
     public override void _Ready()
     {
@@ -23,9 +25,15 @@ public partial class BaseLevel : Node
             var goldMineTilePosition = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
             if (gridManager.IsTilePositionBuildable(goldMineTilePosition))
             {
-                GD.Print("win");
+                ShowCompleteScreen();
                 goldMine.SetActive();
             }
         };
+    }
+
+    private void ShowCompleteScreen()
+    {
+        var levelCompleteScreenInstance = levelCompleteScreenScene.Instantiate<LevelCompleteScreen>();
+        GetTree().Root.AddChild(levelCompleteScreenInstance);
     }
 }

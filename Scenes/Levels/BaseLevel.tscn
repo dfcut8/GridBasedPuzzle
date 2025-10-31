@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvnu58ajf8bub"]
+[gd_scene load_steps=13 format=3 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Levels/BaseLevel.cs" id="1_r150o"]
+[ext_resource type="PackedScene" uid="uid://cpjv57gwogpoh" path="res://Scenes/Ui/LevelCompleteScreen.tscn" id="2_5c1rd"]
 [ext_resource type="PackedScene" uid="uid://3in1dqsfo66r" path="res://Scenes/Managers/GlobalInputManager.tscn" id="2_50glp"]
 [ext_resource type="PackedScene" uid="uid://mrkx2m388gth" path="res://Scenes/Managers/BuildingManager.tscn" id="2_jw32o"]
 [ext_resource type="TileSet" uid="uid://di7b570y6y7tj" path="res://Resources/HighLightTileset.tres" id="3_kln2b"]
@@ -20,6 +21,7 @@ baseBuilding = NodePath("YSortRoot/BaseBuilding")
 goldMine = NodePath("YSortRoot/GoldMine")
 camera = NodePath("Camera")
 baseLayer = NodePath("YSortRoot/BaseTerrainTilemapLayer")
+levelCompleteScreenScene = ExtResource("2_5c1rd")
 
 [node name="GlobalInputManager" parent="." instance=ExtResource("2_50glp")]
 
