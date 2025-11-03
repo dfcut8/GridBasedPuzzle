@@ -5,11 +5,11 @@ namespace GridBasedPuzzle.UserInterface;
 
 public partial class LevelCompleteScreen : CanvasLayer
 {
-    private Button nextlevelButton;
+    private Button nextLevelButton;
     public override void _Ready()
     {
-        nextlevelButton = GetNode<Button>("%NextLevelButton");
-        nextlevelButton.Pressed += OnNextLevelButtonPressed;
+        nextLevelButton = GetNode<Button>("%NextLevelButton");
+        nextLevelButton.Pressed += OnNextLevelButtonPressed;
     }
     private void OnNextLevelButtonPressed()
     {
