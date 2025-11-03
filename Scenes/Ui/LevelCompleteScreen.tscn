@@ -52,6 +52,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/margin_top = 32
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/MarginContainer"]
+[node name="NextLevelButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Next Level"

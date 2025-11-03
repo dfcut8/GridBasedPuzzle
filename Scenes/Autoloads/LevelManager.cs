@@ -5,6 +5,8 @@ public partial class LevelManager : Node
 {
     [Export] private PackedScene[] levelScenes;
 
+    private int currentLevelIndex = 0;
+
     public static LevelManager Instance { get; private set; }
 
     public LevelManager()
@@ -20,6 +22,7 @@ public partial class LevelManager : Node
             GD.PrintErr($"Level index {levelIndex} is out of bounds.");
             return;
         }
+        currentLevelIndex = levelIndex;
         var levelScene = levelScenes[levelIndex];
         if (levelScene == null)
         {
@@ -27,5 +30,10 @@ public partial class LevelManager : Node
             return;
         }
         GetTree().ChangeSceneToPacked(levelScene);
+    }
+
+    public void LoadNextLevel()
+    {
+        LoadLevel(++currentLevelIndex);
     }
 }
