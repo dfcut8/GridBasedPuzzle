@@ -14,6 +14,5 @@ public partial class LevelCompleteScreen : CanvasLayer
     private void OnNextLevelButtonPressed()
     {
         LevelManager.Instance.LoadNextLevel();
-        QueueFree();
     }
 }

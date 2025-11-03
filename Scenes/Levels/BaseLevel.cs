@@ -35,7 +35,7 @@ public partial class BaseLevel : Node
     private void ShowCompleteScreen()
     {
         var levelCompleteScreenInstance = levelCompleteScreenScene.Instantiate<LevelCompleteScreen>();
-        GetTree().Root.AddChild(levelCompleteScreenInstance);
+        AddChild(levelCompleteScreenInstance);
         ui.HideUi();
     }
 }
