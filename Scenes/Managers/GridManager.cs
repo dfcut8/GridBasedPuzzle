@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 using Godot;
-
 using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Levels.Utils;
 using GridBasedPuzzle.Scenes.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -32,6 +30,7 @@ public partial class GridManager : Node
     [Export] private TileMapLayer highlightTilemapLayer;
     [Export] private TileMapLayer baseTerrainTilemapLayer;
 
+    private HashSet<Vector2I> allTilesInBuildableRadius = [];
     private HashSet<Vector2I> validBuildableTiles = [];
     private HashSet<Vector2I> occupiedTiles = [];
     private HashSet<Vector2I> collectedResourceTiles = [];
@@ -65,6 +64,7 @@ public partial class GridManager : Node
     {
         occupiedTiles.Clear();
         validBuildableTiles.Clear();
+        allTilesInBuildableRadius.Clear();
         collectedResourceTiles.Clear();
 
         var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
@@ -90,6 +90,12 @@ public partial class GridManager : Node
         occupiedTiles.UnionWith(buildingComponent.GetOccupiedSellPositions());
         var rootCell = buildingComponent.GetRootGridCellPosition();
         var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
+
+        var allTiles = GetTilesRadius(tileArea,
+            buildingComponent.BuildingResource.BuildableRadius,
+            (_) => true);
+        allTilesInBuildableRadius.UnionWith(allTiles);
+
         var validTiles = GetTilesRadius(tileArea,
             buildingComponent.BuildingResource.BuildableRadius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
@@ -280,5 +286,10 @@ public partial class GridManager : Node
     {
         var gridPosition = (worldPosition / 64).Floor();
         return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
+    }
+
+    public bool IsTilePositionInAnyBuildingRadius(Vector2I pos)
+    {
+        return allTilesInBuildableRadius.Contains(pos);
     }
 }
