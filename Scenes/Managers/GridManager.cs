@@ -233,13 +233,20 @@ public partial class GridManager : Node
 
         (TileMapLayer firstTileMapLayer, _) = GetTileCustomData(tiles[0], IS_BUILDABLE_LAYER_NAME);
         ElevationLayer targetElevationLayer = null;
-        tileMapLayerToElevationLayer.TryGetValue(firstTileMapLayer, out targetElevationLayer);
+        if (firstTileMapLayer != null)
+        {
+            tileMapLayerToElevationLayer.TryGetValue(firstTileMapLayer, out targetElevationLayer);
+        }
 
         return tiles.All(t =>
         {
             (TileMapLayer layer, bool isBuildable) = GetTileCustomData(t, IS_BUILDABLE_LAYER_NAME);
             ElevationLayer elevationLayer = null;
-            tileMapLayerToElevationLayer.TryGetValue(layer, out elevationLayer);
+            if (layer != null)
+            {
+                tileMapLayerToElevationLayer.TryGetValue(layer, out elevationLayer);
+            }
+
             return isBuildable && validBuildableTiles.Contains(t) && elevationLayer == targetElevationLayer;
         });
     }
