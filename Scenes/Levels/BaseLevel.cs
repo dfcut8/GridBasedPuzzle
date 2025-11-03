@@ -14,6 +14,7 @@ public partial class BaseLevel : Node
     [Export] private Camera camera;
     [Export] private TileMapLayer baseLayer;
     [Export] private PackedScene levelCompleteScreenScene;
+    [Export] private Ui ui;
 
     public override void _Ready()
     {
@@ -35,5 +36,6 @@ public partial class BaseLevel : Node
     {
         var levelCompleteScreenInstance = levelCompleteScreenScene.Instantiate<LevelCompleteScreen>();
         GetTree().Root.AddChild(levelCompleteScreenInstance);
+        ui.HideUi();
     }
 }
