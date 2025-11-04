@@ -71,6 +71,12 @@ public partial class BuildingManager : Node
         }
     }
 
+    public void SetStartingResourceCount(int count)
+    {
+        startingResourceCount = count;
+        ui.UpdateAvailableResources(AvailableResourceCount);
+    }
+
     private void HandleNormalInput(InputEvent e)
     {
         if (e.IsActionPressed(InputConstants.MOUSE_RIGHT_CLICK))

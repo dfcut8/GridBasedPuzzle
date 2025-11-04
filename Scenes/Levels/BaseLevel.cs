@@ -1,6 +1,7 @@
 using Godot;
 
 using GridBasedPuzzle.Managers;
+using GridBasedPuzzle.Resources.Levels;
 using GridBasedPuzzle.UserInterface;
 
 namespace GridBasedPuzzle.Levels;
@@ -15,11 +16,13 @@ public partial class BaseLevel : Node
     [Export] private TileMapLayer baseLayer;
     [Export] private PackedScene levelCompleteScreenScene;
     [Export] private Ui ui;
+    [Export] private LevelResource levelResource;
 
     public override void _Ready()
     {
         camera.SetBoundariesRect(baseLayer.GetUsedRect());
         camera.SetCameraPosition(baseBuilding.GlobalPosition);
+        buildingManager.SetStartingResourceCount(levelResource.StartingResourceCount);
 
         gridManager.GridStateUpdated += () =>
         {
