@@ -15,7 +15,8 @@ public partial class BuildingManager : Node
     [Export] private Ui ui;
     [Export] private PackedScene cursorScene;
     [Export] private Node2D ySortRoot;
-    [Export] private int startingResourceCount = 4;
+
+    private int startingResourceCount;
 
     private enum State
     {
