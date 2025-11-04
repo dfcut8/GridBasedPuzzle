@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_a2edy")
-Id = "Level1"
+Id = "Level01"
 StartingResourceCount = 4
 LevelScenePath = "uid://bypt25sd50bds"
 metadata/_custom_type_script = "uid://hf4ql778pss"
