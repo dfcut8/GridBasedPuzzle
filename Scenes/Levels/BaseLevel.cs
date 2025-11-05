@@ -22,17 +22,22 @@ public partial class BaseLevel : Node
     {
         camera.SetBoundariesRect(baseLayer.GetUsedRect());
         camera.SetCameraPosition(baseBuilding.GlobalPosition);
+        if (levelResource == null)
+        {
+            GD.PushError("LevelResource is not assigned in the inspector.");
+            return;
+        }
         buildingManager.SetStartingResourceCount(levelResource.StartingResourceCount);
 
-        gridManager.GridStateUpdated += () =>
-        {
-            var goldMineTilePosition = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
-            if (gridManager.IsTilePositionInAnyBuildingRadius(goldMineTilePosition))
-            {
-                ShowCompleteScreen();
-                goldMine.SetActive();
-            }
-        };
+        //gridManager.GridStateUpdated += () =>
+        //{
+        //    var goldMineTilePosition = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
+        //    if (gridManager.IsTilePositionInAnyBuildingRadius(goldMineTilePosition))
+        //    {
+        //        ShowCompleteScreen();
+        //        goldMine.SetActive();
+        //    }
+        //};
     }
 
     private void ShowCompleteScreen()
