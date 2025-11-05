@@ -22,10 +22,17 @@ public partial class MainMenu : Node
 
         levelSelection = GetNode<LevelSelection>("%LevelSelection");
         levelSelection.Visible = false;
+        levelSelection.BackButtonPressed += ToggleLevelSelection;
 
-        playButton.Pressed += OnPlayButtonPressed;
+        playButton.Pressed += ToggleLevelSelection;
         quitButton.Pressed += OnQuitButtonPressed;
         optionsButton.Pressed += OnOptionsButtonPressed;
+    }
+
+    private void ToggleLevelSelection()
+    {
+        mainMenu.Visible = !mainMenu.Visible;
+        levelSelection.Visible = !levelSelection.Visible;
     }
 
     private void OnOptionsButtonPressed()
@@ -36,11 +43,5 @@ public partial class MainMenu : Node
     private void OnQuitButtonPressed()
     {
         GetTree().Quit();
-    }
-
-    private void OnPlayButtonPressed()
-    {
-        mainMenu.Visible = false;
-        levelSelection.Visible = true;
     }
 }
