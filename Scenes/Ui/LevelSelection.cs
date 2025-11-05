@@ -14,8 +14,8 @@ public partial class LevelSelection : MarginContainer
         for (int i = 0; i < levels.Length; i++)
         {
             var levelElement = levelSelectionElement.Instantiate<LevelSelectionElement>();
-            //levelElement.Setup(levels[i], i);
             grid.AddChild(levelElement);
+            levelElement.Setup(levels[i], i + 1);
         }
     }
 }
