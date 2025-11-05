@@ -37,4 +37,9 @@ public partial class LevelManager : Node
     {
         LoadLevel(++currentLevelIndex);
     }
+
+    public static LevelResource[] GetAllLevels()
+    {
+        return [.. Instance.levelResouces];
+    }
 }
