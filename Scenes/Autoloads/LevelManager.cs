@@ -1,9 +1,10 @@
 using Godot;
+using GridBasedPuzzle.Resources.Levels;
 
 namespace GridBasedPuzzle.Autoloads;
 public partial class LevelManager : Node
 {
-    [Export] private PackedScene[] levelScenes;
+    [Export] private LevelResource[] levelResouces;
 
     private int currentLevelIndex = 0;
 
@@ -11,25 +12,25 @@ public partial class LevelManager : Node
 
     public LevelManager()
     {
-        levelScenes = [];
+        levelResouces = [];
         Instance = this;
     }
 
     public void LoadLevel(int levelIndex)
     {
-        if (levelIndex < 0 || levelIndex >= levelScenes.Length)
+        if (levelIndex < 0 || levelIndex >= levelResouces.Length)
         {
             GD.PrintErr($"Level index {levelIndex} is out of bounds.");
             return;
         }
         currentLevelIndex = levelIndex;
-        var levelScene = levelScenes[levelIndex];
+        var levelScene = levelResouces[levelIndex].LevelScenePath;
         if (levelScene == null)
         {
             GD.PrintErr($"Level scene at index {levelIndex} is null.");
             return;
         }
-        GetTree().ChangeSceneToPacked(levelScene);
+        GetTree().ChangeSceneToFile(levelScene);
     }
 
     public void LoadNextLevel()
