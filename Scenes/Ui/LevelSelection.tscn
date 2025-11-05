@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://biib13m6bk070" path="res://Scenes/Ui/LevelSelectionElement.tscn" id="1_l1rri"]
 [ext_resource type="Script" uid="uid://ju334vxjt6s2" path="res://Scenes/Ui/LevelSelection.cs" id="1_w0qnh"]
 
-[node name="LevelSelectionScreen" type="MarginContainer"]
+[node name="LevelSelection" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
