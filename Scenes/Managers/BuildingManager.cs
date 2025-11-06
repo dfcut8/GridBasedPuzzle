@@ -161,8 +161,9 @@ public partial class BuildingManager : Node
         {
             ChangeState(State.PlacingBuilding);
             hoveredGridArea.Size = br.Dimensions;
-            var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
-            cursor.AddChild(cursorSprite);
+            var buildingSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
+            // cursor.AddChild(buildingSprite);
+            cursor.SetBuildingSprite(buildingSprite);
             cursor.SetDimensions(br.Dimensions);
 
             toPlaceBuildingResource = br;

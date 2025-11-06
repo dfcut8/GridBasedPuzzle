@@ -9,6 +9,7 @@ public partial class Cursor : Node2D
     private Node2D topRight;
     private Node2D bottomLeft;
     private Node2D bottomRight;
+    private Node2D buildingSpriteRoot;
 
     public override void _Ready()
     {
@@ -16,6 +17,7 @@ public partial class Cursor : Node2D
         topRight = GetNode<Node2D>("TopRight");
         bottomLeft = GetNode<Node2D>("BottomLeft");
         bottomRight = GetNode<Node2D>("BottomRight");
+        buildingSpriteRoot = GetNode<Node2D>("BuildingSpriteRoot");
     }
     
     public void SetInvalid()
@@ -33,5 +35,10 @@ public partial class Cursor : Node2D
         bottomLeft.Position = dim * new Vector2I(0, GlobalConstants.TILE_SIZE_PIXELS);
         bottomRight.Position = dim * new Vector2I(GlobalConstants.TILE_SIZE_PIXELS, GlobalConstants.TILE_SIZE_PIXELS);
         topRight.Position = dim * new Vector2I(GlobalConstants.TILE_SIZE_PIXELS, 0);
+    }
+
+    public void SetBuildingSprite(Node2D sprite)
+    {
+        buildingSpriteRoot.AddChild(sprite);
     }
 }
