@@ -1,8 +1,8 @@
+using System;
 using Godot;
 using GridBasedPuzzle.Resources.Buildings;
-using System;
 
-namespace GridBasedPuzzle.UserInterface;
+namespace GridBasedPuzzle.Scenes.Ui;
 
 public partial class BuildingSection : PanelContainer
 {

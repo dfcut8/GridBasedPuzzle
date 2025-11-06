@@ -2,7 +2,7 @@ using Godot;
 using GridBasedPuzzle.Autoloads;
 using GridBasedPuzzle.Resources.Levels;
 
-namespace GridBasedPuzzle.UserInterface;
+namespace GridBasedPuzzle.Scenes.Ui;
 
 public partial class LevelSelectionElement : PanelContainer
 {

@@ -1,10 +1,11 @@
+using System;
 using Godot;
 using GridBasedPuzzle.Resources.Buildings;
-using System;
+using GridBasedPuzzle.UserInterface;
 
-namespace GridBasedPuzzle.UserInterface;
+namespace GridBasedPuzzle.Scenes.Ui;
 
-public partial class Ui : CanvasLayer
+public partial class Hud : CanvasLayer
 {
     [Export] private BuildingResource[] buildingResources;
     [Export] private PackedScene buildingSectionScene;

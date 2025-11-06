@@ -9,7 +9,7 @@ public partial class MainMenu : Node
     private Button quitButton;
     private Button optionsButton;
     private MarginContainer mainMenu;
-    private LevelSelection levelSelection;
+    private Scenes.Ui.LevelSelection levelSelection;
 
     public override void _Ready()
     {
@@ -20,7 +20,7 @@ public partial class MainMenu : Node
         mainMenu = GetNode<MarginContainer>("%MainMenu");
         mainMenu.Visible = true;
 
-        levelSelection = GetNode<LevelSelection>("%LevelSelection");
+        levelSelection = GetNode<Scenes.Ui.LevelSelection>("%LevelSelection");
         levelSelection.Visible = false;
         levelSelection.BackButtonPressed += ToggleLevelSelection;
 

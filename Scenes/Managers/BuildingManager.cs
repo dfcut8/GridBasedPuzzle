@@ -1,18 +1,19 @@
+using System.Linq;
 using Godot;
-using GridBasedPuzzle.Buildings;
 using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
+using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.Scenes.Core;
-using GridBasedPuzzle.UserInterface;
-using System.Linq;
+using GridBasedPuzzle.Scenes.Ui;
+using GridBasedPuzzle.Ui.Buildings;
 
-namespace GridBasedPuzzle.Managers;
+namespace GridBasedPuzzle.Scenes.Managers;
 
 public partial class BuildingManager : Node
 {
     [Export] private GridManager gridManager;
-    [Export] private Ui ui;
+    [Export] private Hud ui;
     [Export] private PackedScene cursorScene;
     [Export] private Node2D ySortRoot;
 

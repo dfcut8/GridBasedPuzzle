@@ -1,6 +1,6 @@
 using Godot;
 
-namespace GridBasedPuzzle.Buildings;
+namespace GridBasedPuzzle.Ui.Buildings;
 
 public partial class Cursor : Node2D
 {

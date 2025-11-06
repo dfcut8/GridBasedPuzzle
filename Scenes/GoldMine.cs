@@ -1,6 +1,6 @@
 using Godot;
 
-namespace GridBasedPuzzle;
+namespace GridBasedPuzzle.Scenes;
 
 public partial class GoldMine : Node2D
 {

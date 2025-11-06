@@ -1,21 +1,22 @@
 using Godot;
-
 using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Levels;
-using GridBasedPuzzle.UserInterface;
+using GridBasedPuzzle.Scenes.Ui;
+using BuildingManager = GridBasedPuzzle.Scenes.Managers.BuildingManager;
+using LevelCompleteScreen = GridBasedPuzzle.Scenes.Ui.LevelCompleteScreen;
 
-namespace GridBasedPuzzle.Levels;
+namespace GridBasedPuzzle.Scenes.Levels;
 
 public partial class BaseLevel : Node
 {
     [Export] private GridManager gridManager;
     [Export] private BuildingManager buildingManager;
     [Export] private Node2D baseBuilding;
-    [Export] private GoldMine goldMine;
-    [Export] private Camera camera;
+    [Export] private Scenes.GoldMine goldMine;
+    [Export] private Scenes.Camera camera;
     [Export] private TileMapLayer baseLayer;
     [Export] private PackedScene levelCompleteScreenScene;
-    [Export] private Ui ui;
+    [Export] private Hud ui;
     [Export] private LevelResource levelResource;
 
     public override void _Ready()

@@ -1,8 +1,7 @@
 using Godot;
-
 using GridBasedPuzzle.Scenes.Core;
 
-namespace GridBasedPuzzle;
+namespace GridBasedPuzzle.Scenes;
 
 public partial class Camera : Camera2D
 {

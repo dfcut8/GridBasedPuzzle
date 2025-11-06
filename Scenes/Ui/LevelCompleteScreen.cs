@@ -1,7 +1,7 @@
 using Godot;
 using GridBasedPuzzle.Autoloads;
 
-namespace GridBasedPuzzle.UserInterface;
+namespace GridBasedPuzzle.Scenes.Ui;
 
 public partial class LevelCompleteScreen : CanvasLayer
 {

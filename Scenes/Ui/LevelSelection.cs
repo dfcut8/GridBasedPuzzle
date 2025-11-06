@@ -1,8 +1,9 @@
+using System;
 using Godot;
 using GridBasedPuzzle.Autoloads;
-using System;
+using GridBasedPuzzle.UserInterface;
 
-namespace GridBasedPuzzle.UserInterface;
+namespace GridBasedPuzzle.Scenes.Ui;
 
 public partial class LevelSelection : MarginContainer
 {
