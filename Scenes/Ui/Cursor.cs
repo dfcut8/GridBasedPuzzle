@@ -10,6 +10,8 @@ public partial class Cursor : Node2D
     private Node2D bottomLeft;
     private Node2D bottomRight;
     private Node2D buildingSpriteRoot;
+    
+    private Tween buildingSpriteTween;
 
     public override void _Ready()
     {
@@ -23,11 +25,13 @@ public partial class Cursor : Node2D
     public void SetInvalid()
     {
         Modulate = Colors.Red;
+        buildingSpriteRoot.Modulate = Modulate;
     }
 
     public void SetValid()
     {
         Modulate = Colors.White;
+        buildingSpriteRoot.Modulate = Modulate;
     }
 
     public void SetDimensions(Vector2I dim)
@@ -40,5 +44,19 @@ public partial class Cursor : Node2D
     public void SetBuildingSprite(Node2D sprite)
     {
         buildingSpriteRoot.AddChild(sprite);
+    }
+
+    public void PlayHoverAnimation()
+    {
+        if (buildingSpriteTween != null && buildingSpriteTween.IsValid())
+        {
+            buildingSpriteTween.Kill();
+        }
+        buildingSpriteTween = CreateTween();
+        buildingSpriteTween.TweenProperty(buildingSpriteRoot,
+            "position",
+            GlobalPosition,
+            0.3f);
+        buildingSpriteTween.Play();
     }
 }

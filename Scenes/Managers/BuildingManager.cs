@@ -43,11 +43,6 @@ public partial class BuildingManager : Node
     public override void _Process(double delta)
     {
         var gridPosition = gridManager.GetMouseGridCellPosition();
-        if (hoveredGridArea.Position != gridPosition)
-        {
-            hoveredGridArea.Position = gridPosition;
-            UpdateHoveredGridArea();
-        }
         switch (currentState)
         {
             case State.Normal:
@@ -56,6 +51,13 @@ public partial class BuildingManager : Node
                 cursor.GlobalPosition = gridPosition * 64;
                 break;
         }
+        
+        if (hoveredGridArea.Position != gridPosition)
+        {
+            hoveredGridArea.Position = gridPosition;
+            UpdateHoveredGridArea();
+        }
+        
     }
 
     public override void _UnhandledInput(InputEvent e)
@@ -162,7 +164,6 @@ public partial class BuildingManager : Node
             ChangeState(State.PlacingBuilding);
             hoveredGridArea.Size = br.Dimensions;
             var buildingSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
-            // cursor.AddChild(buildingSprite);
             cursor.SetBuildingSprite(buildingSprite);
             cursor.SetDimensions(br.Dimensions);
 
@@ -185,6 +186,7 @@ public partial class BuildingManager : Node
         {
             cursor.SetInvalid();
         }
+        cursor.PlayHoverAnimation();
     }
 
     private void OnResourceTilesUpdated(int resourceCount)
