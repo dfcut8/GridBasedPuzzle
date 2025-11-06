@@ -6,7 +6,7 @@ using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.Scenes.Core;
 using GridBasedPuzzle.Scenes.Ui;
-using GridBasedPuzzle.Ui.Buildings;
+using Cursor = GridBasedPuzzle.Scenes.Ui.Cursor;
 
 namespace GridBasedPuzzle.Scenes.Managers;
 
@@ -144,9 +144,9 @@ public partial class BuildingManager : Node
     private void DestroyBuildingAtHoveredCellPosition()
     {
         var rootCell = hoveredGridArea.Position;
-        var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
-            .Where(bc => bc.IsTileInBuildingArea(rootCell))
-            .FirstOrDefault();
+        var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent))
+            .Cast<BuildingComponent>()
+            .FirstOrDefault(bc => bc.IsTileInBuildingArea(rootCell));
         if (buildingComponent == null) return;
         usedResourceCount -= buildingComponent.BuildingResource.ResourceCost;
         buildingComponent.DestroyBuilding();
@@ -163,6 +163,7 @@ public partial class BuildingManager : Node
             hoveredGridArea.Size = br.Dimensions;
             var cursorSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.AddChild(cursorSprite);
+            cursor.SetDimensions(br.Dimensions);
 
             toPlaceBuildingResource = br;
             UpdateGridDisplay();

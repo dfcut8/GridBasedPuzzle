@@ -7,7 +7,7 @@
 [ext_resource type="TileSet" uid="uid://di7b570y6y7tj" path="res://Resources/HighLightTileset.tres" id="3_kln2b"]
 [ext_resource type="PackedScene" uid="uid://dvf3srqqpmw6f" path="res://Scenes/Managers/GridManager.tscn" id="3_pbw6q"]
 [ext_resource type="TileSet" uid="uid://ca70iacsqhub7" path="res://Resources/FlatTileset.tres" id="4_rgh2o"]
-[ext_resource type="PackedScene" uid="uid://1rt1fsvp1e5w" path="res://Resources/Buildings/Cursor.tscn" id="4_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://1rt1fsvp1e5w" path="res://Scenes/Ui/Cursor.tscn" id="4_vy5pj"]
 [ext_resource type="PackedScene" uid="uid://didqeaf7n7aae" path="res://Scenes/Ui/Ui.tscn" id="6_jw32o"]
 [ext_resource type="PackedScene" uid="uid://b1ifv3js634q2" path="res://Scenes/Camera.tscn" id="6_poiwk"]
 [ext_resource type="PackedScene" uid="uid://7lqoud5x50xk" path="res://Scenes/Buildings/BaseBuilding.tscn" id="6_v1gob"]
