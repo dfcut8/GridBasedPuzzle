@@ -12,7 +12,7 @@ public partial class LevelSelection : MarginContainer
 
     private Button backButton;
 
-    override public void _Ready()
+    public override void _Ready()
     {
         backButton = GetNode<Button>("%BackButton");
         backButton.Pressed += () => BackButtonPressed?.Invoke();
