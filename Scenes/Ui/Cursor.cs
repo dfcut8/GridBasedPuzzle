@@ -9,9 +9,11 @@ public partial class Cursor : Node2D
     private Node2D topRight;
     private Node2D bottomLeft;
     private Node2D bottomRight;
+    private Node2D bouncingBuildingRoot;
     private Node2D buildingSpriteRoot;
 
     private Tween buildingSpriteTween;
+    private Tween bouncingBuildingRootTween;
 
     public override void _Ready()
     {
@@ -19,19 +21,20 @@ public partial class Cursor : Node2D
         topRight = GetNode<Node2D>("TopRight");
         bottomLeft = GetNode<Node2D>("BottomLeft");
         bottomRight = GetNode<Node2D>("BottomRight");
-        buildingSpriteRoot = GetNode<Node2D>("BuildingSpriteRoot");
+        bouncingBuildingRoot = GetNode<Node2D>("%BouncingBuildingRoot");
+        buildingSpriteRoot = GetNode<Node2D>("%BuildingSpriteRoot");
     }
 
     public void SetInvalid()
     {
         Modulate = Colors.Red;
-        buildingSpriteRoot.Modulate = Modulate;
+        bouncingBuildingRoot.Modulate = Modulate;
     }
 
     public void SetValid()
     {
         Modulate = Colors.White;
-        buildingSpriteRoot.Modulate = Modulate;
+        bouncingBuildingRoot.Modulate = Modulate;
     }
 
     public void SetDimensions(Vector2I dim)
@@ -43,7 +46,7 @@ public partial class Cursor : Node2D
 
     public void SetBuildingSprite(Node2D sprite)
     {
-        buildingSpriteRoot.AddChild(sprite);
+        bouncingBuildingRoot.AddChild(sprite);
     }
 
     public void PlayHoverAnimation()
@@ -56,7 +59,29 @@ public partial class Cursor : Node2D
         buildingSpriteTween.TweenProperty(buildingSpriteRoot,
             "global_position",
             GlobalPosition,
-            0.3f);
+            0.3f)
+            .SetTrans(Tween.TransitionType.Back)
+            .SetEase(Tween.EaseType.Out);
         buildingSpriteTween.Play();
+
+        if (bouncingBuildingRootTween != null && bouncingBuildingRootTween.IsValid())
+        {
+            bouncingBuildingRootTween.Kill();
+        }
+        bouncingBuildingRootTween = CreateTween();
+        bouncingBuildingRootTween.SetLoops(0);
+        bouncingBuildingRootTween.TweenProperty(bouncingBuildingRoot,
+            "position",
+            new Vector2(0, -6),
+            0.3f)
+            .SetEase(Tween.EaseType.InOut)
+            .SetTrans(Tween.TransitionType.Quad);
+        bouncingBuildingRootTween.TweenProperty(bouncingBuildingRoot,
+            "position",
+            new Vector2(0, 6),
+            0.3f)
+            .SetEase(Tween.EaseType.InOut)
+            .SetTrans(Tween.TransitionType.Quad);
+        bouncingBuildingRootTween.Play();
     }
 }
