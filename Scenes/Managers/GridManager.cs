@@ -256,6 +256,17 @@ public partial class GridManager : Node
         return ConvertWorldPositionToTilePosition(highlightTilemapLayer.GetGlobalMousePosition());
     }
 
+    public Vector2I GetCursorDimensionsWithOffset(Vector2 dimensions)
+    {
+        var mousePos = highlightTilemapLayer.GetGlobalMousePosition() / GlobalConstants.TILE_SIZE_PIXELS;
+        GD.Print(mousePos);
+        mousePos -= dimensions / 2;
+        mousePos = mousePos.Round();
+        var result = new Vector2I((int)mousePos.X, (int)mousePos.Y);
+        GD.Print($"Cursor grid cell position with offset: {result}");
+        return result;
+    }
+
     public void HighlightBuildableTiles()
     {
         foreach (var tilePosition in validBuildableTiles)

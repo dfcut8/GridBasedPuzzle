@@ -31,6 +31,7 @@ public partial class BuildingManager : Node
     private BuildingResource toPlaceBuildingResource;
     private Rect2I hoveredGridArea = new(Vector2I.Zero, Vector2I.One);
     private Cursor cursor;
+    private Vector2 cursorDimensions;
     private State currentState;
 
 
@@ -42,7 +43,7 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
-        var gridPosition = gridManager.GetMouseGridCellPosition();
+        var gridPosition = gridManager.GetCursorDimensionsWithOffset(cursorDimensions);
         switch (currentState)
         {
             case State.Normal:
@@ -166,6 +167,7 @@ public partial class BuildingManager : Node
             var buildingSprite = br.BuildingSpriteScene.Instantiate<Sprite2D>();
             cursor.SetBuildingSprite(buildingSprite);
             cursor.SetDimensions(br.Dimensions);
+            cursorDimensions = br.Dimensions;
 
             toPlaceBuildingResource = br;
             UpdateGridDisplay();
