@@ -43,12 +43,15 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
-        var gridPosition = gridManager.GetCursorDimensionsWithOffset(cursorDimensions);
+        Vector2I gridPosition = Vector2I.Zero;
+
         switch (currentState)
         {
             case State.Normal:
+                gridPosition = gridManager.GetMouseGridCellPosition();
                 break;
             case State.PlacingBuilding:
+                gridPosition = gridManager.GetCursorDimensionsWithOffset(cursorDimensions);
                 cursor.GlobalPosition = gridPosition * GlobalConstants.TILE_SIZE_PIXELS;
                 break;
         }
