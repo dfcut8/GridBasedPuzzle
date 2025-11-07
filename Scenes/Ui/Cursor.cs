@@ -10,7 +10,7 @@ public partial class Cursor : Node2D
     private Node2D bottomLeft;
     private Node2D bottomRight;
     private Node2D buildingSpriteRoot;
-    
+
     private Tween buildingSpriteTween;
 
     public override void _Ready()
@@ -21,7 +21,7 @@ public partial class Cursor : Node2D
         bottomRight = GetNode<Node2D>("BottomRight");
         buildingSpriteRoot = GetNode<Node2D>("BuildingSpriteRoot");
     }
-    
+
     public void SetInvalid()
     {
         Modulate = Colors.Red;
@@ -54,7 +54,7 @@ public partial class Cursor : Node2D
         }
         buildingSpriteTween = CreateTween();
         buildingSpriteTween.TweenProperty(buildingSpriteRoot,
-            "position",
+            "global_position",
             GlobalPosition,
             0.3f);
         buildingSpriteTween.Play();

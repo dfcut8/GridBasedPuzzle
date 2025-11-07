@@ -1,4 +1,3 @@
-using System.Linq;
 using Godot;
 using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
@@ -6,6 +5,7 @@ using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.Scenes.Core;
 using GridBasedPuzzle.Scenes.Ui;
+using System.Linq;
 using Cursor = GridBasedPuzzle.Scenes.Ui.Cursor;
 
 namespace GridBasedPuzzle.Scenes.Managers;
@@ -48,16 +48,16 @@ public partial class BuildingManager : Node
             case State.Normal:
                 break;
             case State.PlacingBuilding:
-                cursor.GlobalPosition = gridPosition * 64;
+                cursor.GlobalPosition = gridPosition * GlobalConstants.TILE_SIZE_PIXELS;
                 break;
         }
-        
+
         if (hoveredGridArea.Position != gridPosition)
         {
             hoveredGridArea.Position = gridPosition;
             UpdateHoveredGridArea();
         }
-        
+
     }
 
     public override void _UnhandledInput(InputEvent e)
