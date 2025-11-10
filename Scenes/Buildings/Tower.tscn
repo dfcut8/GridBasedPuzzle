@@ -7,8 +7,9 @@
 [node name="Tower" type="Node2D"]
 y_sort_enabled = true
 
-[node name="BuildingComponent" parent="." instance=ExtResource("2_ywl2g")]
+[node name="BuildingComponent" parent="." node_paths=PackedStringArray("animatorComponent") instance=ExtResource("2_ywl2g")]
 buildingResourcePath = "uid://bcupk3s047qr4"
+animatorComponent = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_8qjvt")]
 

@@ -54,12 +54,20 @@ public partial class BuildingComponent : Node2D
     {
         if (BuildingResource.IsDeletable)
         {
-            GlobalEvents.BuildingDestroyed?.Invoke(this);
-            animatorComponent?.PlayDestroyAnimation();
-            animatorComponent?.DestroyAnimationFinished += () =>
+            if (animatorComponent is null)
             {
                 Owner.QueueFree();
-            };
+                return;
+            }
+            else
+            {
+                animatorComponent.PlayDestroyAnimation();
+                animatorComponent.DestroyAnimationFinished += () =>
+                {
+                    Owner.QueueFree();
+                };
+            }
+            GlobalEvents.BuildingDestroyed?.Invoke(this);
         }
     }
 

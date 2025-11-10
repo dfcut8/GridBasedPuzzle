@@ -7,10 +7,10 @@
 [node name="Village" type="Node2D"]
 y_sort_enabled = true
 
-[node name="BuildingComponent" parent="." instance=ExtResource("2_qygkm")]
+[node name="BuildingComponent" parent="." node_paths=PackedStringArray("animatorComponent") instance=ExtResource("2_qygkm")]
 buildingResourcePath = "uid://y1lwti6w3s7w"
+animatorComponent = NodePath("../BuildingAnimatorComponent")
 
-[node name="BuildingAnimatorComponent" parent="." node_paths=PackedStringArray("spriteToAnimate") instance=ExtResource("1_qygkm")]
-spriteToAnimate = NodePath("VillageSprite2D")
+[node name="BuildingAnimatorComponent" parent="." instance=ExtResource("1_qygkm")]
 
 [node name="VillageSprite2D" parent="BuildingAnimatorComponent" instance=ExtResource("3_qygkm")]
