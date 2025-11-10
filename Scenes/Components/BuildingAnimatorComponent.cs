@@ -26,7 +26,7 @@ public partial class BuildingAnimatorComponent : Node2D
             Vector2.Zero,
             0.5f)
             .From(Vector2.Up * 128)
-            .SetTrans(Tween.TransitionType.Back)
+            .SetTrans(Tween.TransitionType.Bounce)
             .SetEase(Tween.EaseType.Out);
     }
 
