@@ -9,7 +9,6 @@ public partial class BuildingAnimatorComponent : Node2D
 
     override public void _Ready()
     {
-        animationRoot = GetNode<Node2D>("%AnimationRoot");
         Setup();
         PlayInAnimation();
     }
@@ -34,15 +33,18 @@ public partial class BuildingAnimatorComponent : Node2D
     /// <summary>
     /// Needed to setup properly for y-sort alignment.
     /// </summary>
+    // Dont like this, but fine for now.
     private void Setup()
     {
         var spriteToAnimate = GetChildOrNull<Sprite2D>(0);
         if (spriteToAnimate == null)
         {
-            GD.PushError("Sprite to animate is not assigned in BuildingAnimatorComponent.");
+            GD.PushError("Sprite to animate should be child to component");
             return;
         }
         // need to offset position by sprite height to align bottom
+        animationRoot = new Node2D();
+        AddChild(animationRoot);
         Position = new Vector2(Position.X, spriteToAnimate.Position.Y);
         RemoveChild(spriteToAnimate);
         animationRoot.AddChild(spriteToAnimate);
