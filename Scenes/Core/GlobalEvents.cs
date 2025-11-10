@@ -1,6 +1,5 @@
+using GridBasedPuzzle.Scenes.Components;
 using System;
-
-using GridBasedPuzzle.Components;
 
 namespace GridBasedPuzzle.Core;
 

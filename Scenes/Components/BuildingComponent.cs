@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-
 using Godot;
-
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
+using System.Collections.Generic;
 
-namespace GridBasedPuzzle.Components;
+namespace GridBasedPuzzle.Scenes.Components;
 
 public partial class BuildingComponent : Node2D
 {

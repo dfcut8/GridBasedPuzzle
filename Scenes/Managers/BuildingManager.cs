@@ -1,8 +1,8 @@
 using Godot;
-using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Buildings;
+using GridBasedPuzzle.Scenes.Components;
 using GridBasedPuzzle.Scenes.Core;
 using GridBasedPuzzle.Scenes.Ui;
 using System.Linq;
@@ -206,6 +206,7 @@ public partial class BuildingManager : Node
         ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridArea.Position * GlobalConstants.TILE_SIZE_PIXELS;
+        building.GetChildOrNull<BuildingAnimatorComponent>(0)?.PlayInAnimation();
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         ui.UpdateAvailableResources(AvailableResourceCount);
         ChangeState(State.Normal);
