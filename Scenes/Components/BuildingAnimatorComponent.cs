@@ -1,14 +1,16 @@
 using Godot;
-using System.Linq;
 
 namespace GridBasedPuzzle.Scenes.Components;
 
 public partial class BuildingAnimatorComponent : Node2D
 {
     private Tween activeTween;
+    private Node2D animationRoot;
 
     override public void _Ready()
     {
+        animationRoot = GetNode<Node2D>("%AnimationRoot");
+        Setup();
         PlayInAnimation();
     }
 
@@ -20,7 +22,7 @@ public partial class BuildingAnimatorComponent : Node2D
         }
 
         activeTween = CreateTween();
-        activeTween.TweenProperty(this,
+        activeTween.TweenProperty(animationRoot,
             "position",
             Vector2.Zero,
             0.5f)
@@ -29,12 +31,21 @@ public partial class BuildingAnimatorComponent : Node2D
             .SetEase(Tween.EaseType.Out);
     }
 
-    private void SetupNodes()
+    /// <summary>
+    /// Needed to setup properly for y-sort alignment.
+    /// </summary>
+    private void Setup()
     {
-        var spriteNode = GetChildren().FirstOrDefault() as Node2D;
-        if (spriteNode == null)
+        var spriteToAnimate = GetChildOrNull<Sprite2D>(0);
+        if (spriteToAnimate == null)
         {
+            GD.PushError("Sprite to animate is not assigned in BuildingAnimatorComponent.");
             return;
         }
+        // need to offset position by sprite height to align bottom
+        Position = new Vector2(Position.X, spriteToAnimate.Position.Y);
+        RemoveChild(spriteToAnimate);
+        animationRoot.AddChild(spriteToAnimate);
+        spriteToAnimate.Position = new Vector2(spriteToAnimate.Position.X, 0f);
     }
 }
