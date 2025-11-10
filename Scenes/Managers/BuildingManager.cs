@@ -206,7 +206,7 @@ public partial class BuildingManager : Node
         ySortRoot.AddChild(building);
 
         building.GlobalPosition = hoveredGridArea.Position * GlobalConstants.TILE_SIZE_PIXELS;
-        building.GetChildOrNull<BuildingAnimatorComponent>(0)?.PlayInAnimation();
+        building.GetChildren().OfType<BuildingAnimatorComponent>().FirstOrDefault()?.PlayInAnimation();
         usedResourceCount += toPlaceBuildingResource.ResourceCost;
         ui.UpdateAvailableResources(AvailableResourceCount);
         ChangeState(State.Normal);

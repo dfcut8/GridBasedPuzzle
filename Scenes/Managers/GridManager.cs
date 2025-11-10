@@ -1,7 +1,7 @@
 using Godot;
-using GridBasedPuzzle.Components;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Levels.Utils;
+using GridBasedPuzzle.Scenes.Components;
 using GridBasedPuzzle.Scenes.Core;
 using System;
 using System.Collections.Generic;
