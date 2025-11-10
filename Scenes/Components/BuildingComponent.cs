@@ -9,6 +9,7 @@ public partial class BuildingComponent : Node2D
 {
     [Export(PropertyHint.File, "*.tres")]
     private string buildingResourcePath;
+    [Export] private BuildingAnimatorComponent animatorComponent;
 
     public BuildingResource BuildingResource;
 
@@ -54,7 +55,11 @@ public partial class BuildingComponent : Node2D
         if (BuildingResource.IsDeletable)
         {
             GlobalEvents.BuildingDestroyed?.Invoke(this);
-            Owner.QueueFree();
+            animatorComponent?.PlayDestroyAnimation();
+            animatorComponent?.DestroyAnimationFinished += () =>
+            {
+                Owner.QueueFree();
+            };
         }
     }
 
