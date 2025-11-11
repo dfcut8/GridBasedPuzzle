@@ -53,6 +53,7 @@ public partial class GridManager : Node
     protected override void Dispose(bool disposing)
     {
         GlobalEvents.BuildingPlaced -= OnBuildingPlaced;
+        GlobalEvents.BuildingDestroyed -= OnBuildingDestroyed;
     }
 
     private void OnBuildingDestroyed(BuildingComponent bc)
