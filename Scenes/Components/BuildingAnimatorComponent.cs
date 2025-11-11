@@ -7,8 +7,11 @@ public partial class BuildingAnimatorComponent : Node2D
 {
     public Action DestroyAnimationFinished;
 
+    [Export] private Texture2D maskTexture;
+
     private Tween activeTween;
     private Node2D animationRoot;
+    private Sprite2D maskNode;
 
     override public void _Ready()
     {
@@ -34,6 +37,8 @@ public partial class BuildingAnimatorComponent : Node2D
 
     public void PlayDestroyAnimation()
     {
+        maskNode.Texture = maskTexture;
+        maskNode.ClipChildren = ClipChildrenMode.Only;
         if (animationRoot == null)
         {
             GD.PushError("Animation root is null!");
@@ -67,7 +72,9 @@ public partial class BuildingAnimatorComponent : Node2D
         activeTween.TweenProperty(animationRoot,
             "position",
             Vector2.Down * 300,
-            0.4f);
+            0.4f)
+            .SetTrans(Tween.TransitionType.Quint)
+            .SetEase(Tween.EaseType.In);
         activeTween.Finished += () => DestroyAnimationFinished?.Invoke();
     }
 
@@ -83,12 +90,20 @@ public partial class BuildingAnimatorComponent : Node2D
             GD.PushError("Sprite to animate should be child to component");
             return;
         }
+
+        maskNode = new Sprite2D()
+        {
+            Centered = false,
+            Offset = new Vector2(-160f, -256f),
+        };
+        AddChild(maskNode);
+
         // need to offset position by sprite height to align bottom
         animationRoot = new Node2D();
-        AddChild(animationRoot);
-        Position = new Vector2(Position.X, spriteToAnimate.Position.Y);
+        maskNode.AddChild(animationRoot);
+        Position = new Vector2(spriteToAnimate.Position.X, spriteToAnimate.Position.Y);
         RemoveChild(spriteToAnimate);
         animationRoot.AddChild(spriteToAnimate);
-        spriteToAnimate.Position = new Vector2(spriteToAnimate.Position.X, 0f);
+        spriteToAnimate.Position = new Vector2(0f, 0f);
     }
 }
