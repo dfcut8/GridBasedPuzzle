@@ -89,25 +89,30 @@ public partial class GridManager : Node
 
     private void UpdateGoblinOccupiedTiles(BuildingComponent bc)
     {
+        occupiedTiles.UnionWith(bc.GetOccupiedSellPositions());
         var rootCell = bc.GetRootGridCellPosition();
         var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
-        var tiles = GetTilesRadius(tileArea, bc.BuildingResource.DangerRadius, (_) => true);
-        goblinOccupiedTiles.UnionWith(tiles);
+        if (bc.BuildingResource.DangerRadius > 0)
+        {
+            var tiles = GetTilesRadius(tileArea, bc.BuildingResource.DangerRadius, (_) => true).ToHashSet();
+            tiles.ExceptWith(occupiedTiles);
+            goblinOccupiedTiles.UnionWith(tiles);
+        }
     }
 
-    private void UpdateValidBuildableTiles(BuildingComponent buildingComponent)
+    private void UpdateValidBuildableTiles(BuildingComponent bc)
     {
-        occupiedTiles.UnionWith(buildingComponent.GetOccupiedSellPositions());
-        var rootCell = buildingComponent.GetRootGridCellPosition();
-        var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
+        occupiedTiles.UnionWith(bc.GetOccupiedSellPositions());
+        var rootCell = bc.GetRootGridCellPosition();
+        var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
 
         var allTiles = GetTilesRadius(tileArea,
-            buildingComponent.BuildingResource.BuildableRadius,
+            bc.BuildingResource.BuildableRadius,
             (_) => true);
         allTilesInBuildableRadius.UnionWith(allTiles);
 
         var validTiles = GetTilesRadius(tileArea,
-            buildingComponent.BuildingResource.BuildableRadius,
+            bc.BuildingResource.BuildableRadius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
         validBuildableTiles.UnionWith(validTiles);
         validBuildableTiles.ExceptWith(occupiedTiles);
