@@ -301,7 +301,7 @@ public partial class GridManager : Node
         var validTiles = GetTilesRadius(tileArea, radius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData)
             .ToHashSet();
-        var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles);
+        var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles).Except(goblinOccupiedTiles);
         var atlasCoords = new Vector2I(1, 0);
         foreach (var tilePosition in expandedTiles)
         {
