@@ -8,6 +8,7 @@ public partial class BuildingAnimatorComponent : Node2D
     public Action DestroyAnimationFinished;
 
     [Export] private Texture2D maskTexture;
+    [Export] private PackedScene partilesScene;
 
     private Tween activeTween;
     private Node2D animationRoot;
@@ -33,6 +34,12 @@ public partial class BuildingAnimatorComponent : Node2D
             .From(Vector2.Up * 128)
             .SetTrans(Tween.TransitionType.Bounce)
             .SetEase(Tween.EaseType.Out);
+        activeTween.TweenCallback(Callable.From(() =>
+        {
+            var particles = partilesScene.Instantiate<Node2D>();
+            GetParent().AddChild(particles);
+            particles.GlobalPosition = GlobalPosition; // + new Vector2(80f, 128f);
+        }));
     }
 
     public void PlayDestroyAnimation()
