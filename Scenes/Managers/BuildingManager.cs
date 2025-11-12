@@ -150,9 +150,8 @@ public partial class BuildingManager : Node
     private void DestroyBuildingAtHoveredCellPosition()
     {
         var rootCell = hoveredGridArea.Position;
-        var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent))
-            .Cast<BuildingComponent>()
-            .FirstOrDefault(bc => bc.IsTileInBuildingArea(rootCell));
+        var buildingComponent = BuildingComponent.GetValidBuildingComponents(this)
+            .FirstOrDefault(bc => bc.BuildingResource.IsDeletable && bc.IsTileInBuildingArea(rootCell));
         if (buildingComponent == null) return;
         usedResourceCount -= buildingComponent.BuildingResource.ResourceCost;
         buildingComponent.DestroyBuilding();

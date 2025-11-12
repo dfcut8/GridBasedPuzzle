@@ -2,6 +2,7 @@ using Godot;
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GridBasedPuzzle.Scenes.Components;
 
@@ -13,8 +14,15 @@ public partial class BuildingComponent : Node2D
 
     public BuildingResource BuildingResource;
 
+    public bool IsDestroing { get; private set; } = false;
+
     private HashSet<Vector2I> occupiedTiles = [];
 
+    public static IEnumerable<BuildingComponent> GetValidBuildingComponents(Node node)
+    {
+        return node.GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
+            .Where(b => !b.IsDestroing);
+    }
     public override void _Ready()
     {
         if (buildingResourcePath is not null)
@@ -52,6 +60,7 @@ public partial class BuildingComponent : Node2D
 
     public void DestroyBuilding()
     {
+        IsDestroing = true;
         if (BuildingResource.IsDeletable)
         {
             if (animatorComponent is null)

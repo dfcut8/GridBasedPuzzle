@@ -58,18 +58,17 @@ public partial class GridManager : Node
 
     private void OnBuildingDestroyed(BuildingComponent bc)
     {
-        RecalculateGrid(bc);
+        RecalculateGrid();
     }
 
-    private void RecalculateGrid(BuildingComponent excludedComponent)
+    private void RecalculateGrid()
     {
         occupiedTiles.Clear();
         validBuildableTiles.Clear();
         allTilesInBuildableRadius.Clear();
         collectedResourceTiles.Clear();
 
-        var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
-            .Except([excludedComponent]);
+        var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 
         foreach (var bc in buildingComponents)
         {
