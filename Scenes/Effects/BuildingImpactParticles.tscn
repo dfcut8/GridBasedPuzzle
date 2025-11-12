@@ -94,7 +94,7 @@ angle_max = 360.00003
 direction = Vector3(0, 0, 0)
 spread = 15.0
 initial_velocity_min = 100.0
-initial_velocity_max = 300.0
+initial_velocity_max = 400.0
 angular_velocity_min = -360.0
 angular_velocity_max = 359.99997
 gravity = Vector3(0, -200, 0)
@@ -111,6 +111,7 @@ libraries = {
 autoplay = "Default"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, -32)
 emitting = false
 amount = 16
 texture = ExtResource("1_yv6rw")
@@ -122,6 +123,7 @@ draw_order = 0
 process_material = SubResource("ParticleProcessMaterial_yv6rw")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+position = Vector2(0, -32)
 rotation = -3.1415927
 emitting = false
 amount = 16
