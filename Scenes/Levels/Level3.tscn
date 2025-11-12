@@ -45,4 +45,4 @@ position = Vector2(512, 992)
 position = Vector2(2336, 448)
 
 [node name="GoblinCamp" parent="YSortRoot" index="4" instance=ExtResource("3_c01y6")]
-position = Vector2(1056, 320)
+position = Vector2(1152, 320)
