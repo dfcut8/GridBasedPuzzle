@@ -48,6 +48,9 @@ public partial class BuildingAnimatorComponent : Node2D
         {
             activeTween.Kill();
         }
+
+        animationRoot.Position = Vector2.Zero;
+
         activeTween = CreateTween();
         activeTween.TweenProperty(animationRoot,
             "rotation_degrees",
