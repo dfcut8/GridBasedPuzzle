@@ -8,7 +8,8 @@ public partial class BuildingAnimatorComponent : Node2D
     public Action DestroyAnimationFinished;
 
     [Export] private Texture2D maskTexture;
-    [Export] private PackedScene partilesScene;
+    [Export] private PackedScene impactPartilesScene;
+    [Export] private PackedScene destroyPartilesScene;
 
     private Tween activeTween;
     private Node2D animationRoot;
@@ -34,11 +35,13 @@ public partial class BuildingAnimatorComponent : Node2D
             .From(Vector2.Up * 128)
             .SetTrans(Tween.TransitionType.Bounce)
             .SetEase(Tween.EaseType.Out);
+
+        // This have a delay. We can move this to async later.
         activeTween.TweenCallback(Callable.From(() =>
         {
-            var particles = partilesScene.Instantiate<Node2D>();
-            GetParent().AddChild(particles);
-            particles.GlobalPosition = GlobalPosition; // + new Vector2(80f, 128f);
+            var particles = impactPartilesScene.Instantiate<Node2D>();
+            Owner.GetParent().AddChild(particles);
+            particles.GlobalPosition = GlobalPosition;
         }));
     }
 
@@ -57,6 +60,10 @@ public partial class BuildingAnimatorComponent : Node2D
         }
 
         animationRoot.Position = Vector2.Zero;
+
+        var particles = destroyPartilesScene.Instantiate<Node2D>();
+        Owner.GetParent().AddChild(particles);
+        particles.GlobalPosition = GlobalPosition;
 
         activeTween = CreateTween();
         activeTween.TweenProperty(animationRoot,
