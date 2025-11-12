@@ -44,6 +44,7 @@ animations = [{
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." node_paths=PackedStringArray("animatorComponent") instance=ExtResource("1_qwyqt")]
+buildingResourcePath = "uid://dckoft5kmq1x1"
 animatorComponent = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_tb53f")]
@@ -53,6 +54,6 @@ position = Vector2(64, 96)
 sprite_frames = SubResource("SpriteFrames_mufk0")
 animation = &"Default"
 autoplay = "Default"
-frame_progress = 0.7478438
+frame_progress = 0.5133405
 centered = false
 offset = Vector2(-128, -160)

@@ -101,7 +101,7 @@ public partial class BuildingAnimatorComponent : Node2D
     // Dont like this, but fine for now.
     private void Setup()
     {
-        var spriteToAnimate = GetChildOrNull<Sprite2D>(0);
+        var spriteToAnimate = GetChildOrNull<Node2D>(0);
         if (spriteToAnimate == null)
         {
             GD.PushError("Sprite to animate should be child to component");

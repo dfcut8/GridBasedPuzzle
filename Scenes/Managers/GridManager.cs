@@ -34,6 +34,7 @@ public partial class GridManager : Node
     private HashSet<Vector2I> validBuildableTiles = [];
     private HashSet<Vector2I> occupiedTiles = [];
     private HashSet<Vector2I> collectedResourceTiles = [];
+    private HashSet<Vector2I> goblinOccupiedTiles = [];
     private List<TileMapLayer> tileMapLayers = [];
     private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = [];
 
@@ -81,8 +82,17 @@ public partial class GridManager : Node
 
     private void OnBuildingPlaced(BuildingComponent b)
     {
+        UpdateGoblinOccupiedTiles(b);
         UpdateValidBuildableTiles(b);
         UpdateCollectedResourceTiles(b);
+    }
+
+    private void UpdateGoblinOccupiedTiles(BuildingComponent bc)
+    {
+        var rootCell = bc.GetRootGridCellPosition();
+        var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
+        var tiles = GetTilesRadius(tileArea, bc.BuildingResource.DangerRadius, (_) => true);
+        goblinOccupiedTiles.UnionWith(tiles);
     }
 
     private void UpdateValidBuildableTiles(BuildingComponent buildingComponent)
@@ -100,11 +110,8 @@ public partial class GridManager : Node
             buildingComponent.BuildingResource.BuildableRadius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
         validBuildableTiles.UnionWith(validTiles);
-
-        foreach (var tilePosition in occupiedTiles)
-        {
-            validBuildableTiles.Remove(tilePosition);
-        }
+        validBuildableTiles.ExceptWith(occupiedTiles);
+        validBuildableTiles.ExceptWith(goblinOccupiedTiles);
         GridStateUpdated?.Invoke();
     }
 
@@ -265,6 +272,15 @@ public partial class GridManager : Node
         var result = new Vector2I((int)mousePos.X, (int)mousePos.Y);
         GD.Print($"Cursor grid cell position with offset: {result}");
         return result;
+    }
+
+    public void HighlightGoblinOccupiedTiles()
+    {
+        var atlasCoords = new Vector2I(2, 0);
+        foreach (var tilePosition in goblinOccupiedTiles)
+        {
+            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
+        }
     }
 
     public void HighlightBuildableTiles()
