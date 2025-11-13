@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingResource" load_steps=4 format=3 uid="uid://dus2bo7xt40ri"]
+
+[ext_resource type="PackedScene" uid="uid://b2ht3oolal4uc" path="res://Scenes/Buildings/Barracks.tscn" id="1_biuao"]
+[ext_resource type="Script" uid="uid://dhkl1b3d21mec" path="res://Resources/Buildings/BuildingResource.cs" id="1_gtohm"]
+[ext_resource type="PackedScene" uid="uid://gq48buhphl6s" path="res://Scenes/Buildings/Sprites/BarracksSprite2d.tscn" id="2_hxbo0"]
+
+[resource]
+script = ExtResource("1_gtohm")
+DisplayName = "Barracks"
+Description = "Attack goblins"
+Dimensions = Vector2i(5, 2)
+ResourceCost = 8
+AttackRadius = 4
+BuildingScene = ExtResource("1_biuao")
+BuildingSpriteScene = ExtResource("2_hxbo0")
+metadata/_custom_type_script = "uid://dhkl1b3d21mec"

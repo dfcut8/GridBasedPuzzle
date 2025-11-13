@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bvnu58ajf8bub"]
+[gd_scene load_steps=16 format=3 uid="uid://bvnu58ajf8bub"]
 
 [ext_resource type="Script" uid="uid://jkbw41cg51jl" path="res://Scenes/Levels/BaseLevel.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://cpjv57gwogpoh" path="res://Scenes/Ui/LevelCompleteScreen.tscn" id="2_5c1rd"]
@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://b1ifv3js634q2" path="res://Scenes/Camera.tscn" id="6_poiwk"]
 [ext_resource type="PackedScene" uid="uid://7lqoud5x50xk" path="res://Scenes/Buildings/BaseBuilding.tscn" id="6_v1gob"]
 [ext_resource type="PackedScene" uid="uid://0lypfhhry1bt" path="res://Scenes/GoldMine.tscn" id="8_bmxlf"]
+[ext_resource type="Resource" uid="uid://bcupk3s047qr4" path="res://Resources/Buildings/Tower.tres" id="8_majtp"]
+[ext_resource type="Resource" uid="uid://y1lwti6w3s7w" path="res://Resources/Buildings/Village.tres" id="9_31dbj"]
+[ext_resource type="Resource" uid="uid://dus2bo7xt40ri" path="res://Resources/Buildings/Barracks.tres" id="10_peoxj"]
 
 [node name="BaseLevel" type="Node" node_paths=PackedStringArray("gridManager", "buildingManager", "baseBuilding", "goldMine", "camera", "baseLayer", "ui")]
 script = ExtResource("1_r150o")
@@ -38,6 +41,7 @@ baseTerrainTilemapLayer = NodePath("../YSortRoot/BaseTerrainTilemapLayer")
 
 [node name="Ui" parent="." instance=ExtResource("6_jw32o")]
 unique_name_in_owner = true
+buildingResources = Array[Object]([ExtResource("8_majtp"), ExtResource("9_31dbj"), ExtResource("10_peoxj")])
 
 [node name="Camera" parent="." instance=ExtResource("6_poiwk")]
 
