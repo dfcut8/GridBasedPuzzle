@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://gq48buhphl6s" path="res://Scenes/Buildings/Sprites/BarracksSprite2d.tscn" id="3_1gy74"]
 
 [node name="Barracks" type="Node2D"]
+y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." node_paths=PackedStringArray("animatorComponent") instance=ExtResource("1_1gy74")]
 buildingResourcePath = "uid://dus2bo7xt40ri"
@@ -13,4 +14,3 @@ animatorComponent = NodePath("../BuildingAnimatorComponent")
 [node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_t1xl4")]
 
 [node name="BarracksSprite2D" parent="BuildingAnimatorComponent" instance=ExtResource("3_1gy74")]
-position = Vector2(160, 96)
