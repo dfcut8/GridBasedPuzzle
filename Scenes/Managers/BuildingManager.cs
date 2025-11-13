@@ -1,11 +1,14 @@
+using System.Linq;
+
 using Godot;
+
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Managers;
 using GridBasedPuzzle.Resources.Buildings;
 using GridBasedPuzzle.Scenes.Components;
 using GridBasedPuzzle.Scenes.Core;
 using GridBasedPuzzle.Scenes.Ui;
-using System.Linq;
+
 using Cursor = GridBasedPuzzle.Scenes.Ui.Cursor;
 
 namespace GridBasedPuzzle.Scenes.Managers;
@@ -179,8 +182,17 @@ public partial class BuildingManager : Node
     private void UpdateGridDisplay()
     {
         gridManager.ClearHighlightedTiles();
-        gridManager.HighlightBuildableTiles();
-        gridManager.HighlightGoblinOccupiedTiles();
+
+        if (toPlaceBuildingResource.IsAttackBuilding)
+        {
+            gridManager.HighlightGoblinOccupiedTiles();
+            gridManager.HighlightBuildableTiles(true);
+        }
+        else
+        {
+            gridManager.HighlightBuildableTiles();
+            gridManager.HighlightGoblinOccupiedTiles();
+        }
         if (IsBuildingPlaceableAtArea(hoveredGridArea))
         {
             gridManager.HighlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
@@ -221,7 +233,7 @@ public partial class BuildingManager : Node
 
     private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
     {
-        var buildable = gridManager.IsTileAreaBuildable(tileArea);
+        var buildable = gridManager.IsTileAreaBuildable(tileArea, toPlaceBuildingResource.IsAttackBuilding);
         return buildable && AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
     }
 }

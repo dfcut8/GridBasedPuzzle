@@ -122,8 +122,14 @@ public partial class GridManager : Node
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
         validBuildableTiles.UnionWith(validTiles);
         validBuildableTiles.ExceptWith(occupiedTiles);
+        validAttackTiles.UnionWith(validTiles);
         validBuildableTiles.ExceptWith(goblinOccupiedTiles);
         GridStateUpdated?.Invoke();
+    }
+
+    private HashSet<Vector2I> GetBuildableTiles(bool isAttackTiles = false)
+    {
+        return isAttackTiles ? validAttackTiles : validBuildableTiles;
     }
 
     private void UpdateCollectedResourceTiles(BuildingComponent buildingComponent)
@@ -244,7 +250,7 @@ public partial class GridManager : Node
         return validBuildableTiles.Contains(tilePosition);
     }
 
-    public bool IsTileAreaBuildable(Rect2I rect)
+    public bool IsTileAreaBuildable(Rect2I rect, bool isAttackTiles = false)
     {
         var tiles = rect.GetTiles();
         if (tiles.Count == 0) return false;
@@ -265,7 +271,7 @@ public partial class GridManager : Node
                 tileMapLayerToElevationLayer.TryGetValue(layer, out elevationLayer);
             }
 
-            return isBuildable && validBuildableTiles.Contains(t) && elevationLayer == targetElevationLayer;
+            return isBuildable && GetBuildableTiles(isAttackTiles).Contains(t) && elevationLayer == targetElevationLayer;
         });
     }
 
@@ -294,9 +300,9 @@ public partial class GridManager : Node
         }
     }
 
-    public void HighlightBuildableTiles()
+    public void HighlightBuildableTiles(bool isAttackTiles = false)
     {
-        foreach (var tilePosition in validBuildableTiles)
+        foreach (var tilePosition in GetBuildableTiles(isAttackTiles))
         {
             highlightTilemapLayer.SetCell(tilePosition, 0, Vector2I.Zero);
         }
