@@ -1,11 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using Godot;
+
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Levels.Utils;
 using GridBasedPuzzle.Scenes.Components;
 using GridBasedPuzzle.Scenes.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GridBasedPuzzle.Managers;
 
@@ -35,6 +37,7 @@ public partial class GridManager : Node
     private HashSet<Vector2I> occupiedTiles = [];
     private HashSet<Vector2I> collectedResourceTiles = [];
     private HashSet<Vector2I> goblinOccupiedTiles = [];
+    private HashSet<Vector2I> validAttackTiles = [];
     private List<TileMapLayer> tileMapLayers = [];
     private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = [];
 
@@ -66,8 +69,10 @@ public partial class GridManager : Node
     {
         occupiedTiles.Clear();
         validBuildableTiles.Clear();
+        validAttackTiles.Clear();
         allTilesInBuildableRadius.Clear();
         collectedResourceTiles.Clear();
+        goblinOccupiedTiles.Clear();
 
         var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 
@@ -75,16 +80,17 @@ public partial class GridManager : Node
         {
             UpdateValidBuildableTiles(bc);
             UpdateCollectedResourceTiles(bc);
+            UpdateGoblinOccupiedTiles(bc);
         }
         ResourceTilesUpdated?.Invoke(collectedResourceTiles.Count);
         GridStateUpdated?.Invoke();
     }
 
-    private void OnBuildingPlaced(BuildingComponent b)
+    private void OnBuildingPlaced(BuildingComponent bc)
     {
-        UpdateGoblinOccupiedTiles(b);
-        UpdateValidBuildableTiles(b);
-        UpdateCollectedResourceTiles(b);
+        UpdateGoblinOccupiedTiles(bc);
+        UpdateValidBuildableTiles(bc);
+        UpdateCollectedResourceTiles(bc);
     }
 
     private void UpdateGoblinOccupiedTiles(BuildingComponent bc)
