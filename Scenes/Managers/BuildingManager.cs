@@ -195,9 +195,16 @@ public partial class BuildingManager : Node
         }
         if (IsBuildingPlaceableAtArea(hoveredGridArea))
         {
-            gridManager.HighlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+            if (toPlaceBuildingResource.IsAttackBuilding)
+            {
+                gridManager.HighlightAttackTiles(hoveredGridArea, toPlaceBuildingResource.AttackRadius);
+            }
+            else
+            {
+                gridManager.HighlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+            }
+
             gridManager.HighlightResourceTiles(hoveredGridArea, toPlaceBuildingResource.ResourceRadius);
-            gridManager.HighlightAttackTiles(hoveredGridArea, toPlaceBuildingResource.ResourceRadius);
             cursor.SetValid();
         }
         else

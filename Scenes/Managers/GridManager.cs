@@ -341,7 +341,10 @@ public partial class GridManager : Node
 
     public void HighlightAttackTiles(Rect2I tileArea, int radius)
     {
-        var tiles = GetTilesRadius(tileArea, radius, (_) => true).ToHashSet().Except(validAttackTiles);
+        var buildableAreaTiles = tileArea.GetTiles().ToHashSet();
+        var tiles = GetTilesRadius(tileArea, radius,
+            (tilePosition) => GetTileCustomData(tilePosition, IS_WOOD_LAYER_NAME).hasData).ToHashSet()
+            .Except(validAttackTiles).Except(buildableAreaTiles);
         var atlasCoords = new Vector2I(1, 0);
         foreach (var tilePosition in tiles)
         {
