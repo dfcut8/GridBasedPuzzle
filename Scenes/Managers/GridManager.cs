@@ -262,6 +262,12 @@ public partial class GridManager : Node
             tileMapLayerToElevationLayer.TryGetValue(firstTileMapLayer, out targetElevationLayer);
         }
 
+        var tilesToCheck = GetBuildableTiles(isAttackTiles);
+        if (isAttackTiles)
+        {
+            tilesToCheck = tilesToCheck.Except(occupiedTiles).ToHashSet();
+        }
+
         return tiles.All(t =>
         {
             (TileMapLayer layer, bool isBuildable) = GetTileCustomData(t, IS_BUILDABLE_LAYER_NAME);
@@ -271,7 +277,7 @@ public partial class GridManager : Node
                 tileMapLayerToElevationLayer.TryGetValue(layer, out elevationLayer);
             }
 
-            return isBuildable && GetBuildableTiles(isAttackTiles).Contains(t) && elevationLayer == targetElevationLayer;
+            return isBuildable && tilesToCheck.Contains(t) && elevationLayer == targetElevationLayer;
         });
     }
 
@@ -313,7 +319,7 @@ public partial class GridManager : Node
         var validTiles = GetTilesRadius(tileArea, radius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData)
             .ToHashSet();
-        var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles).Except(goblinOccupiedTiles);
+        var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles);
         var atlasCoords = new Vector2I(1, 0);
         foreach (var tilePosition in expandedTiles)
         {
@@ -328,6 +334,16 @@ public partial class GridManager : Node
             (tilePosition) => GetTileCustomData(tilePosition, IS_WOOD_LAYER_NAME).hasData);
         var atlasCoords = new Vector2I(1, 0);
         foreach (var tilePosition in resourceTiles)
+        {
+            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
+        }
+    }
+
+    public void HighlightAttackTiles(Rect2I tileArea, int radius)
+    {
+        var tiles = GetTilesRadius(tileArea, radius, (_) => true).ToHashSet().Except(validAttackTiles);
+        var atlasCoords = new Vector2I(1, 0);
+        foreach (var tilePosition in tiles)
         {
             highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
         }

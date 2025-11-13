@@ -197,6 +197,7 @@ public partial class BuildingManager : Node
         {
             gridManager.HighlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
             gridManager.HighlightResourceTiles(hoveredGridArea, toPlaceBuildingResource.ResourceRadius);
+            gridManager.HighlightAttackTiles(hoveredGridArea, toPlaceBuildingResource.ResourceRadius);
             cursor.SetValid();
         }
         else
