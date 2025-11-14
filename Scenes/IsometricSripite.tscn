@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://csq8hg81ryih4"]
+
+[ext_resource type="Texture2D" uid="uid://d4i5a03nrtj3x" path="res://Assets/Textures/Isometric/dirt_center_N.png" id="1_217xy"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_217xy")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=4 uid="uid://qtit6ppjyuym"]
+
+[ext_resource type="Texture2D" uid="uid://d4i5a03nrtj3x" path="res://Assets/Textures/Isometric/dirt_center_N.png" id="1_iwtxr"]
+[ext_resource type="Script" uid="uid://vliuh8roy0" path="res://Scenes/Isometrics3.cs" id="1_ogj65"]
+[ext_resource type="PackedScene" uid="uid://csq8hg81ryih4" path="res://Scenes/IsometricSripite.tscn" id="3_5eosd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ogj65"]
+texture = ExtResource("1_iwtxr")
+texture_region_size = Vector2i(256, 352)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5eosd"]
+tile_shape = 1
+tile_size = Vector2i(256, 128)
+sources/0 = SubResource("TileSetAtlasSource_ogj65")
+
+[node name="Isometrics3" type="Node2D" node_paths=PackedStringArray("tileMap")]
+script = ExtResource("1_ogj65")
+tileMap = NodePath("TileMapLayer")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAAAAP7/AAAAAAAAAAAAAAEAAAAAAAAAAAABAAAAAAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAAAAP3/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_5eosd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Sprite2D" parent="." instance=ExtResource("3_5eosd")]
