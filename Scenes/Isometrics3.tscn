@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://qtit6ppjyuym"]
+[gd_scene load_steps=7 format=4 uid="uid://qtit6ppjyuym"]
 
 [ext_resource type="Texture2D" uid="uid://d4i5a03nrtj3x" path="res://Assets/Textures/Isometric/dirt_center_N.png" id="1_iwtxr"]
 [ext_resource type="Script" uid="uid://vliuh8roy0" path="res://Scenes/Isometrics3.cs" id="1_ogj65"]
 [ext_resource type="PackedScene" uid="uid://csq8hg81ryih4" path="res://Scenes/IsometricSripite.tscn" id="3_5eosd"]
+[ext_resource type="PackedScene" uid="uid://3in1dqsfo66r" path="res://Scenes/Managers/GlobalInputManager.tscn" id="4_jdan5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ogj65"]
 texture = ExtResource("1_iwtxr")
@@ -16,13 +17,22 @@ sources/0 = SubResource("TileSetAtlasSource_ogj65")
 
 [node name="Isometrics3" type="Node2D" node_paths=PackedStringArray("tileMap")]
 script = ExtResource("1_ogj65")
-tileMap = NodePath("TileMapLayer")
+tileMap = NodePath("YSort/TileMapLayer")
+tileAnimationSprite = ExtResource("3_5eosd")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="GlobalInputManager" parent="." instance=ExtResource("4_jdan5")]
+
+[node name="YSort" type="Node2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+
+[node name="Sprite2D" parent="YSort" instance=ExtResource("3_5eosd")]
+position = Vector2(256, -192)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="YSort"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAAAAP7/AAAAAAAAAAAAAAEAAAAAAAAAAAABAAAAAAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAAAAP3/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_5eosd")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="Sprite2D" parent="." instance=ExtResource("3_5eosd")]
+zoom = Vector2(0.5, 0.5)
