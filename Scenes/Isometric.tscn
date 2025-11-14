@@ -203,6 +203,7 @@ sources/1 = SubResource("TileSetAtlasSource_egrgd")
 [node name="Isometric" type="Node2D" node_paths=PackedStringArray("tileMap")]
 script = ExtResource("1_5yxma")
 tileMap = NodePath("TileMapLayer")
+tilesetTexture = ExtResource("1_8kla7")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true
