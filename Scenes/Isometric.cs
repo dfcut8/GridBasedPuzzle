@@ -14,7 +14,8 @@ public partial class Isometric : Node2D
 
             GD.Print($"Random tile: {randomTilePos}");
             GD.Print($"Tile data: {tileData}");
-            tileData.TextureOrigin += new Vector2I(0, 4);
+            // Move the random tile 40 pixels up
+            tileData.TextureOrigin += new Vector2I(0, -40);
         }
     }
 }
