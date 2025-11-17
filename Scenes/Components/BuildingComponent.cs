@@ -1,8 +1,10 @@
-using Godot;
-using GridBasedPuzzle.Core;
-using GridBasedPuzzle.Resources.Buildings;
 using System.Collections.Generic;
 using System.Linq;
+
+using Godot;
+
+using GridBasedPuzzle.Core;
+using GridBasedPuzzle.Resources.Buildings;
 
 namespace GridBasedPuzzle.Scenes.Components;
 
@@ -23,6 +25,12 @@ public partial class BuildingComponent : Node2D
         return node.GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
             .Where(b => !b.IsDestroing);
     }
+
+    public static IEnumerable<BuildingComponent> GetDangerBuildingComponents(Node node)
+    {
+        return GetValidBuildingComponents(node).Where(bc => bc.BuildingResource.IsDangerBuilding);
+    }
+
     public override void _Ready()
     {
         if (buildingResourcePath is not null)
@@ -32,6 +40,8 @@ public partial class BuildingComponent : Node2D
         AddToGroup(nameof(BuildingComponent));
         Callable.From(Initialize).CallDeferred();
     }
+
+
 
     public Vector2I GetRootGridCellPosition()
     {

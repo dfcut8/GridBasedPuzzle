@@ -74,14 +74,13 @@ public partial class GridManager : Node
         allTilesInBuildableRadius.Clear();
         collectedResourceTiles.Clear();
         goblinOccupiedTiles.Clear();
+        attackTiles.Clear();
 
         var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 
         foreach (var bc in buildingComponents)
         {
-            UpdateValidBuildableTiles(bc);
-            UpdateCollectedResourceTiles(bc);
-            UpdateGoblinOccupiedTiles(bc);
+            UpdateBuildingComponentGridState(bc);
         }
         ResourceTilesUpdated?.Invoke(collectedResourceTiles.Count);
         GridStateUpdated?.Invoke();
@@ -89,9 +88,7 @@ public partial class GridManager : Node
 
     private void OnBuildingPlaced(BuildingComponent bc)
     {
-        UpdateGoblinOccupiedTiles(bc);
-        UpdateValidBuildableTiles(bc);
-        UpdateCollectedResourceTiles(bc);
+        UpdateBuildingComponentGridState(bc);
         CheckGoblinCampDestruction();
     }
 
@@ -136,7 +133,15 @@ public partial class GridManager : Node
 
     private void CheckGoblinCampDestruction()
     {
+        var dangerBuildings = BuildingComponent.GetDangerBuildingComponents(this);
+    }
 
+    private void UpdateBuildingComponentGridState(BuildingComponent bc)
+    {
+        UpdateGoblinOccupiedTiles(bc);
+        UpdateValidBuildableTiles(bc);
+        UpdateCollectedResourceTiles(bc);
+        UpdateAttackTiles(bc);
     }
 
     private void UpdateAttackTiles(BuildingComponent bc)
@@ -147,7 +152,8 @@ public partial class GridManager : Node
         }
         var rootCell = bc.GetRootGridCellPosition();
         var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
-        var attackTiles = GetTilesRadius(tileArea, bc.BuildingResource.AttackRadius, (_) => true);
+        var newAttackTiles = GetTilesRadius(tileArea, bc.BuildingResource.AttackRadius, (_) => true).ToHashSet();
+        attackTiles.UnionWith(newAttackTiles);
     }
 
     private void UpdateCollectedResourceTiles(BuildingComponent buildingComponent)
