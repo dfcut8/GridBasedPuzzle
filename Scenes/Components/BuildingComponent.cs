@@ -68,6 +68,8 @@ public partial class BuildingComponent : Node2D
         return occupiedTiles.Contains(pos);
     }
 
+    public Rect2I GetTileArea() => new(GetRootGridCellPosition(), BuildingResource.Dimensions);
+
     public void DestroyBuilding()
     {
         IsDestroing = true;

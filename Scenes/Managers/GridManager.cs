@@ -95,11 +95,9 @@ public partial class GridManager : Node
     private void UpdateGoblinOccupiedTiles(BuildingComponent bc)
     {
         occupiedTiles.UnionWith(bc.GetOccupiedSellPositions());
-        var rootCell = bc.GetRootGridCellPosition();
-        var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
         if (bc.BuildingResource.IsDangerBuilding)
         {
-            var tiles = GetTilesRadius(tileArea, bc.BuildingResource.DangerRadius, (_) => true).ToHashSet();
+            var tiles = GetTilesRadius(bc.GetTileArea(), bc.BuildingResource.DangerRadius, (_) => true).ToHashSet();
             tiles.ExceptWith(occupiedTiles);
             goblinOccupiedTiles.UnionWith(tiles);
         }
@@ -108,15 +106,12 @@ public partial class GridManager : Node
     private void UpdateValidBuildableTiles(BuildingComponent bc)
     {
         occupiedTiles.UnionWith(bc.GetOccupiedSellPositions());
-        var rootCell = bc.GetRootGridCellPosition();
-        var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
-
-        var allTiles = GetTilesRadius(tileArea,
+        var allTiles = GetTilesRadius(bc.GetTileArea(),
             bc.BuildingResource.BuildableRadius,
             (_) => true);
         allTilesInBuildableRadius.UnionWith(allTiles);
 
-        var validTiles = GetTilesRadius(tileArea,
+        var validTiles = GetTilesRadius(bc.GetTileArea(),
             bc.BuildingResource.BuildableRadius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
         validBuildableTiles.UnionWith(validTiles);
@@ -150,18 +145,15 @@ public partial class GridManager : Node
         {
             return;
         }
-        var rootCell = bc.GetRootGridCellPosition();
-        var tileArea = new Rect2I(rootCell, bc.BuildingResource.Dimensions);
-        var newAttackTiles = GetTilesRadius(tileArea, bc.BuildingResource.AttackRadius, (_) => true).ToHashSet();
+
+        var newAttackTiles = GetTilesRadius(bc.GetTileArea(), bc.BuildingResource.AttackRadius, (_) => true).ToHashSet();
         attackTiles.UnionWith(newAttackTiles);
     }
 
-    private void UpdateCollectedResourceTiles(BuildingComponent buildingComponent)
+    private void UpdateCollectedResourceTiles(BuildingComponent bc)
     {
-        var rootCell = buildingComponent.GetRootGridCellPosition();
-        var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
-        var resourceTiles = GetTilesRadius(tileArea,
-            buildingComponent.BuildingResource.ResourceRadius,
+        var resourceTiles = GetTilesRadius(bc.GetTileArea(),
+            bc.BuildingResource.ResourceRadius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_WOOD_LAYER_NAME).hasData);
 
         var oldResourceTileCount = collectedResourceTiles.Count;
