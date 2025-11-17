@@ -91,7 +91,7 @@ public partial class GridManager : Node
                 });
             if (!allBuildingsStillValid)
             {
-                return true;
+                return false;
             }
         }
         return true;
@@ -121,6 +121,7 @@ public partial class GridManager : Node
         collectedResourceTiles.Clear();
         goblinOccupiedTiles.Clear();
         attackTiles.Clear();
+        buildingToBuildableTiles.Clear();
 
         var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 
@@ -166,13 +167,16 @@ public partial class GridManager : Node
             (_) => true);
         allTilesInBuildableRadius.UnionWith(allTiles);
 
-        var validTiles = GetTilesRadius(bc.GetTileArea(),
-            bc.BuildingResource.BuildableRadius,
-            (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
-        buildingToBuildableTiles[bc] = [.. validTiles];
-        validBuildableTiles.UnionWith(validTiles);
+        if (bc.BuildingResource.BuildableRadius > 0)
+        {
+            var validTiles = GetTilesRadius(bc.GetTileArea(),
+                bc.BuildingResource.BuildableRadius,
+                (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
+            buildingToBuildableTiles[bc] = [.. validTiles];
+            validBuildableTiles.UnionWith(validTiles);
+            validBuildableAttackTiles.UnionWith(validTiles);
+        }
         validBuildableTiles.ExceptWith(occupiedTiles);
-        validBuildableAttackTiles.UnionWith(validTiles);
         validBuildableTiles.ExceptWith(goblinOccupiedTiles);
         GridStateUpdated?.Invoke();
     }
