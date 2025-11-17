@@ -17,6 +17,7 @@ public partial class BuildingComponent : Node2D
     public BuildingResource BuildingResource;
 
     public bool IsDestroing { get; private set; } = false;
+    public bool IsDisabled { get; private set; } = false;
 
     private HashSet<Vector2I> occupiedTiles = [];
 
@@ -41,7 +42,19 @@ public partial class BuildingComponent : Node2D
         Callable.From(Initialize).CallDeferred();
     }
 
+    public void Disable()
+    {
+        if (IsDisabled) return;
+        IsDisabled = true;
+        GlobalEvents.BuildingDisabled?.Invoke(this);
+    }
 
+    public void Enable()
+    {
+        if (!IsDisabled) return;
+        IsDisabled = false;
+        GlobalEvents.BuildingEnabled?.Invoke(this);
+    }
 
     public Vector2I GetRootGridCellPosition()
     {
