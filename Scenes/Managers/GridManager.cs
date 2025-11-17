@@ -41,6 +41,7 @@ public partial class GridManager : Node
     private HashSet<Vector2I> attackTiles = [];
     private List<TileMapLayer> tileMapLayers = [];
     private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = [];
+    private Dictionary<BuildingComponent, HashSet<Vector2I>> buildingToBuildableTiles = [];
 
     public override void _Ready()
     {
@@ -63,6 +64,37 @@ public partial class GridManager : Node
         GlobalEvents.BuildingDestroyed -= OnBuildingDestroyed;
         GlobalEvents.BuildingDisabled -= OnBuildingDisabled;
         GlobalEvents.BuildingEnabled -= OnBuildingEnabled;
+    }
+
+    public bool CanDestroyBuilding(BuildingComponent bcToDestroy)
+    {
+        if (bcToDestroy.BuildingResource.BuildableRadius > 0)
+        {
+            var dependentBuildings = BuildingComponent.GetValidBuildingComponents(this)
+                .Where(bc =>
+                {
+                    var anyTilesInRadius = bc.GetTileArea().GetTiles()
+                        .Any(buildingToBuildableTiles[bc].Contains);
+                    return bc != bcToDestroy && anyTilesInRadius;
+                });
+            var allBuildingsStillValid = dependentBuildings
+                .All(bc =>
+                {
+                    var tilesForBuilding = bc.GetTileArea().GetTiles();
+                    return tilesForBuilding.All(tilePos =>
+                    {
+                        var tileIsInSet = buildingToBuildableTiles.Keys
+                            .Where(k => k != bcToDestroy)
+                            .Any(bc => buildingToBuildableTiles[bc].Contains(tilePos));
+                        return tileIsInSet;
+                    });
+                });
+            if (!allBuildingsStillValid)
+            {
+                return true;
+            }
+        }
+        return true;
     }
 
     private void OnBuildingEnabled(BuildingComponent bc)
@@ -137,6 +169,7 @@ public partial class GridManager : Node
         var validTiles = GetTilesRadius(bc.GetTileArea(),
             bc.BuildingResource.BuildableRadius,
             (tilePosition) => GetTileCustomData(tilePosition, IS_BUILDABLE_LAYER_NAME).hasData);
+        buildingToBuildableTiles[bc] = [.. validTiles];
         validBuildableTiles.UnionWith(validTiles);
         validBuildableTiles.ExceptWith(occupiedTiles);
         validBuildableAttackTiles.UnionWith(validTiles);
