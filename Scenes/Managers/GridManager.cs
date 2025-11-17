@@ -129,6 +129,15 @@ public partial class GridManager : Node
     private void CheckGoblinCampDestruction()
     {
         var dangerBuildings = BuildingComponent.GetDangerBuildingComponents(this);
+        foreach (var bc in dangerBuildings)
+        {
+            var tileArea = bc.GetTileArea();
+            var isInsideAttackTile = tileArea.GetTiles().Any(attackTiles.Contains);
+            if (isInsideAttackTile)
+            {
+                bc.DestroyBuilding();
+            }
+        }
     }
 
     private void UpdateBuildingComponentGridState(BuildingComponent bc)

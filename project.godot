@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GridBasedPuzzle"
-run/main_scene="uid://07rdoi2mguu6"
+run/main_scene="uid://d2x0t6yadsavc"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
