@@ -18,4 +18,5 @@ public partial class BuildingResource : Resource
     [Export] public PackedScene BuildingSpriteScene { get; private set; }
 
     public bool IsAttackBuilding => AttackRadius > 0;
+    public bool IsDangerBuilding => DangerRadius > 0;
 }
