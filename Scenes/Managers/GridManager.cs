@@ -126,8 +126,19 @@ public partial class GridManager : Node
         return isAttackTiles ? validBuildableAttackTiles : validBuildableTiles;
     }
 
+    private void RecalculateGoblinOccupiedTiles()
+    {
+        goblinOccupiedTiles.Clear();
+        var dangerBuildings = BuildingComponent.GetDangerBuildingComponents(this);
+        foreach (var bc in dangerBuildings)
+        {
+            UpdateGoblinOccupiedTiles(bc);
+        }
+    }
+
     private void CheckGoblinCampDestruction()
     {
+        var isCampDestroyed = false;
         var dangerBuildings = BuildingComponent.GetDangerBuildingComponents(this);
         foreach (var bc in dangerBuildings)
         {
@@ -135,8 +146,14 @@ public partial class GridManager : Node
             var isInsideAttackTile = tileArea.GetTiles().Any(attackTiles.Contains);
             if (isInsideAttackTile)
             {
+                isCampDestroyed = true;
                 bc.DestroyBuilding();
             }
+        }
+
+        if (isCampDestroyed)
+        {
+            RecalculateGoblinOccupiedTiles();
         }
     }
 

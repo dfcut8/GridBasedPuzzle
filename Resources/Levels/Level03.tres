@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_topne")
 Id = "Level03"
-StartingResourceCount = 12
+StartingResourceCount = 22
 LevelScenePath = "uid://d2x0t6yadsavc"
 metadata/_custom_type_script = "uid://hf4ql778pss"
