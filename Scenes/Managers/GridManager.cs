@@ -74,13 +74,13 @@ public partial class GridManager : Node
                 .Where(bc =>
                 {
                     var anyTilesInRadius = bc.GetTileArea().GetTiles()
-                        .Any(buildingToBuildableTiles[bc].Contains);
+                        .Any(buildingToBuildableTiles[bcToDestroy].Contains);
                     return bc != bcToDestroy && anyTilesInRadius;
                 });
             var allBuildingsStillValid = dependentBuildings
-                .All(bc =>
+                .All(dependentBuilding =>
                 {
-                    var tilesForBuilding = bc.GetTileArea().GetTiles();
+                    var tilesForBuilding = dependentBuilding.GetTileArea().GetTiles();
                     return tilesForBuilding.All(tilePos =>
                     {
                         var tileIsInSet = buildingToBuildableTiles.Keys
