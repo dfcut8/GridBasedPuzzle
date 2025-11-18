@@ -169,7 +169,34 @@ public partial class GridManager : Node
 
     private bool IsBuildingNetworkConnected(BuildingComponent bcToDestroy)
     {
+        var baseBuilding = BuildingComponent
+            .GetDangerBuildingComponents(this)
+            .FirstOrDefault(bc => bc.BuildingResource.IsBaseBuilding);
+        var visitedBuildings = new HashSet<BuildingComponent>();
+
         return true;
+    }
+
+    private bool CanAllBuildingsBeVisited(
+        BuildingComponent root,
+        BuildingComponent exclude,
+        HashSet<BuildingComponent> visited
+    )
+    {
+        var dependentBuildings = BuildingComponent
+            .GetValidBuildingComponents(this)
+            .Where(bc =>
+            {
+                if (bc.BuildingResource.BuildableRadius == 0)
+                    return false;
+                if (visited.Contains(bc))
+                    return false;
+                var anyTilesInRadius = bc.GetTileArea()
+                    .GetTiles()
+                    .Any(buildingToBuildableTiles[root].Contains);
+                return bc != exclude && anyTilesInRadius;
+            });
+        visited.UnionWith(dependentBuildings);
     }
 
     private void UpdateValidBuildableTiles(BuildingComponent bc)
