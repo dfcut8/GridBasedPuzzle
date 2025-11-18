@@ -173,11 +173,14 @@ public partial class GridManager : Node
             .GetDangerBuildingComponents(this)
             .FirstOrDefault(bc => bc.BuildingResource.IsBaseBuilding);
         var visitedBuildings = new HashSet<BuildingComponent>();
-
-        return true;
+        VisitAllConnectedBuildings(baseBuilding, bcToDestroy, visitedBuildings);
+        var totalBuildingsToVisit = BuildingComponent
+            .GetDangerBuildingComponents(this)
+            .Count(bc => bc.BuildingResource.BuildableRadius > 0 && bc != bcToDestroy);
+        return totalBuildingsToVisit == visitedBuildings.Count;
     }
 
-    private bool CanAllBuildingsBeVisited(
+    private void VisitAllConnectedBuildings(
         BuildingComponent root,
         BuildingComponent exclude,
         HashSet<BuildingComponent> visited
@@ -197,6 +200,10 @@ public partial class GridManager : Node
                 return bc != exclude && anyTilesInRadius;
             });
         visited.UnionWith(dependentBuildings);
+        foreach (var bcDependant in dependentBuildings)
+        {
+            VisitAllConnectedBuildings(bcDependant, exclude, visited);
+        }
     }
 
     private void UpdateValidBuildableTiles(BuildingComponent bc)
