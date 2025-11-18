@@ -167,6 +167,11 @@ public partial class GridManager : Node
         }
     }
 
+    private bool IsBuildingNetworkConnected(BuildingComponent bcToDestroy)
+    {
+        return true;
+    }
+
     private void UpdateValidBuildableTiles(BuildingComponent bc)
     {
         occupiedTiles.UnionWith(bc.GetOccupiedSellPositions());

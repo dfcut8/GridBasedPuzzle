@@ -7,6 +7,7 @@
 script = ExtResource("2_y8ef6")
 DisplayName = "Base"
 Description = "Base building where you start"
+IsBaseBuilding = true
 Dimensions = Vector2i(5, 2)
 IsDeletable = false
 BuildableRadius = 6

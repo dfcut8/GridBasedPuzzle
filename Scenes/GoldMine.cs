@@ -4,7 +4,8 @@ namespace GridBasedPuzzle.Scenes;
 
 public partial class GoldMine : Node2D
 {
-    [Export] private Texture2D activeTexture;
+    [Export]
+    private Texture2D activeTexture;
 
     public bool IsActive { get; private set; }
 
