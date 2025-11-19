@@ -96,6 +96,7 @@ public partial class GridManager : Node
             {
                 return false;
             }
+            return IsBuildingNetworkConnected(bcToDestroy);
         }
         return true;
     }
