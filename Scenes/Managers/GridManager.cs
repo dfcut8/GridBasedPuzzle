@@ -87,7 +87,7 @@ public partial class GridManager : Node
                 return tilesForBuilding.All(tilePos =>
                 {
                     var tileIsInSet = buildingToBuildableTiles
-                        .Keys.Where(k => k != bcToDestroy)
+                        .Keys.Where(k => k != bcToDestroy && k != dependentBuilding)
                         .Any(bc => buildingToBuildableTiles[bc].Contains(tilePos));
                     return tileIsInSet;
                 });
@@ -197,9 +197,10 @@ public partial class GridManager : Node
                     return false;
                 var anyTilesInRadius = bc.GetTileArea()
                     .GetTiles()
-                    .Any(buildingToBuildableTiles[root].Contains);
+                    .Any(t => buildingToBuildableTiles[root].Contains(t));
                 return bc != exclude && anyTilesInRadius;
-            });
+            })
+            .ToList();
         visited.UnionWith(dependentBuildings);
         foreach (var bcDependant in dependentBuildings)
         {
