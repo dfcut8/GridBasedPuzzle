@@ -5,22 +5,11 @@
 [node name="Isometrics2" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+y_sort_enabled = true
 position = Vector2(256, 256)
-texture = ExtResource("1_g21ya")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(384, 320)
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+y_sort_enabled = true
 texture = ExtResource("1_g21ya")
-
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-position = Vector2(512, 256)
-texture = ExtResource("1_g21ya")
-
-[node name="Sprite2D4" type="Sprite2D" parent="."]
-position = Vector2(384, 192)
-texture = ExtResource("1_g21ya")
-
-[node name="Sprite2D5" type="Sprite2D" parent="."]
-position = Vector2(640, 192)
-texture = ExtResource("1_g21ya")
+offset = Vector2(0, -128)
