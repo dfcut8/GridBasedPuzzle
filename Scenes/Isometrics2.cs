@@ -18,10 +18,10 @@ public partial class Isometrics2 : Node2D
         allSprites.Sort(
             (a, b) =>
             {
-                var yComparison = a.GlobalPosition.Y.CompareTo(b.GlobalPosition.Y);
-                if (yComparison != 0)
-                    return yComparison;
-                return a.GlobalPosition.X.CompareTo(b.GlobalPosition.X);
+                var xComparison = a.GlobalPosition.X.CompareTo(b.GlobalPosition.X);
+                if (xComparison != 0)
+                    return xComparison;
+                return a.GlobalPosition.Y.CompareTo(b.GlobalPosition.Y);
             }
         );
 
