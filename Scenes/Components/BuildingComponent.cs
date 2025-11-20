@@ -16,7 +16,7 @@ public partial class BuildingComponent : Node2D
 
     public BuildingResource BuildingResource;
 
-    public bool IsDestroing { get; private set; } = false;
+    public bool IsDestroying { get; private set; } = false;
     public bool IsDisabled { get; private set; } = false;
 
     private HashSet<Vector2I> occupiedTiles = [];
@@ -26,7 +26,7 @@ public partial class BuildingComponent : Node2D
         return node.GetTree()
             .GetNodesInGroup(nameof(BuildingComponent))
             .Cast<BuildingComponent>()
-            .Where(b => !b.IsDestroing);
+            .Where(b => !b.IsDestroying);
     }
 
     public static IEnumerable<BuildingComponent> GetDangerBuildingComponents(Node node)
@@ -88,7 +88,7 @@ public partial class BuildingComponent : Node2D
 
     public void DestroyBuilding()
     {
-        IsDestroing = true;
+        IsDestroying = true;
         if (BuildingResource.IsDeletable)
         {
             if (animatorComponent is null)
