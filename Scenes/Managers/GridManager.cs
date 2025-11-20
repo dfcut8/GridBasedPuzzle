@@ -72,31 +72,49 @@ public partial class GridManager : Node
     {
         if (bcToDestroy.BuildingResource.BuildableRadius > 0)
         {
-            var dependentBuildings = BuildingComponent
-                .GetNonDangerComponents(this)
-                .Where(bc =>
-                {
-                    var anyTilesInRadius = bc.GetTileArea()
-                        .GetTiles()
-                        .Any(buildingToBuildableTiles[bcToDestroy].Contains);
-                    return bc != bcToDestroy && anyTilesInRadius;
-                });
-            var allBuildingsStillValid = dependentBuildings.All(dependentBuilding =>
+            return IsBuildingNetworkConnected(bcToDestroy) && OrphanBuildingsCheck(bcToDestroy);
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Validates that destroying a building won't leave other buildings without access to buildable tiles.
+    /// </summary>
+    /// <remarks>
+    /// This method ensures that all buildings dependent on the destroyed building's buildable radius
+    /// can still place themselves entirely within the buildable radii of remaining buildings.
+    /// If any dependent building loses access to all required tiles, the destruction is invalid.
+    /// </remarks>
+    /// <param name="bcToDestroy">The building component to check for orphaning other buildings.</param>
+    /// <returns>
+    /// <c>true</c> if all dependent buildings can still be placed after destruction;
+    /// <c>false</c> if any building would become orphaned without access to buildable tiles.
+    /// </returns>
+    private bool OrphanBuildingsCheck(BuildingComponent bcToDestroy)
+    {
+        var dependentBuildings = BuildingComponent
+            .GetNonDangerComponents(this)
+            .Where(bc =>
             {
-                var tilesForBuilding = dependentBuilding.GetTileArea().GetTiles();
-                return tilesForBuilding.All(tilePos =>
-                {
-                    var tileIsInSet = buildingToBuildableTiles
-                        .Keys.Where(k => k != bcToDestroy && k != dependentBuilding)
-                        .Any(bc => buildingToBuildableTiles[bc].Contains(tilePos));
-                    return tileIsInSet;
-                });
+                var anyTilesInRadius = bc.GetTileArea()
+                    .GetTiles()
+                    .Any(buildingToBuildableTiles[bcToDestroy].Contains);
+                return bc != bcToDestroy && anyTilesInRadius;
             });
-            if (!allBuildingsStillValid)
+        var allBuildingsStillValid = dependentBuildings.All(dependentBuilding =>
+        {
+            var tilesForBuilding = dependentBuilding.GetTileArea().GetTiles();
+            return tilesForBuilding.All(tilePos =>
             {
-                return false;
-            }
-            return IsBuildingNetworkConnected(bcToDestroy);
+                var tileIsInSet = buildingToBuildableTiles
+                    .Keys.Where(k => k != bcToDestroy && k != dependentBuilding)
+                    .Any(bc => buildingToBuildableTiles[bc].Contains(tilePos));
+                return tileIsInSet;
+            });
+        });
+        if (!allBuildingsStillValid)
+        {
+            return false;
         }
         return true;
     }
@@ -188,7 +206,7 @@ public partial class GridManager : Node
     )
     {
         var dependentBuildings = BuildingComponent
-            .GetValidBuildingComponents(this)
+            .GetNonDangerComponents(this)
             .Where(bc =>
             {
                 if (bc.BuildingResource.BuildableRadius == 0)
