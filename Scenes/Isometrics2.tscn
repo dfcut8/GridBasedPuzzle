@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://btcebo3gywdd3"]
+[gd_scene load_steps=3 format=3 uid="uid://btcebo3gywdd3"]
 
+[ext_resource type="Script" uid="uid://crju6rwu5xj0h" path="res://Scenes/Isometrics2.cs" id="1_3iohl"]
 [ext_resource type="Texture2D" uid="uid://d4i5a03nrtj3x" path="res://Assets/Textures/Isometric/dirt_center_N.png" id="1_g21ya"]
 
 [node name="Isometrics2" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_3iohl")
 
 [node name="Node2D" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -13,3 +15,56 @@ position = Vector2(256, 256)
 y_sort_enabled = true
 texture = ExtResource("1_g21ya")
 offset = Vector2(0, -128)
+
+[node name="Node2D5" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D5"]
+y_sort_enabled = true
+position = Vector2(-256, 0)
+texture = ExtResource("1_g21ya")
+offset = Vector2(0, -128)
+
+[node name="Node2D4" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D4"]
+y_sort_enabled = true
+position = Vector2(-256, 128)
+texture = ExtResource("1_g21ya")
+offset = Vector2(0, -128)
+
+[node name="Node2D2" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D2"]
+y_sort_enabled = true
+position = Vector2(128, 64)
+texture = ExtResource("1_g21ya")
+offset = Vector2(0, -128)
+
+[node name="Node2D3" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D3"]
+y_sort_enabled = true
+position = Vector2(0, 128)
+texture = ExtResource("1_g21ya")
+offset = Vector2(0, -128)
+
+[node name="Target" type="Node2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Target"]
+y_sort_enabled = true
+position = Vector2(-128, 64)
+texture = ExtResource("1_g21ya")
+offset = Vector2(0, -128)
+
+[node name="Camera2D" type="Camera2D" parent="."]
