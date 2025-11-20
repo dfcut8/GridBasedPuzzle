@@ -34,6 +34,11 @@ public partial class BuildingComponent : Node2D
         return GetValidBuildingComponents(node).Where(bc => bc.BuildingResource.IsDangerBuilding);
     }
 
+    public static IEnumerable<BuildingComponent> GetNonDangerComponents(Node node)
+    {
+        return GetValidBuildingComponents(node).Where(bc => !bc.BuildingResource.IsDangerBuilding);
+    }
+
     public override void _Ready()
     {
         if (buildingResourcePath is not null)

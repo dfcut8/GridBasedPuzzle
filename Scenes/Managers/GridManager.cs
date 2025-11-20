@@ -73,7 +73,7 @@ public partial class GridManager : Node
         if (bcToDestroy.BuildingResource.BuildableRadius > 0)
         {
             var dependentBuildings = BuildingComponent
-                .GetValidBuildingComponents(this)
+                .GetNonDangerComponents(this)
                 .Where(bc =>
                 {
                     var anyTilesInRadius = bc.GetTileArea()
