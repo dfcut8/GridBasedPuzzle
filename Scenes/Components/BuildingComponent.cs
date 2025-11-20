@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using Godot;
-
 using GridBasedPuzzle.Core;
 using GridBasedPuzzle.Resources.Buildings;
 
@@ -12,7 +10,9 @@ public partial class BuildingComponent : Node2D
 {
     [Export(PropertyHint.File, "*.tres")]
     private string buildingResourcePath;
-    [Export] private BuildingAnimatorComponent animatorComponent;
+
+    [Export]
+    private BuildingAnimatorComponent animatorComponent;
 
     public BuildingResource BuildingResource;
 
@@ -23,7 +23,9 @@ public partial class BuildingComponent : Node2D
 
     public static IEnumerable<BuildingComponent> GetValidBuildingComponents(Node node)
     {
-        return node.GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
+        return node.GetTree()
+            .GetNodesInGroup(nameof(BuildingComponent))
+            .Cast<BuildingComponent>()
             .Where(b => !b.IsDestroing);
     }
 
@@ -44,14 +46,16 @@ public partial class BuildingComponent : Node2D
 
     public void Disable()
     {
-        if (IsDisabled) return;
+        if (IsDisabled)
+            return;
         IsDisabled = true;
         GlobalEvents.BuildingDisabled?.Invoke(this);
     }
 
     public void Enable()
     {
-        if (!IsDisabled) return;
+        if (!IsDisabled)
+            return;
         IsDisabled = false;
         GlobalEvents.BuildingEnabled?.Invoke(this);
     }
@@ -61,7 +65,6 @@ public partial class BuildingComponent : Node2D
         var gridPosition = (GlobalPosition / 64).Floor();
         return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
     }
-
 
     /// <summary>
     /// Returns a snapshot of the grid cells occupied by this building.
@@ -122,5 +125,4 @@ public partial class BuildingComponent : Node2D
         CalculateOccupiedSellPositions();
         GlobalEvents.BuildingPlaced?.Invoke(this);
     }
-
 }
