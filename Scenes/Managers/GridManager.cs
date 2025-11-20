@@ -104,11 +104,14 @@ public partial class GridManager : Node
         var allBuildingsStillValid = dependentBuildings.All(dependentBuilding =>
         {
             var tilesForBuilding = dependentBuilding.GetTileArea().GetTiles();
+            var buildingsToCheck = buildingToBuildableTiles.Keys.Where(k =>
+                k != bcToDestroy && k != dependentBuilding
+            );
             return tilesForBuilding.All(tilePos =>
             {
-                var tileIsInSet = buildingToBuildableTiles
-                    .Keys.Where(k => k != bcToDestroy && k != dependentBuilding)
-                    .Any(bc => buildingToBuildableTiles[bc].Contains(tilePos));
+                var tileIsInSet = buildingsToCheck.Any(bc =>
+                    buildingToBuildableTiles[bc].Contains(tilePos)
+                );
                 return tileIsInSet;
             });
         });
